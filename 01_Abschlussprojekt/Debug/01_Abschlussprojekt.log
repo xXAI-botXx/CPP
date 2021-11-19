@@ -1,0 +1,3 @@
+﻿  main.cpp
+D:\Tobia\Programmieren\C++\CPP_Projektmappe\01_Abschlussprojekt\main.cpp(52,41): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+  01_Abschlussprojekt.vcxproj -> D:\Tobia\Programmieren\C++\CPP_Projektmappe\Debug\01_Abschlussprojekt.exe
