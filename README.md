@@ -10,9 +10,16 @@ May use it as a reference.
 <h4 style="text-align:center"><a href="#runcppcode">Run C++ Code</a><h4>
 
 
+
+<img src="./cover.jpeg"></img>
+
+
+
+
+
+
 ---
 <h3><a href="#top" name="topic_">Topics</a><h3>
-
 
 - [Hello World](./00_hello_world/main.cpp)
 - Variables, Datatypes and Logic
