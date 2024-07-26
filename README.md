@@ -41,7 +41,7 @@ May use it as a reference.
 
 
 ---
-### Ausführung
+### Run C++ Code
 
 1. First you compile your program and create a executeable file:
     - ```terminal
@@ -50,26 +50,44 @@ g++ main.cpp -o main
     - If you have multiple C++ Files you can do:
     ```terminal
 g++ -o main main.cpp game.cpp
-    ```
+        ```
     or:
     ```terminal
 g++ -c main.cpp
 g++ -c game.cpp
 g++ -o main main.o game.o
-    ```
+        ```
 2. Then you can execute it:
     ```terminal
 ./main.exe
-    ```
+        ```
     Or in Linux:
     ```terminal
 ./main
-    ```
+        ```
 
 
 
 > Hint:<br>Use the terminal and navigate with cd .. and cd 01_variables_datatypes_logic to the right folder.<br>You also can type 00 and then tab-key to use auto completion.
 
+
+
+In Depth:
+- assemble:
+```terminal
+g++ -S program.cpp
+```
+- compile:
+```terminal
+g++ -c program.cpp -o program.o
+```
+- build:
+```terminal
+g++ program.o -o program
+```
+
+
+> You can add a parameter at the beginning of every command to specify how much the code should be optimized. For debugging it is common to not optimize your code to can analyze your code.<br>For Debugging: g++ -O0 -g3 ...<br>For Release: g++ -O3 ...
 
 
 ---
@@ -86,15 +104,22 @@ g++ -o main main.o game.o
   - [While Loops](./01_variables_datatypes_logic/while_loop.cpp)
   - [Functions](./01_variables_datatypes_logic/functions.cpp)
   - [Recursion](./01_variables_datatypes_logic/recursion.cpp)
-  - [Overloded Funtions](./01_variables_datatypes_logic/function_overloading.cpp)
+  - [Overloaded Funtions](./01_variables_datatypes_logic/function_overloading.cpp)
   - [Templates](./01_variables_datatypes_logic/template.cpp)
+  - [Pre and Post Increment](./01_variables_datatypes_logic/post_and_pre_increment.cpp)
+  - [Constant Variables](./01_variables_datatypes_logic/const.cpp)
+  - [Static Local Variables](./01_variables_datatypes_logic/static_local_var.cpp)
+  - [Casting](./01_variables_datatypes_logic/casting.cpp)
+  - [Auto Keyword](./01_variables_datatypes_logic/auto_keyword.cpp)
+- Arrays
+  - [Arrays](./02_arrays/arrays.cpp)
 - ...
 
 
 
 Games:
-- [Guessing Game](./games/guessing_game/main.cpp)
-- [Game 1](./games/computer_game_1.cpp)
+- [Guessing Game](./games/guessing_game/)
+- [Game 1](./games/computer_game_1/)
 - ...
 
 

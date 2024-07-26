@@ -1,6 +1,6 @@
 // to don't cause issues with multiple imports: see the comment
 // called: include guard
-// #program once 
+// #pragma once 
 //     checks, if it already got imported
 // or C style with an if:
 // #ifndef GAME_H
