@@ -45,26 +45,26 @@ May use it as a reference.
 
 1. First you compile your program and create a executeable file:
     - ```terminal
-g++ main.cpp -o main
-        ```
+      g++ main.cpp -o main
+      ```
     - If you have multiple C++ Files you can do:
     ```terminal
-g++ -o main main.cpp game.cpp
-        ```
+    g++ -o main main.cpp game.cpp
+    ```
     or:
     ```terminal
-g++ -c main.cpp
-g++ -c game.cpp
-g++ -o main main.o game.o
-        ```
+    g++ -c main.cpp
+    g++ -c game.cpp
+    g++ -o main main.o game.o
+    ```
 2. Then you can execute it:
     ```terminal
-./main.exe
-        ```
+    ./main.exe
+    ```
     Or in Linux:
     ```terminal
-./main
-        ```
+    ./main
+    ```
 
 
 
