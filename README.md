@@ -5,13 +5,13 @@ This project contains the basics of C++ language.
 May use it as a reference.
 
 
-<h4 style="text-align:center"><a href="#topic">Topics</a><h4>
-<h4 style="text-align:center"><a href="#installation">Installation</a><h4>
+<h4 style="text-align:center"><a href="#topic_">Topics</a><h4>
+<h4 style="text-align:center"><a href="#installation_">Installation</a><h4>
 <h4 style="text-align:center"><a href="#runcppcode">Run C++ Code</a><h4>
 
 
 ---
-<h3><a href="#top" name="topic">Topics</a><h3>
+<h3><a href="#top" name="topic_">Topics</a><h3>
 
 
 - [Hello World](./00_hello_world/main.cpp)
@@ -51,7 +51,7 @@ Projects:
 
 
 ---
-<h3><a href="#top" name="installation">Installation</a><h3>
+<h3><a href="#top" name="installation_">Installation</a><h3>
 
 - Download a C++ Compiler in **Windows**:
     - https://cygwin.com/install.html
