@@ -40,7 +40,14 @@ May use it as a reference.
   - [Casting](./01_variables_datatypes_logic/casting.cpp)
   - [Auto Keyword](./01_variables_datatypes_logic/auto_keyword.cpp)
 - Arrays
-  - [Arrays](./02_arrays/arrays.cpp)
+  - [Arrays](./02_pointer_and_arrays/arrays.cpp)
+  - [Strings](./02_pointer_and_arrays/string.cpp)
+  - [Multidimensionale Arrays](./02_pointer_and_arrays/multidimensional_arrays.cpp)
+  - [Arrays in C++ Style](./02_pointer_and_arrays/arrays_cpp_style.cpp)
+  - [Pointer](./02_pointer_and_arrays/pointer.cpp)
+  - [Heap in C Style](./02_pointer_and_arrays/heap_c_style.cpp)
+  - [Nullpointers](./02_pointer_and_arrays/nullpointers.cpp)
+  - [Pointer Arrays](./02_pointer_and_arrays/pointer_arrays.cpp)
 - ...
 
 
