@@ -18,6 +18,7 @@ int main(){
         std::cout << arr_1[i] << std::endl;
     }
 
+    // don't forget the [] when you delete the array memory
     delete[] arr_1;
 
     return 0;

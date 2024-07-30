@@ -8,6 +8,13 @@
  * So when you use it as parameter, you always also have to give the size with it.
  * Most mistakes in C/C++ Code comes from a wrong memory access with these C-Style arrays
  * and with pointers which points to memory which not longer belongs to the program.
+ * 
+ * C++ Style:
+ * - std::array -> constant array
+ * - std::string -> dynamic char array
+ * - std::vector -> dynamic array
+ * 
+ * (not in this file)
  */
 
 int main(){
