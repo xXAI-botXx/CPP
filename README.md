@@ -73,13 +73,20 @@ You can decide whether to install GNU Compiler Collection (GCC) or Clang. Both a
 
 - Download a C++ Compiler in **Windows**:
     - https://cygwin.com/install.html
+    - make sure to install following extension (use the search bar):
+        - gcc-g++
+        - gcc-core
+        - make
+        - gdb
     - Testing: 
     ```terminal
     make --version
     gdb --version
     gcc --version
-    g++ --version
+    g++ --versiono
     ```
+
+》 Use the cygwin terminal (C:\cygwin64\Cygwin.bat) and navigate to your folder (cd and ls，or you copy the dir-path and use it with cd) to use it with make or with g++ <a href="#runcppcode">look here for more details</a>.<br>Alternativly you can add cygwin to the system path variables. And then you can you the normal cmd or Powershell or the terminal in Visual Studio Code.
 
 - Download a C++ Compiler in **Linux**:
     - Installation: 
