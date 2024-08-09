@@ -50,6 +50,8 @@ May use it as a reference.
   - [Heap in C Style](./02_pointer_and_arrays/heap_c_style.cpp)
   - [Nullpointers](./02_pointer_and_arrays/nullpointers.cpp)
   - [Pointer Arrays](./02_pointer_and_arrays/pointer_arrays.cpp)
+  - [References](./02_pointer_and_arrays/references.cpp)
+  - [Argc and Argv](./02_pointer_and_arrays/argc_argv.cpp)
 - ...
 
 
