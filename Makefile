@@ -8,7 +8,7 @@ CXX = g++  # Use this if you're using MinGW or Cygwin
 CXXFLAGS = -Wall -std=c++17
 
 # List of source files
-SRCS = ./02_pointer_and_arrays/arrays.cpp
+SRCS = ./02_pointer_and_arrays/references.cpp
 
 # List of object files
 OBJS = $(SRCS:.cpp=.o)
