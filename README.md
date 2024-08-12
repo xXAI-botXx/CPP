@@ -41,7 +41,7 @@ May use it as a reference.
   - [Static Local Variables](./01_variables_datatypes_logic/static_local_var.cpp)
   - [Casting](./01_variables_datatypes_logic/casting.cpp)
   - [Auto Keyword](./01_variables_datatypes_logic/auto_keyword.cpp)
-- Arrays
+- Arrays, Pointer and References
   - [Arrays](./02_pointer_and_arrays/arrays.cpp)
   - [Strings](./02_pointer_and_arrays/string.cpp)
   - [Multidimensionale Arrays](./02_pointer_and_arrays/multidimensional_arrays.cpp)
@@ -52,6 +52,8 @@ May use it as a reference.
   - [Pointer Arrays](./02_pointer_and_arrays/pointer_arrays.cpp)
   - [References](./02_pointer_and_arrays/references.cpp)
   - [Argc and Argv](./02_pointer_and_arrays/argc_argv.cpp)
+- Enums, Structs and Namespaces
+    - [Enum and Switch (C-Style)](./03_enum_structs_and_namespaces/Enum_and_Switch.cpp)
 - ...
 
 
