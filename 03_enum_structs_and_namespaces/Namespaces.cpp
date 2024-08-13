@@ -39,6 +39,7 @@ namespace {
 };
 
 // using namespace VHC;
+// using namespace VHC::Vehicle;
 
 int main() {
     auto train_1 = VHC::Vehicle{.velocity=120, .vehicle_type=VHC::VehicleType::TRAIN};
