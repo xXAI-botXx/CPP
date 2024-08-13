@@ -64,6 +64,7 @@ May use it as a reference.
 Games:
 - [Guessing Game](./games/guessing_game/)
 - [Game 1](./games/computer_game_1/)
+- [Game 2](./games/computer_game_2/)
 - ...
 
 

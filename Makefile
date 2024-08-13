@@ -5,10 +5,10 @@
 CXX = g++  # Use this if you're using MinGW or Cygwin
 
 # Compiler flags
-CXXFLAGS = -Wall -std=c++17
+CXXFLAGS = -Wall -std=c++23
 
 # List of source files
-SRCS = ./02_pointer_and_arrays/references.cpp
+SRCS = ./games/computer_game_2/Main.cpp ./games/computer_game_2/Game.cpp
 
 # List of object files
 OBJS = $(SRCS:.cpp=.o)

@@ -8,6 +8,8 @@
  * When using stucts as input parameters it is often recommended to use 
  * the reference (&) to save memory and not copy all the data.
  * 
+ * Structs can be defined in C++ files or in c++-Header files.
+ * 
  * To access the attributes/data you use the name with a point and then the name of the data.
  * var_name.data_name
  * Also when using a reference.
