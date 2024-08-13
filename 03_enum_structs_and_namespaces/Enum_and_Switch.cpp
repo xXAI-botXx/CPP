@@ -20,6 +20,7 @@ enum PermissionLevel {
 
 int main(){
     PermissionLevel pl_giuliano = PermissionLevel::STUDENT;
+    // auto pl_giuliano = PermissionLevel::STUDENT;
     std::cout << pl_giuliano << std::endl;
 
     switch(pl_giuliano) {

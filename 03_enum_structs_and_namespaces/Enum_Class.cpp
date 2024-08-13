@@ -16,6 +16,7 @@ enum class ServerPermissionLevel {
 
 int main(){
     PermissionLevel pl_giuliano = PermissionLevel::STUDENT;
+    // auto pl_giuliano = PermissionLevel::STUDENT;
 
     switch(pl_giuliano) {
         case PermissionLevel::STUDENT: {

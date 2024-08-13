@@ -56,6 +56,7 @@ May use it as a reference.
     - [Enum and Switch (C-Style)](./03_enum_structs_and_namespaces/Enum_and_Switch.cpp)
     - [Enum Class](./03_enum_structs_and_namespaces/Enum_Class.cpp)
     - [Structures](./03_enum_structs_and_namespaces/Struct.cpp)
+    - [Namespaces](./03_enum_structs_and_namespaces/Namespaces.cpp)
 - ...
 
 

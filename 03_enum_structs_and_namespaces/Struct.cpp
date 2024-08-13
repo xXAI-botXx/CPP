@@ -39,6 +39,8 @@ void print_user(const UserData* user) {
 
 int main(){
     UserData peter = {"Peter", 2437};
+    // UserData peter = UserData{"Peter", 2437};
+    // auto peter = UserData{"Peter", 2437};
 
     std::cout << peter.name << std::endl;
 
