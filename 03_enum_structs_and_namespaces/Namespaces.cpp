@@ -25,6 +25,19 @@ namespace VHC {
 
 };
 
+
+/**
+ * A namespace without a name makes the content inside 
+ * just visible for the current file (like the private keyword in Java)
+ * 
+ * An alternative is using static const, but the namespace way is better!
+ */
+namespace {
+
+    int awesome_number = 164;
+
+};
+
 // using namespace VHC;
 
 int main() {
