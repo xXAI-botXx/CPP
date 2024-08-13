@@ -54,6 +54,8 @@ May use it as a reference.
   - [Argc and Argv](./02_pointer_and_arrays/argc_argv.cpp)
 - Enums, Structs and Namespaces
     - [Enum and Switch (C-Style)](./03_enum_structs_and_namespaces/Enum_and_Switch.cpp)
+    - [Enum Class](./03_enum_structs_and_namespaces/Enum_Class.cpp)
+    - [Structures](./03_enum_structs_and_namespaces/Struct.cpp)
 - ...
 
 
