@@ -52,10 +52,13 @@ int main(){
     // you can also use the parameter names (recommended)
     UserData giulia = {.name="Giulia", .id=45676};
 
-    UserData* giulia_pt = &giulia;
+    // UserData* giulia_pt = &giulia;
+    // a structure can also be a pointer
+    // with new it will be generated in heap and else in stack???
+    UserData* gianna = new UserData{.name="Giannao", .id=45677};
 
     print_user(giulia);
-    print_user(giulia_pt);
+    print_user(gianna);
 
     return 0;
 }
