@@ -1,15 +1,22 @@
 <h1><a name="top">C++</a></h1>
 
-This project contains the basics of C++ language.
+This project contains knowledge about the C++ language.
+An amazing programming langauge which is most likely preferred for software developement, rendering/graphical applications and compute intense applications. Through the long history and the near to the C language there are some legacy ways to use C++ and modern ways to use C++.<br>
+I always found that C++ code is much prettier and more logical and gives the programmer more structure to hold on comapred to other programming languages but of course you pay with flexibility compared to languages like python or julia.<br>
+This is project tries to catch the basics of C++ as well as some most interesting parts, like game programming, graphics rendering and general GPU calculations.
 
-May use it as a reference.
+May use it as a reference ❤️
 
 
-<h4 style="text-align:center"><a href="#topic_">Topics</a><h4>
-<h4 style="text-align:center"><a href="#installation_">Installation of GNU Compiler Collection</a><h4>
-<h4 style="text-align:center"><a href="#installation_clang">Installation of Clang</a><h4>
-<h4 style="text-align:center"><a href="#runcppcode">Run C++ Code with GNU</a><h4>
-<h4 style="text-align:center"><a href="#runcppcode_with_clang">Run C++ Code with Clang</a><h4>
+<h4 style="text-align:center"><a href="#basics_">Basics</a></h4>
+<h4 style="text-align:center"><a href="#gaming_">Gaming</a></h4>
+<h4 style="text-align:center"><a href="#opengl_">OpenGL</a></h4>
+<h4 style="text-align:center"><a href="#vulkan_">Vulkan</a></h4>
+<h4 style="text-align:center"><a href="#cuda_">CUDA</a></h4>
+<h4 style="text-align:center"><a href="#installation_">Installation of GNU Compiler Collection</a></h4>
+<h4 style="text-align:center"><a href="#installation_clang">Installation of Clang</a></h4>
+<h4 style="text-align:center"><a href="#runcppcode">Run C++ Code with GNU</a></h4>
+<h4 style="text-align:center"><a href="#runcppcode_with_clang">Run C++ Code with Clang</a></h4>
 
 
 
@@ -21,7 +28,10 @@ May use it as a reference.
 
 
 ---
-<h3><a href="#top" name="topic_">Topics</a><h3>
+<h3><a href="#top" name="basics_">Basics</a></h3>
+
+This part contains all import basics in form of C++ files. Just search the topic you desire and inside of the file will be more information with an example. Adjust the paths/names in the [Makefile](./Makefile) to run the file or manually (g++ -0 output cpp_file.cpp another_cpp_file.cpp).<br>
+Some key concepts are also shortly covered in this part as text.
 
 - [Hello World](./00_hello_world/main.cpp)
 - Variables, Datatypes and Logic
@@ -61,7 +71,7 @@ May use it as a reference.
 
 
 
-Games:
+Games/Projects:
 - [Guessing Game](./games/guessing_game/)
 - [Game 1](./games/computer_game_1/)
 - [Game 2](./games/computer_game_2/)
@@ -69,15 +79,63 @@ Games:
 
 
 
-Projects:
-- ...
+Some keypconcepts...
+
+
+
 
 
 
 ---
-<h3><a href="#top" name="installation_">Installation of GNU Compiler Collection</a><h3>
+<h3><a href="#top" name="gaming_">Gaming</a></h3>
 
-You can decide whether to install GNU Compiler Collection (GCC) or Clang. Both are great and both are covered in this README. I would recommend Clang, but that is personal preference.
+...
+
+
+
+
+
+
+
+
+---
+<h3><a href="#top" name="opengl_">OpenGL</a></h3>
+
+...
+
+
+
+
+
+
+
+
+---
+<h3><a href="#top" name="vulkan_">Vulkan</a></h3>
+
+...
+
+
+
+
+
+
+
+---
+<h3><a href="#top" name="cuda_">CUDA</a></h3>
+
+...
+
+
+
+
+
+
+
+---
+<h3><a href="#top" name="installation_">Installation of GNU Compiler Collection</a></h3>
+
+You can decide whether to install GNU Compiler Collection (GCC) or Clang. Both are great and both are covered in this README. I would recommend GCC, but that is personal preference.
 
 - Download a C++ Compiler in **Windows**:
     - https://cygwin.com/install.html
@@ -92,7 +150,7 @@ You can decide whether to install GNU Compiler Collection (GCC) or Clang. Both a
     make --version
     gdb --version
     gcc --version
-    g++ --versiono
+    g++ --version
     ```
 
 
@@ -119,7 +177,7 @@ You can decide whether to install GNU Compiler Collection (GCC) or Clang. Both a
 
 
 ---
-<h3><a href="#top" name="installation_clang">Installation (Clang/LLVM)</a><h3>
+<h3><a href="#top" name="installation_clang">Installation (Clang/LLVM)</a></h3>
 
 You can also download Clang, it is an alternative compiler for C and C++:
 
@@ -157,13 +215,13 @@ clang --version
 
 
 ---
-<h3><a href="#top" name="runcppcode">Run C++ Code (with g++)</a><h3>
+<h3><a href="#top" name="runcppcode">Run C++ Code (with g++)</a></h3>
 
 The GNU Compiler Collection (GCC) is a standard compiler for c and c++ and here you see how to use it.
 
 
 
-Most simple way to compile a C++ program with Clang is to create a **make** file and use make to compile your C++-Files (for this you can install cygwin in Windows to use make <a href="#installation_">see here</a>):
+Most simple way to compile a C++ program with GCC is to create a **make** file and use make to compile your C++-Files (for this you can install cygwin in Windows to use make <a href="#installation_">see here</a>):
 ```terminal
 # Compiler
 CXX = g++  # Use this if you're using MinGW or Cygwin
@@ -249,9 +307,12 @@ g++ program.o -o program
 > You can add a parameter at the beginning of every command to specify how much the code should be optimized. For debugging it is common to not optimize your code to can analyze your code.<br>For Debugging: g++ -O0 -g3 ...<br>For Release: g++ -O3 ...
 
 
+Alternativly you can open 'Cygwin64 Terminal', go to your repository and use make or g++ than over this terminal.
+
+
 
 ---
-<h3><a href="#top" name="runcppcode_with_clang">Run C++ Code (with clang++)</a><h3>
+<h3><a href="#top" name="runcppcode_with_clang">Run C++ Code (with clang++)</a></h3>
 
 Clang is a compiler front end for the C, C++, and Objective-C programming languages. It is part of the LLVM (Low-Level Virtual Machine) project and provides tools for compiling code, checking syntax, and generating executable files. Clang is known for its fast compilation times, detailed error messages, and modular design.<br>
 Clang is a powerful and versatile compiler that is widely used in the development of system software, games, and many other applications. Its fast compilation times, excellent diagnostic tools, and extensibility make it a valuable tool for developers. Whether you're writing code, debugging, or optimizing, Clang provides a comprehensive suite of features to support your workflow.
