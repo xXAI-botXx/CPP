@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdint>
 
 /**
  * Disclaimer:
@@ -46,7 +47,7 @@ int main(){
     constexpr auto len = std::uint32_t{3U};
     // constecpr std::uint32_t = 3;
 
-    float vector_1[len]{};  // this is a good prctise to mke sure every vlue is 0 and not a (random) number from memory
+    float vector_1[len]{};  // this is a good practise to make sure every value is 0 and not a (random) number from memory
     float vector_2[len];
     
     for (int i=0; i < len; ++i) {

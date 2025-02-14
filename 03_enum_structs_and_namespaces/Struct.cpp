@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdint>
+#include <string>
 
 /**
  * Strutures can be used to bundle data which

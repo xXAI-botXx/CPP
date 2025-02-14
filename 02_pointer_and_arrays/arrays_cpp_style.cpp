@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdint>
+#include <cstddef>
 #include <array>
 
 template <std::size_t N, typename T>

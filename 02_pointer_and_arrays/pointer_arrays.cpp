@@ -1,5 +1,6 @@
 #include <iostream>
-#include <array>
+#include <cstddef>
+#include <cstdint>
 
 // there is also a better C++ alternative, but for now we lern the basic
 

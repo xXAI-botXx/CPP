@@ -1,4 +1,5 @@
-#include<iostream>
+#include <iostream>
+#include <cstdlib>
 
 // you can pass arguments when you call your executive file
 // just split the arguments with an whitespace
