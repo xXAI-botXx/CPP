@@ -11,9 +11,9 @@ May use it as a reference ❤️
 ### Content:
 
 - <h4><a href="#basics_">Basics</a></h4>
-- <h4><a href="#gaming_">Gaming</a></h4>
-- <h4><a href="#opengl_">OpenGL</a></h4>
-- <h4><a href="#vulkan_">Vulkan</a></h4>
+- <h4><a href="./docs/Game.md">Gaming</a></h4>
+- <h4><a href="./docs/OpenGL.md">OpenGL</a></h4>
+- <h4><a href="./docs/Vulkan.md">Vulkan</a></h4>
 - <h4><a href="#installation_">Installation of GNU Compiler Collection</a></h4>
 - <h4><a href="#installation_clang">Installation of Clang</a></h4>
 - <h4><a href="#runcppcode">Run C++ Code with GNU</a></h4>
@@ -33,57 +33,31 @@ May use it as a reference ❤️
 ---
 <h3><a href="#top" name="basics_">Basics</a></h3>
 
-This part contains all import basics in form of C++ files. Just search the topic you desire and inside of the file will be more information with an example. Adjust the paths/names in the [Makefile](./Makefile) to run the file or manually (g++ -0 output cpp_file.cpp another_cpp_file.cpp).<br>
-Some key concepts are also shortly covered in this part as text.
+This part contains the most essential knowledge about C++.
 
-- [Hello World](./00_hello_world/main.cpp)
-- Variables, Datatypes and Logic
-  - [Variables](./01_variables_datatypes_logic/variables.cpp)
-  - [Data Types](./01_variables_datatypes_logic/datatypes.cpp)
-  - [User Input](./01_variables_datatypes_logic/user_input.cpp)
-  - [If Else](./01_variables_datatypes_logic/if_else.cpp)
-  - [Ternary](./01_variables_datatypes_logic/ternary_operator.cpp)
-  - [For Loops](./01_variables_datatypes_logic/for_loop.cpp)
-  - [While Loops](./01_variables_datatypes_logic/while_loop.cpp)
-  - [Functions](./01_variables_datatypes_logic/functions.cpp)
-  - [Recursion](./01_variables_datatypes_logic/recursion.cpp)
-  - [Overloaded Funtions](./01_variables_datatypes_logic/function_overloading.cpp)
-  - [Templates](./01_variables_datatypes_logic/template.cpp)
-  - [Pre and Post Increment](./01_variables_datatypes_logic/post_and_pre_increment.cpp)
-  - [Constant Variables](./01_variables_datatypes_logic/const.cpp)
-  - [Static Local Variables](./01_variables_datatypes_logic/static_local_var.cpp)
-  - [Casting](./01_variables_datatypes_logic/casting.cpp)
-  - [Auto Keyword](./01_variables_datatypes_logic/auto_keyword.cpp)
-- Arrays, Pointer and References
-  - [Arrays](./02_pointer_and_arrays/arrays.cpp)
-  - [Strings](./02_pointer_and_arrays/string.cpp)
-  - [Multidimensionale Arrays](./02_pointer_and_arrays/multidimensional_arrays.cpp)
-  - [Arrays in C++ Style](./02_pointer_and_arrays/arrays_cpp_style.cpp)
-  - [Pointer](./02_pointer_and_arrays/pointer.cpp)
-  - [Heap in C Style](./02_pointer_and_arrays/heap_c_style.cpp)
-  - [Nullpointers](./02_pointer_and_arrays/nullpointers.cpp)
-  - [Pointer Arrays](./02_pointer_and_arrays/pointer_arrays.cpp)
-  - [References](./02_pointer_and_arrays/references.cpp)
-  - [Argc and Argv](./02_pointer_and_arrays/argc_argv.cpp)
-- Enums, Structs and Namespaces
-    - [Enum and Switch (C-Style)](./03_enum_structs_and_namespaces/Enum_and_Switch.cpp)
-    - [Enum Class](./03_enum_structs_and_namespaces/Enum_Class.cpp)
-    - [Structures](./03_enum_structs_and_namespaces/Struct.cpp)
-    - [Namespaces](./03_enum_structs_and_namespaces/Namespaces.cpp)
-- ...
+<a name="bascis_top_"></a>
+Contents:
+- <a href="#basics_stack_and_heap_">Stack and Heap</a>
+- <a href="#basics_datatypes_">Datatypes</a>
+- <a href="#basics_flow_structures_">Flow Structures</a>
+- <a href="#basics_value_categories_">Value Categories</a>
+- <a href="#basics_variable modifier_">Variable Modifiers</a>
+- <a href="#basics_pointers_">Pointers</a>
+- <a href="#basics_references_">References</a>
+- <a href="#basics_arrays_">Arrays</a>
+- <a href="#basics_templates_">Templates</a>
+- <a href="#basics_namespaces_">Namespaces and Headerfiles</a>
+- <a href="#basics_std_">Standard Library</a>
+- <a href="#basics_classes_">Classes</a>
+<a href="#basics_best_practises_">Best Practises</a>
+- <a href="#basics_examples_">Examples</a>
 
-
-
-Games/Projects:
-- [Guessing Game](./games/guessing_game/)
-- [Game 1](./games/computer_game_1/)
-- [Game 2](./games/computer_game_2/)
-- ...
 
 
 
 It follows some keyconcepts to keep in mind when working with C++.
 
+<a name="#basics_stack_and_heap_"></a>
 **Stack and Heap**<br>
 In C++ there are 2 main storage types which should be known. One is the stack, a small memory where all local variables/values get stacked. The stack defines variables/values just in a local area, called scope. For example a function call creates a new scope on the stack and the variables are only avaiable on this scope. If the function call finsihes than the scope closes and the memory of these variables get free again.<br>
 The heap is the other storage type, it provides much more storage capacities and have no scopes (there is no stacking). But the variables and values here does not delete themselfs, so the programmer have to delete the values here if they are not used anymore. Else a memory leak occur, where the taken memory accumulates and on some point the heap overflows and the program crashes.<br>
@@ -93,6 +67,7 @@ More about how to create variables where comes in a next chapter.<br>
 
 <br><br>
 
+<a name="#basics_datatypes_"></a>
 **Datatypes**<br>
 Basic Data Types
 - bool → Boolean (true or false)
@@ -169,6 +144,7 @@ STD Threading-Types
 
 <br><br>
 
+<a name="#basics_flow_structures_"></a>
 **Flow Structures**<br>
 Conditional Statements
 - if → Executes a block if a condition is true
@@ -200,6 +176,7 @@ Others
 
 <br><br>
 
+<a name="#basics_value_categories_"></a>
 **Value Categories**<br>
 Lvalues are values which are stored/connected with a variable.<br>
 Values which are just passed by as a parameter and therfore have no memory location are called rvalues.<br>
@@ -209,11 +186,46 @@ And Prvalues which are rvalues which have a memory address.
 
 <br><br>
 
+<a name="#basics_variable modifier_"></a>
 **Variable Modifier**<br>
-Variables can be 'const' -> constant, means the value is not allowed to change. This is useful for constants which value never should change in the program or for function parameters, to make sure that the passed reference is not changed and does so not lead to unwanted sideeffects -> why we want unchangable references? because references are most lowest at resource consuming.
+Variables can be 'const' -> constant, means the value is not allowed to change. This is 
+const (Constant Variable)
+
+- const
+	- The value cannot be changed after initialization.
+	- Used for defining constants and preventing modifications to function parameters.
+	- Helps avoid unintended side effects.
+	- Efficient for references since they don’t require additional memory allocation.
+	- Useful for constants which value never should get changed in the program or for function parameters, to make sure that the passed reference is not changed and does so not lead to unwanted sideeffects -> why we want unchangable references? because references are most lowest at resource consuming.
+
+- volatile
+    - Tells the compiler that the variable can be changed at any time (e.g., by hardware or another thread).
+    - Prevents compiler optimizations that assume the value won’t change unexpectedly.
+
+- mutable
+	- Allows modification of a variable inside a const object.
+    - Typically used with const class methods to modify specific members.
+
+- static
+    - Inside a function: Retains its value across function calls.
+    - Inside a class: Shared among all instances (i.e., belongs to the class, not an object).
+    At global scope: Limits visibility to the current translation unit (file).
+
+- extern
+    - Declares a global variable defined in another file or translation unit.
+    - Used for sharing variables across multiple files.
+
+- register (Deprecated)
+    - Suggested storing the variable in a CPU register for fast access.
+    - Modern compilers optimize this automatically, making it obsolete.
+
+- thread_local
+    - Creates a variable that is unique to each thread.
+    - Useful for thread-safe programming without explicit locking.
 
 <br><br>
 
+<a name="#basics_pointers_"></a>
 **Pointers**<br>
 Pointers are variables pointing to another memory address. A pointer have a own memory adress and the value saved is the memory address where the pointer points to.<br>
 Pointer are important to use the heap efficiently.<br>
@@ -270,6 +282,7 @@ Important: 'const' makes not the pointer constant but it's value address.
 
 <br><br>
 
+<a name="#basics_references_"></a>
 **References**<br>
 References is a C++ feature which is not avaiable in C. References are variables which refer to another variable. The following example shows 2 variables which both have the same value and changes on both variables impact the value of the other variable. Notice that references are written with a & after the datatyp.
 ```c++
@@ -282,6 +295,7 @@ Key difference to pointer: references can't have/refer to no value (easier handl
 
 <br><br>
 
+<a name="#basics_arrays_"></a>
 **Arrays**<br>
 Arrays is a collection of n elements of the same datatype. An array can be thought as a primitive form of an list.<br>
 Create and acces an array:
@@ -473,15 +487,101 @@ int main() {
  ```
  
  
+ <a name="#basics_collections_"></a>
+**Collections**<br>
+ We previously saw some important collections like the **Vector**. Here are some more.
+ 
+ A **linked list** is a collection of pointers. So every element can be in another place in the memory.
+ 
+ ```c++
+ #include <list>
+ std::list<int> my_list;
+ my_list.push_back(4);
+ my_list.push_back(6);
+ my_list.push_back(8);
+ ms_list.push_front(2);
+ ```
+ 
+ Another collection is the **Queue** which works with the FIFO (first in, first out). It is like a queue on a icecream shop.
+ 
+ ```c++
+ #include <queue>
+ std::queue<int> my_q;
+ my_q.push(10);
+ my_q.push(20);
+ my_q.front();    // returns the current first obj/data in the queue but does not remove it
+ my_q.pop();    // return and remove first elem in the queue
+ ```
+ 
+ The opposite is the **Stack**. It works with the LIFO priciple (last in, first out). The last element which got added will be the first which get out from the stack. Like a stack of papers on a table of a busy worker in the 80s.
+ 
+ ```c++
+ #include <stack>
+ std::stack<int> my_stack;
+ my_stack.push(10);
+ my_stack.push(20);
+ my_stack.top();    // only return the current first elem
+ my_stack.pop();    // returns and removes the first (last added) elem
+ ```
+ 
+ Most performant data structures are the maps and hash maps. The difference is that maps are ordered and hash maps using hashing to allow unordered lists. They work with a key which lead to a value...like a dictionary.
+ 
+ ```c++
+ #include <map>
+ std::map<int,std::string> months;
+ months.emplace(1, "Januray");
+ months.emplace(2, "February");
+ 
+ std::cout << month[2];
+ ```
+ 
+ Hash-maps:
+ ```c++
+ #include <unoredered_map>
+ std::unordered_map<int, std:.string> months;
+ months.emplace(1, "Januray");
+ months.emplace(2, "February");
+ 
+ std::cout << month[2];
+ ```
+ 
+ Important for collections is to itterate over them and this is sometimes not easy possible. For that we can use **Iterator** which are objects which help to traverse the object.
+ 
+ ```c++
+ std::list<int> numbers; 
+ numbers.emplace_back(2); 
+ numbers.emplace_back(4); 
+ numbers.emplace_back(6); 
+ 
+ for (std::list<int>::iterator iter = numbers.begin();    iter != numbers.end();    ++iter) {
+ 	std::cout << *iter << std::endl; 
+ }
+ ```
+ 
+ For maps:
+ ```c++
+ // Get an iterator to the element with the key 2 
+ std::map<int, std::string> iter = months.find(2); 
+ 
+ if (iter != months.end()) // This is only true if found {
+ 	std::cout << iter->first << std::endl; // Outputs 2
+ 	std::cout << iter->second << std::endl; // Outputs February
+ }
+ ```
+ 
+ 
+ 
 
 <br><br>
 
+<a name="#basics_templates_"></a>
 **Templates**<br>
 ...
 
 
 <br><br>
 
+<a name="#basics_namespaces_"></a>
 **Namespaces and Header Files**<br>
 Namespaces are scopes in which are given variable names and function names set/available. <br>
 You can also defining your own namespaces:
@@ -594,129 +694,249 @@ As you might see, there are many possible ways how to implement your code. Names
 
 <br><br>
 
+<a name="#basics_std_"></a>
 **Standard Library (STD):**
 It follows a overview about most namespaces of std, you can search online if you are interesting in one of them.<br>
 Notice that all of these libraries are in the std namespace but get first loaded/imported if the specific lib is imported. This is practically done by defining different header files (for every lib one header file). 
 
 Input/Output & Streams
-- <iostream> – Standard I/O (cin, cout, cerr)
-- <fstream> – File input/output streams
-- <sstream> – String stream manipulation
+- \<iostream\> – Standard I/O (cin, cout, cerr)
+- \<fstream\> – File input/output streams
+- \<sstream\> – String stream manipulation
 
 Containers & Data Structures
-- <vector> – Dynamic array (fast random access)
-- <array> – Fixed-size array wrapper
-- <deque> – Double-ended queue
-- <list> – Doubly linked list
-- <forward_list> – Singly linked list
-- <map> – Sorted associative key-value container (RB-tree)
-- <unordered_map> – Unordered key-value container (hash table)
-- <set> – Sorted unique collection (RB-tree)
-- <unordered_set> – Unordered unique collection (hash table)
-- <stack> – LIFO stack
-- <queue> – FIFO queue
-- <priority_queue> – Heap-based priority queue
-- <tuple> – Fixed-size heterogeneous collection
+- \<vector\> – Dynamic array (fast random access)
+- \<array\> – Fixed-size array wrapper
+- \<deque\> – Double-ended queue
+- \<list\> – Doubly linked list
+- \<forward_list\> – Singly linked list
+- \<map\> – Sorted associative key-value container (RB-tree)
+- \<unordered_map\> – Unordered key-value container (hash table)
+- \<set\> – Sorted unique collection (RB-tree)
+- \<unordered_set\> – Unordered unique collection (hash table)
+- \<stack\> – LIFO stack
+- \<queue\> – FIFO queue
+- \<priority_queue\> – Heap-based priority queue
+- \<tuple\> – Fixed-size heterogeneous collection
 
 Algorithms & Utility Functions
-- <algorithm> – Sorting, searching, min/max, transformations
-- <numeric> – Numeric operations (accumulate, inner_product)
-- <functional> – Function objects, lambda utilities
-- <utility> – std::pair, std::move, std::forward, etc.
-- <ranges> (C++20) – Range-based algorithms
+- \<algorithm\> – Sorting, searching, min/max, transformations
+- \<numeric\> – Numeric operations (accumulate, inner_product)
+- \<functional\> – Function objects, lambda utilities
+- \<utility\> – std::pair, std::move, std::forward, etc.
+- \<ranges\> (C++20) – Range-based algorithms
 
 Strings & Localization
-- <string> – std::string, std::wstring
-- <string_view> (C++17) – Non-owning string reference
-- <charconv> (C++17) – Fast number-to-string conversion
-- <locale> – Localization utilities
-- <codecvt> (Deprecated in C++17) – Unicode conversions
+- \<string\> – std::string, std::wstring
+- \<string_view\> (C++17) – Non-owning string reference
+- \<charconv\> (C++17) – Fast number-to-string conversion
+- \<locale\> – Localization utilities
+- \<codecvt\> (Deprecated in C++17) – Unicode conversions
 
 Memory Management
-- <memory> – Smart pointers (std::unique_ptr, std::shared_ptr)
-- <scoped_allocator> – Memory allocation policies
-- <new> – Low-level memory allocation (operator new)
+- \<memory\> – Smart pointers (std::unique_ptr, std::shared_ptr)
+- \<scoped_allocator\> – Memory allocation policies
+- \<new\> – Low-level memory allocation (operator new)
 
 Concurrency & Parallelism
-- <thread> – Thread management
-- <mutex> – Mutual exclusion locks
-- <shared_mutex> (C++17) – Shared/read-write mutex
-- <atomic> – Atomic operations (lock-free programming)
-- <condition_variable> – Thread synchronization
-- <future> – Asynchronous execution (std::async, std::promise)
-- <stop_token> (C++20) – Stopping threads gracefully
+- \<thread\> – Thread management
+- \<mutex\> – Mutual exclusion locks
+- \<shared_mutex\> (C++17) – Shared/read-write mutex
+- \<atomic\> – Atomic operations (lock-free programming)
+- \<condition_variable\> – Thread synchronization
+- \<future\> – Asynchronous execution (std::async, std::promise)
+- \<stop_token\> (C++20) – Stopping threads gracefully
 
 Time & Date
-- <chrono> – Time utilities (C++11)
-- <ctime> – C-style time functions
+- \<chrono\> – Time utilities (C++11)
+- \<ctime\> – C-style time functions
 
 Type information & Reflection
-- <type_traits> – Type checking and manipulation (std::is_same, std::enable_if)
-- <typeinfo> – Runtime type information (RTTI, typeid)
-<concepts> (C++20) – Constraints for templates
+- \<type_traits\> – Type checking and manipulation (std::is_same, std::enable_if)
+- \<typeinfo\> – Runtime type information (RTTI, typeid)
+- \<concepts\> (C++20) – Constraints for templates
 
 Math & Randomization
-- <cmath> – Standard math functions (sin, cos, sqrt)
-- <random> – Pseudo-random number generation
-- <numbers> (C++20) – Mathematical constants like π and e
+- \<cmath\> – Standard math functions (sin, cos, sqrt)
+- \<random\> – Pseudo-random number generation
+- \<numbers\> (C++20) – Mathematical constants like π and e
 
 Filesystem & OS Interaction
-- <filesystem> (C++17) – File and directory operations
-- <system_error> – Error codes and exceptions
-- <cstdlib> – C-style utilities (malloc, rand, exit)
+- \<filesystem\> (C++17) – File and directory operations
+- \<system_error\> – Error codes and exceptions
+- \<cstdlib\> – C-style utilities (malloc, rand, exit)
 
 Error Handling
-- <exception> – Base exception classes
-- <stdexcept> – Common exceptions (std::runtime_error, std::out_of_range)
-- <cassert> – Debugging assertions
-- <cerrno> – C-style error handling (errno)
+- \<exception\> – Base exception classes
+- \<stdexcept\> – Common exceptions (std::runtime_error, std::out_of_range)
+- \<cassert\> – Debugging assertions
+- \<cerrno\> – C-style error handling (errno)
 
 Regular Expressions
-- <regex> – Regular expressions
+- \<regex\> – Regular expressions
 
 Networking
-- <net> – Networking library
+- \<net\> – Networking library
 
 Coroutines
-- <coroutine> – Coroutine support
+- \<coroutine\> – Coroutine support
+
+<br><br>
+
+<a name="#basics_classes_"></a>
+**Classes**<br>
+In object oritented programming, classes describe a class of which objects can be created. They get created in the heap with the new keyword, which calls the constructor method of the class. The destructor method will be called when the object is delected.<br>
+Classes/Objects have the advantage of creating own data structures with well isolated methods.<br>
+Passing an object to a function can be very ressource harming, due to the fact that functions always create a copy of the parameter. An common used practise is to pass an object with as **const reference** (const ClassName& var_name), this makes sure that the object can't get changed and it is the real object (not an copy).<br>
+The access to attributes and functions is normally an '.' but if your object is an pointer than you need an '->' for accessing the variables and functions of your object.
+
+Example class:
+```c++
+class Complex{
+public:
+	// Constructor
+	Complex(float real, float imaginary)
+	:mReal(real) ,mImaginary(imaginary) {    // efficient init listing
+	// ...
+	}
+	
+	void Negate() {
+		// ...
+	}
+	
+private:
+	float mReal;
+	float mImaginary;
+};
+
+Complex* c = new Complex(1.0f, 2.0f);
+
+c->Negate();
+```
+
+Let's watch another example with destructor:
+
+```c++
+class AwesomeArray {
+public:
+	// Constructor
+	AwesomeArray(int size):mSize(size){
+		this.mArray = nullptr;
+		this.mArray = new int[mSize];
+	}
+	// Destructor
+	~AwesomeArray(){
+		delete[] this.mArray 
+	}
+	
+	// MEthods
+	int& at(int index){
+		return this.mArray[index];
+	}
+
+private:
+	int mSize;
+	int* mArray;
+}
+```
+
+With this-> you can access an objects attributes and functions. If not setted the compiler will take a local attribute with this name and if there is no then taking the attribute from the class.
+
+There are also copy constructors which takes one object from the same class and gives a new object with the same values. C++ creates a copy method automatically but in case you use pointer you should write it by yourself, because the pointers will still reference to the same object -> calles shallow copy.<br>
+Self declared deep copy constructor:
+
+```c++
+class AwesomeArray{
+public:
+	//...
+	
+	AwesomeArray(const AwesomeArray& other_obj) {
+		mSize = other_obj.mSize;
+		mArray = new int[mSize];
+		for (int i=0; i < mSize; ++i){
+			mArray[i] = other_obj.mArray[i];
+		}
+	}
+}
+```
+
+Classes which handle dynamic allocated data (pointer, arrays, ...) should always define a destructor, copy constructor and  assignment operator. -> **rule of three**
+
+Assignment operator are methods which define the behaviour if common signes like the + are used with the object. Here an example with the + sign. Notice that it have an + after the method name (our target sign) and it has the keyword 'friend' which defines that it can be used without an object (standalone).
+
+```c++
+friend Complex operator+(const Compley& a, Complex& b){
+	return Complex(a.mReal + b.mReal, a.mImaginary+b.Imaginary);
+}
+
+Compley result = c1+c2;
+```
+
+There is also operator== for example. You can overload / define a behaviour for most likely any sign using the operator method. For example the stream lib from std does this with the \>\> signs to connect outputs.
+
+
+<br><br>
+
+<a name="#basics_best_practises_"></a>
+**Best Practises**
+
+Parameters:
+- Pass non-basic data types as reference, const, reference or pointer(s) -> to avoid making a copy
+- Pass a variable always with a const if the function should not change it
+- ...
 
 
 
 
+<br><br>
+
+<a name="#basics_examples_"></a>
+**Examples**<br>
+It follows some example cpp files.
+
+- [Hello World](./00_hello_world/main.cpp)
+- Variables, Datatypes and Logic
+  - [Variables](./src/basics/01_variables_datatypes_logic/variables.cpp)
+  - [Data Types](./src/basics/01_variables_datatypes_logic/datatypes.cpp)
+  - [User Input](./src/basics/01_variables_datatypes_logic/user_input.cpp)
+  - [If Else](./src/basics/01_variables_datatypes_logic/if_else.cpp)
+  - [Ternary](./src/basics/01_variables_datatypes_logic/ternary_operator.cpp)
+  - [For Loops](./src/basics/01_variables_datatypes_logic/for_loop.cpp)
+  - [While Loops](./src/basics/01_variables_datatypes_logic/while_loop.cpp)
+  - [Functions](./src/basics/01_variables_datatypes_logic/functions.cpp)
+  - [Recursion](./src/basics/01_variables_datatypes_logic/recursion.cpp)
+  - [Overloaded Funtions](./src/basics/01_variables_datatypes_logic/function_overloading.cpp)
+  - [Templates](./src/basics/01_variables_datatypes_logic/template.cpp)
+  - [Pre and Post Increment](./src/basics/01_variables_datatypes_logic/post_and_pre_increment.cpp)
+  - [Constant Variables](./src/basics/01_variables_datatypes_logic/const.cpp)
+  - [Static Local Variables](./src/basics/01_variables_datatypes_logic/static_local_var.cpp)
+  - [Casting](./src/basics/01_variables_datatypes_logic/casting.cpp)
+  - [Auto Keyword](./src/basics/01_variables_datatypes_logic/auto_keyword.cpp)
+- Arrays, Pointer and References
+  - [Arrays](./src/basics/02_pointer_and_arrays/arrays.cpp)
+  - [Strings](./src/basics/02_pointer_and_arrays/string.cpp)
+  - [Multidimensionale Arrays](./src/basics/02_pointer_and_arrays/multidimensional_arrays.cpp)
+  - [Arrays in C++ Style](./src/basics/02_pointer_and_arrays/arrays_cpp_style.cpp)
+  - [Pointer](./src/basics/02_pointer_and_arrays/pointer.cpp)
+  - [Heap in C Style](./src/basics/02_pointer_and_arrays/heap_c_style.cpp)
+  - [Nullpointers](./src/basics/02_pointer_and_arrays/nullpointers.cpp)
+  - [Pointer Arrays](./src/basics/02_pointer_and_arrays/pointer_arrays.cpp)
+  - [References](./src/basics/02_pointer_and_arrays/references.cpp)
+  - [Argc and Argv](./src/basics/02_pointer_and_arrays/argc_argv.cpp)
+- Enums, Structs and Namespaces
+    - [Enum and Switch (C-Style)](./src/basics/03_enum_structs_and_namespaces/Enum_and_Switch.cpp)
+    - [Enum Class](./src/basics/03_enum_structs_and_namespaces/Enum_Class.cpp)
+    - [Structures](./src/basics/03_enum_structs_and_namespaces/Struct.cpp)
+    - [Namespaces](./src/basics/03_enum_structs_and_namespaces/Namespaces.cpp)
+- ...
 
 
----
-<h3><a href="#top" name="gaming_">Gaming</a></h3>
 
-...
-
-
-
-
-
-
-
-
----
-<h3><a href="#top" name="opengl_">OpenGL</a></h3>
-
-...
-
-
-
-
-
-
-
-
----
-<h3><a href="#top" name="vulkan_">Vulkan</a></h3>
-
-...
-
-
-
-
+Games/Projects:
+- [Guessing Game](./games/guessing_game/)
+- [Game 1](./games/computer_game_1/)
+- [Game 2](./games/computer_game_2/)
+- ...
 
 
 
