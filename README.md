@@ -35,8 +35,7 @@ May use it as a reference ❤️
 
 This part contains the most essential knowledge about C++.
 
-<a name="bascis_top_"></a>
-Contents:
+<a name="bascis_top_">Contents:</a>
 - <a href="#basics_stack_and_heap_">Stack and Heap</a>
 - <a href="#basics_datatypes_">Datatypes</a>
 - <a href="#basics_flow_structures_">Flow Structures</a>
@@ -49,7 +48,7 @@ Contents:
 - <a href="#basics_namespaces_">Namespaces and Headerfiles</a>
 - <a href="#basics_std_">Standard Library</a>
 - <a href="#basics_classes_">Classes</a>
-<a href="#basics_best_practises_">Best Practises</a>
+- <a href="#basics_best_practises_">Best Practises</a>
 - <a href="#basics_examples_">Examples</a>
 
 
@@ -57,7 +56,7 @@ Contents:
 
 It follows some keyconcepts to keep in mind when working with C++.
 
-<a name="#basics_stack_and_heap_"></a>
+<a name="#basics_stack_and_heap_" href="bascis_top_">^</a><br>
 **Stack and Heap**<br>
 In C++ there are 2 main storage types which should be known. One is the stack, a small memory where all local variables/values get stacked. The stack defines variables/values just in a local area, called scope. For example a function call creates a new scope on the stack and the variables are only avaiable on this scope. If the function call finsihes than the scope closes and the memory of these variables get free again.<br>
 The heap is the other storage type, it provides much more storage capacities and have no scopes (there is no stacking). But the variables and values here does not delete themselfs, so the programmer have to delete the values here if they are not used anymore. Else a memory leak occur, where the taken memory accumulates and on some point the heap overflows and the program crashes.<br>
@@ -67,7 +66,7 @@ More about how to create variables where comes in a next chapter.<br>
 
 <br><br>
 
-<a name="#basics_datatypes_"></a>
+<a name="#basics_datatypes_" href="bascis_top_">^</a><br>
 **Datatypes**<br>
 Basic Data Types
 - bool → Boolean (true or false)
@@ -144,7 +143,7 @@ STD Threading-Types
 
 <br><br>
 
-<a name="#basics_flow_structures_"></a>
+<a name="#basics_flow_structures_" href="bascis_top_">^</a><br>
 **Flow Structures**<br>
 Conditional Statements
 - if → Executes a block if a condition is true
@@ -176,7 +175,7 @@ Others
 
 <br><br>
 
-<a name="#basics_value_categories_"></a>
+<a name="#basics_value_categories_" href="bascis_top_">^</a><br>
 **Value Categories**<br>
 Lvalues are values which are stored/connected with a variable.<br>
 Values which are just passed by as a parameter and therfore have no memory location are called rvalues.<br>
@@ -186,7 +185,7 @@ And Prvalues which are rvalues which have a memory address.
 
 <br><br>
 
-<a name="#basics_variable modifier_"></a>
+<a name="#basics_variable modifier_" href="bascis_top_">^</a><br>
 **Variable Modifier**<br>
 Variables can be 'const' -> constant, means the value is not allowed to change. This is 
 const (Constant Variable)
@@ -225,7 +224,7 @@ const (Constant Variable)
 
 <br><br>
 
-<a name="#basics_pointers_"></a>
+<a name="#basics_pointers_" href="bascis_top_">^</a><br>
 **Pointers**<br>
 Pointers are variables pointing to another memory address. A pointer have a own memory adress and the value saved is the memory address where the pointer points to.<br>
 Pointer are important to use the heap efficiently.<br>
@@ -282,7 +281,7 @@ Important: 'const' makes not the pointer constant but it's value address.
 
 <br><br>
 
-<a name="#basics_references_"></a>
+<a name="#basics_references_" href="bascis_top_">^</a><br>
 **References**<br>
 References is a C++ feature which is not avaiable in C. References are variables which refer to another variable. The following example shows 2 variables which both have the same value and changes on both variables impact the value of the other variable. Notice that references are written with a & after the datatyp.
 ```c++
@@ -295,7 +294,7 @@ Key difference to pointer: references can't have/refer to no value (easier handl
 
 <br><br>
 
-<a name="#basics_arrays_"></a>
+<a name="#basics_arrays_" href="bascis_top_">^</a><br>
 **Arrays**<br>
 Arrays is a collection of n elements of the same datatype. An array can be thought as a primitive form of an list.<br>
 Create and acces an array:
@@ -487,7 +486,7 @@ int main() {
  ```
  
  
- <a name="#basics_collections_"></a>
+ <a name="#basics_collections_" href="bascis_top_">^</a><br>
 **Collections**<br>
  We previously saw some important collections like the **Vector**. Here are some more.
  
@@ -574,14 +573,14 @@ int main() {
 
 <br><br>
 
-<a name="#basics_templates_"></a>
+<a name="#basics_templates_" href="bascis_top_">^</a><br>
 **Templates**<br>
 ...
 
 
 <br><br>
 
-<a name="#basics_namespaces_"></a>
+<a name="#basics_namespaces_" href="bascis_top_">^</a><br>
 **Namespaces and Header Files**<br>
 Namespaces are scopes in which are given variable names and function names set/available. <br>
 You can also defining your own namespaces:
@@ -694,7 +693,7 @@ As you might see, there are many possible ways how to implement your code. Names
 
 <br><br>
 
-<a name="#basics_std_"></a>
+<a name="#basics_std_" href="bascis_top_">^</a><br>
 **Standard Library (STD):**
 It follows a overview about most namespaces of std, you can search online if you are interesting in one of them.<br>
 Notice that all of these libraries are in the std namespace but get first loaded/imported if the specific lib is imported. This is practically done by defining different header files (for every lib one header file). 
@@ -783,7 +782,7 @@ Coroutines
 
 <br><br>
 
-<a name="#basics_classes_"></a>
+<a name="#basics_classes_" href="bascis_top_">^</a><br>
 **Classes**<br>
 In object oritented programming, classes describe a class of which objects can be created. They get created in the heap with the new keyword, which calls the constructor method of the class. The destructor method will be called when the object is delected.<br>
 Classes/Objects have the advantage of creating own data structures with well isolated methods.<br>
@@ -877,7 +876,7 @@ There is also operator== for example. You can overload / define a behaviour for 
 
 <br><br>
 
-<a name="#basics_best_practises_"></a>
+<a name="#basics_best_practises_" href="bascis_top_">^</a><br>
 **Best Practises**
 
 Parameters:
@@ -890,7 +889,7 @@ Parameters:
 
 <br><br>
 
-<a name="#basics_examples_"></a>
+<a name="#basics_examples_" href="bascis_top_">^</a><br>
 **Examples**<br>
 It follows some example cpp files.
 
@@ -1319,6 +1318,9 @@ For installation on Linux:
 sudo apt update
 sudo apt install eclipse-cdt
 ```
+
+
+> Important hint: If you want to use git and github, make sure to go to developer settings and to personal access tokens. There you can create a new token with a name and a password/token. This is needed from Eclipse to authentificate with your account and only so you can use eclipse with git/github. Your normal user name and password will not work.
 
 
 
