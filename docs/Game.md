@@ -44,7 +44,7 @@ Note that the game loop is paused during 'pause' (if existing) for example by pr
 Probably best ressource:
 
 
-<img src="../res/img/game_engine_cover.jpg" width=0.5></img>
+<img src="../res/img/game_engine_cover.jpg" width=40%></img>
 
 **Game Engine Architecture, Third Edition** by Jason Gregory (2018/2019)
 - [amazon link](https://www.amazon.de/Engine-Architecture-Third-Jason-Gregory/dp/1138035459/ref=sr_1_1)
@@ -52,7 +52,7 @@ Probably best ressource:
 
 <br><br>
 
-<img src="../res/img/cpp_game_dev_cover.jpg" width=0.5></img>
+<img src="../res/img/cpp_game_dev_cover.jpg" width=40%></img>
 
 **Game Programming in C++: Creating 3D Games** by Sanjay Madhav (2018)
 - [amazon link](https://www.amazon.de/Game-Programming-Creating-Addison-Wesley-Development/dp/0134597206/ref=sr_1_1)
@@ -60,7 +60,7 @@ Probably best ressource:
 
 <br><br>
 
-<img src="../res/img/components_game_engine_cover.jpg" width=0.5></img>
+<img src="../res/img/components_game_engine_cover.jpg" width=40%></img>
 
 **Components of a Game Engine** by Harold Serrano
 - [Gumroad link](https://haroldserrano.gumroad.com/l/componentsofagameengine)
