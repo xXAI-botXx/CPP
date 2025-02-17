@@ -1,6 +1,8 @@
-/old
+/libs
+/res
 /.vscode
 **/*.exe
 **/*.exe.stackdump
 **/*.o
+/docs/books
 Makefile
