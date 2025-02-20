@@ -15,9 +15,7 @@ May use it as a reference ❤️
 - <h4><a href="./docs/OpenGL.md">OpenGL</a></h4>
 - <h4><a href="./docs/Vulkan.md">Vulkan</a></h4>
 - <h4><a href="#installation_">Installation of GNU Compiler Collection</a></h4>
-- <h4><a href="#installation_clang">Installation of Clang</a></h4>
 - <h4><a href="#runcppcode">Run C++ Code with GNU</a></h4>
-- <h4><a href="#runcppcode_with_clang">Run C++ Code with Clang</a></h4>
 - <h4><a href="#cmake_">CMake</a></h4>
 - <h4><a href="#ide_">Using an IDE</a></h4>
 
@@ -944,23 +942,55 @@ Games/Projects:
 ---
 <h3><a href="#top" name="installation_">Installation of GNU Compiler Collection</a></h3>
 
-You can decide whether to install GNU Compiler Collection (GCC) or Clang. Both are great and both are covered in this README. I would recommend GCC, but that is personal preference.
+Most used compiler is the GNU Compiler Collection (GCC). It is used to compile cpp code to executable code.
 
+<!--
 - Download a C++ Compiler in **Windows**:
     - https://cygwin.com/install.html
     - make sure to install following extension (use the search bar，choose a version and click that it should get download):
+        - cygwin-devel
         - gcc-g++
         - gcc-core
         - make
+        - cmake
         - gdb
+        - git
+        - python39
+        - autoconf
+        - automake
+        - libtool
+        - ninja
+        - xorg-server
+		- libX11-devel
+		- libXext-devel
+		- libXrandr-devel
+		- libXrender-devel
+		- libXcursor-devel
+		- libXinerama-devel
+		- libXi-devel
+		- libXss-devel
+		- libgcc1
+		- libstdc++6
     - Add cygwin to the system path variables. Then you can use the normal cmd or Powershell or the terminal in Visual Studio Code.<br>To do so，you have to search/open the system-variables (environment variables). There you search the entry "Path", there should be already some paths. To these paths you add the path of Cygwin bin folder, probably: **C:\cygwin64\bin** <br>And now it should work. Maybe a restart is requirement, if it doesn't works.
-    - Testing: 
+    
+    - Testing (in Cygwin and or normal terminal): 
     ```terminal
     make --version
     gdb --version
     gcc --version
     g++ --version
     ```
+    
+> You can download additional packages by running the setup file again. It will only install the new packages.
+
+-->
+    
+- Download a C++ Compiler in **Windows**:
+	- Download MinGW on: https://winlibs.com/
+    - Unzipping in a path you like
+    - Add MinGW to the system path variables. Then you can use the normal cmd or Powershell or the terminal in Visual Studio Code.<br>To do so，you have to search/open the system-variables (environment variables). There you search the entry "Path", there should be already some paths. To these paths you add the path of MinGW bin folder, probably: **C:\MinGW\bin** <br>And now it should work. Maybe a restart is requirement, if it doesn't works.
+    - Download [Ninja](https://ninja-build.org/) -> download the win-zip file + also add the path to ninja.exe to the system path as decribed before
+
 
 
 
@@ -975,6 +1005,10 @@ You can decide whether to install GNU Compiler Collection (GCC) or Clang. Both a
     sudo apt-get install g++
     sudo apt-get install git
     sudo apt-get install cmake
+    sudo apt-get install autoconf
+    sudo apt-get install automake
+    sudo apt-get install libtool
+    sudo apt-get install ninja
     ```
     - Testing: 
     ```terminal
@@ -982,44 +1016,6 @@ You can decide whether to install GNU Compiler Collection (GCC) or Clang. Both a
     gcc --version
     g++ --version
     ```
-
-
-
----
-<h3><a href="#top" name="installation_clang">Installation (Clang/LLVM)</a></h3>
-
-You can also download Clang, it is an alternative compiler for C and C++:
-
-1. Go to the [official Webiste](https://clang.llvm.org/)
-2. Click on [download](https://releases.llvm.org/download.html)
-3. Go to the [release page](https://github.com/llvm/llvm-project/releases/tag/llvmorg-18.1.8) of the newest release
-4. For windows click on the LLVM-18.1.8-win64.exe
-5. In windows you can then execute the exe file 
-
-In Linux do following:
-```terminal
-sudo apt update && sudo apt upgrade
-sudo apt install clang
-clang --version
-sudo apt install llvm
-```
-
-
-Testing: 
-```terminal
-clang --version
-```
-
-<!--and in linux you can decompress it with "tar -xvf mycompressed.tar.xz". Then you can follow the instructions in the README or if not available, then run:
-    ```terminal
-    ./configure
-    make
-    sudo make install
-    ```
--->
-
-
-<a href="#runcppcode_with_clang">Here are more informations to Clang, what it is and how to use it.</a>
 
 
 
@@ -1064,7 +1060,7 @@ clean:
 
 ```
 
-The Makefile is just a plain textfile without a file type ending. Just name the file "Makefile" and execute it with "make".
+The Makefile is just a plain textfile without a file type ending. Just name the file "Makefile" and execute it with "mingw32-make" (or "make" if not on windows).
 
 
 
@@ -1114,156 +1110,6 @@ g++ program.o -o program
 
 
 > You can add a parameter at the beginning of every command to specify how much the code should be optimized. For debugging it is common to not optimize your code to can analyze your code.<br>For Debugging: g++ -O0 -g3 ...<br>For Release: g++ -O3 ...
-
-
-Alternativly you can open 'Cygwin64 Terminal', go to your repository and use make or g++ than over this terminal.
-
-
-
----
-<h3><a href="#top" name="runcppcode_with_clang">Run C++ Code (with clang++)</a></h3>
-
-Clang is a compiler front end for the C, C++, and Objective-C programming languages. It is part of the LLVM (Low-Level Virtual Machine) project and provides tools for compiling code, checking syntax, and generating executable files. Clang is known for its fast compilation times, detailed error messages, and modular design.<br>
-Clang is a powerful and versatile compiler that is widely used in the development of system software, games, and many other applications. Its fast compilation times, excellent diagnostic tools, and extensibility make it a valuable tool for developers. Whether you're writing code, debugging, or optimizing, Clang provides a comprehensive suite of features to support your workflow.
-
-
-**Key Features**
-
-- **Fast Compilation**: Clang is optimized for speed, making it suitable for large codebases.
-- **Detailed Diagnostics**: It provides clear and concise error and warning messages, helping developers quickly identify and fix issues.
-- **Modular Design**: Clang is designed to be easily extendable and configurable, making it a popular choice for building custom tooling.
-- **Cross-Platform**: Clang is available on multiple platforms, including Linux, macOS, and Windows.
-
-
-
-**Compiling a Program**
-
-Most simple way to compile a C++ program with Clang is to create a **make** file and use make to compile your C++-Files (for this you can install cygwin in Windows to use make <a href="#installation_">see here</a>):
-```terminal
-# Compiler
-CXX = clang++
-# CXX = g++  # Use this if you're using MinGW or Cygwin
-
-# Compiler flags
-CXXFLAGS = -Wall -std=c++17
-
-# List of source files
-SRCS = main.cpp file1.cpp file2.cpp
-
-# List of object files
-OBJS = $(SRCS:.cpp=.o)
-
-# Name of the output executable
-TARGET = my_program.exe
-
-# Default target: build the executable
-all: $(TARGET)
-
-# Rule to link object files into the executable
-$(TARGET): $(OBJS)
-	$(CXX) $(OBJS) -o $(TARGET)
-
-# Rule to compile each source file into an object file
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-# Clean up build files
-clean:
-	rm -f $(OBJS) $(TARGET)
-
-```
-
-The Makefile is just a plain textfile without a file type ending. Just name the file "Makefile" and execute it with "make".
-
-
-
-Alternativly you can use the following commands:
-
-```terminal
-clang++ -o output_file source_file.cpp
-```
-This command generates an executable named `output_file` from `source_file.cpp`.
-
-Or for multiple files:
-```terminal
-clang++ -o my_project main.cpp file1.cpp file2.cpp
-```
-
-
-
-Here is a indepth view of the compilation:
-1. Compile your source code to an object file
-    ```terminal
-    clang++ -c main.cpp -o main.o
-    clang++ -c file1.cpp -o file1.o
-    clang++ -c file2.cpp -o file2.o
-    ```
-    And with external library/include a directory:
-    ```terminal
-    clang++ -I/path/to/include -c file1.cpp -o file1.o
-    ```
-2. Now you can link them together to an executable file
-    ```terminal
-    clang++ main.o file1.o file2.o -o my_project
-    ```
-    And with external library:
-    ```terminal
-    clang++ main.o file1.o file2.o -L/path/to/libs -lmylib -o my_project
-    ```
-
-
-
-> On Windows you hve probably install Visual Studio to make Clang work.
-
-
-
-**Enabling Warnings**
-
-Clang provides various warning options to help catch potential issues in your code. For example, to enable all warnings, you can use the `-Wall` flag:
-
-```bash
-clang -Wall -o output_file source_file.c
-```
-
-
-
-**Debugging**
-
-To generate debugging information, use the `-g` flag:
-
-```bash
-clang -g -o output_file source_file.c
-```
-
-This flag makes it easier to debug the program using tools like `gdb` or `lldb`.
-
-
-
-**Optimization**
-
-For optimized builds, use the `-O` flag followed by the optimization level (0, 1, 2, 3, or `fast`):
-
-```bash
-clang -O2 -o output_file source_file.c
-```
-
-Higher optimization levels can improve performance but may increase compilation time and executable size.
-
-
-
-**Clang Tools**
-
-Clang also includes several useful tools:
-
-- **Clang Format**: A tool to format C, C++, and Objective-C code.
-- **Clang Static Analyzer**: A tool for static code analysis to find bugs.
-- **Clang Tidy**: A tool for linting and automatic code transformations.
-
-
-For more detailed information and advanced features, refer to the [official Clang documentation](https://clang.llvm.org/docs/).
-
-
-
 
 
 

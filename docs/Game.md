@@ -5,10 +5,18 @@
 Knowledge about game programming is collected here.
 
 
+Contents:
+- [Game Loop](#game-loop)
+- [Game Engine](#game-engine)
+- [Ressources](#ressources)
+- Examples
+	- [Simple SDL Game](#simple-sdl-game)
 
 
 
 
+
+---
 ### Game Loop
 
 The Game loop is the loop within the game logic and graphics get updated. Different to other applications, a game have to run a loop where the game gets updated until the game ends. 
@@ -30,6 +38,7 @@ Note that the game loop is paused during 'pause' (if existing) for example by pr
 
 
 
+---
 ### Game Engine
 
 ...
@@ -39,6 +48,8 @@ Note that the game loop is paused during 'pause' (if existing) for example by pr
 
 
 
+
+---
 ### Ressources
 
 Probably best ressource:
@@ -66,6 +77,119 @@ Probably best ressource:
 - [Gumroad link](https://haroldserrano.gumroad.com/l/componentsofagameengine)
 
 <br>
+
+
+
+
+
+
+---
+### Examples
+
+Often the best way to learn something is to just see it in the practise and try it by yourself. For that here are some real gaming examples and some informations about it.
+
+
+
+
+
+
+---
+### Simple SDL Game
+
+A very simple game in C++ using the Simple DirectMedia Library (SDL).
+
+Installing the SDL lib:
+1. You can download the **source code** of the lib by downloading the zip folder: https://www.libsdl.org/ and unzipping it. The content can then be copied on a path you know. I recommend to create a 'CPPlibs' (or similiar name) folder and inside a 'uncompiled folder'. In this uncompiled folder you can put every source code lib which is not compiled yet, like our downloaded SDL source code.
+2. Next you also have to make sure that the lib is compiled to can use it. For that open your CMD/terminal and navigate to your external lib folder and in your SDL folder:<br>
+	```terminal
+	D:
+	cd CPPlibs/uncompiled
+	cd SDL-release-3.2.4
+	```
+3. Creating the Makefile for SDL Lib and set the output to the folder you want to have the lib:<br>
+	```terminal
+	mkdir build
+	cd build
+	cmake -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=D:/CPPlibs/SDL ..
+	```
+4. Compile your project/build:
+	```terminal
+	mingw32-make
+	mingw32-make install
+	```
+5. Now there should be 3 files in your SDL target folder:
+	- D:/CPPlibs/SDL/include/SDL3
+	- D:/CPPlibs/SDL/lib/libSDL3.a
+	- D:/CPPlibs/SDL/bin/SDL3.dll
+
+Congratulations, now you should be able to use SDl lib. Just use it like: 
+```c++
+#include <SDL3/SDL.h>
+#include <iostream>
+
+int main() {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        std::cerr << "SDL konnte nicht initialisiert werden: " << SDL_GetError() << std::endl;
+        return -1;
+    }
+    std::cout << "SDL erfolgreich gestartet!" << std::endl;
+    SDL_Quit();
+    return 0;
+}
+```
+
+And compile it with Cygwin: 
+```terminal
+cd /path/to/game
+g++ main.cpp -o sdl_test.exe -I/cygdrive/d/CPPlibs/SDL/include -L/cygdrive/d/CPPlibs/SDL/lib -lSDL3
+```
+
+Notice for the compiling with a external lib:
+- **I** adds path where the compiler should search for headers
+- **L** adds a path where to search for lib files (.so, .a, .dll)
+- **l** adds the lib name
+
+
+With this we are ready to program a first simple game and learn some basic concepts.
+
+**SDL Init**<br>
+SDL need to be initialized with the *SDL_Init* function. Following subsystem are available:
+- SDL_INIT_AUDIO
+- SDL_INIT_VIDEO
+- SDL_INIT_HAPTIC
+- SDL_INIT_GAMECONTROLLER
+
+With following style:
+```c++
+bool Initialize(){
+		// init Video subsystem
+		int sdlResult = SDL_Init(SDL_INIT_VIDEO);
+		if (sdlResult == 0){
+			// create window
+			// ...
+			return true;
+		} else{
+			SDL_Log("Unable to init SDL: %s", SDL_GetError());
+			return false;
+		}
+	}
+```
+
+FIXME
+
+
+
+Take aways:
+- How to include an external library (SDL)
+- Double Buffering Concept
+- ...
+
+
+
+
+
+
+
 
 ---
 
