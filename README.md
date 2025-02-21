@@ -1146,13 +1146,50 @@ cmake --version
 
 Using CMake is pretty easy. You have to create a *CMakeLists.txt* file and run it in console with:
 ```cmd
-cd to/project/path/
+cd D:
+cd Informatik/Projekte/CPP/src/games/01_Simple_SDL_Game
 if exist build rd /s /q build
 mkdir build
 cd build
 cmake -G "MinGW Makefiles" ..
 mingw32-make 
 ```
+
+And for re-running just create a run.bat file in your project folder:
+```bat
+:: Deactivate showing every single command
+@echo off
+
+:: Go to target path
+cd /d D:\Informatik\Projekte\CPP\src\games\01_Simple_SDL_Game
+
+:: Reset/create 'build' folder
+if exist build rd /s /q build
+mkdir build
+cd build
+
+:: Import external libs 
+copy D:\CPPlibs\SDL\bin\SDL3.dll .
+
+:: Create Makefile and compile C++ files
+cmake -G "MinGW Makefiles" ..
+mingw32-make
+
+:: Start your Programm
+start Simple_SDL_Game.exe
+
+:: Go back to project folder
+cd ..
+```
+
+And now you can easily compile your code by double click on the bat file or run the following command in the cmd in your project folder:
+```cmd
+run.bat
+```
+
+
+
+
 
 The CMakeLists.txt file content could look like that:
 ```text
