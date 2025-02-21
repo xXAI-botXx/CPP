@@ -1063,6 +1063,9 @@ clean:
 The Makefile is just a plain textfile without a file type ending. Just name the file "Makefile" and execute it with "mingw32-make" (or "make" if not on windows).
 
 
+You can also create the Makefile automatically with CMake. [See here for using CMake](#cmake_).
+
+
 
 Another way is to type following in a terminal:
 1. First you compile your program and create a executeable file:
@@ -1141,6 +1144,56 @@ cmake --version
 ```
 
 
+Using CMake is pretty easy. You have to create a *CMakeLists.txt* file and run it in console with:
+```cmd
+cd to/project/path/
+if exist build rd /s /q build
+mkdir build
+cd build
+cmake -G "MinGW Makefiles" ..
+mingw32-make 
+```
+
+The CMakeLists.txt file content could look like that:
+```text
+cmake_minimum_required(VERSION 3.10)
+# = ADJUST ME =
+project(MyProject)
+
+# Set C++ Standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Add source files
+# = ADJUST ME =
+set(SOURCES main.cpp file1.cpp file2.cpp)
+
+# Add executable
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+# Include External Libs -> = ADJUST ME =
+# Include SDL (Custom Path)
+set(SDL_DIR "/path/to/sdl")
+include_directories(${SDL_DIR}/include)
+link_directories(${SDL_DIR}/lib)
+target_link_libraries(${PROJECT_NAME} "${SDL_DIR}/lib/libSDL3.dll.a")
+
+# Include GLFW (Custom Path)
+#set(GLFW_DIR "/path/to/glfw")
+#include_directories(${GLFW_DIR}/include)
+#link_directories(${GLFW_DIR}/lib)
+#target_link_libraries(${PROJECT_NAME} glfw)
+
+# Include Vulkan (Custom Path)
+#set(VULKAN_DIR "/path/to/vulkan")
+#include_directories(${VULKAN_DIR}/include)
+#link_directories(${VULKAN_DIR}/lib)
+#target_link_libraries(${PROJECT_NAME} vulkan)
+```
+
+
+
+
 
 
 
@@ -1166,7 +1219,15 @@ sudo apt install eclipse-cdt
 ```
 
 
-> Important hint: If you want to use git and github, make sure to go to developer settings and to personal access tokens. There you can create a new token with a name and a password/token. This is needed from Eclipse to authentificate with your account and only so you can use eclipse with git/github. Your normal user name and password will not work.
+If you want to use git and github, make sure to go to developer settings and to personal access tokens. There you can create a new token with a name and a password/token. This is needed from Eclipse to authentificate with your account and only so you can use eclipse with git/github. Your normal user name and password will not work.
+
+Install CMake addon: On 'Help \> Eclipse Marketplace' search for 'CMake' and install the CMake Editor.
+
+Next another important step is to add MinGW32 to Eclipse. For that open *Window* \> *Preferences* \> *C/C++* \> *Core Build*. There you can add MinGW -> add the path to the gcc.exe in the bin folder. 
+
+For adding a C++ Project you can go to 'File \> Import' and select 'General \> File from Folder' or from 'Git \> Project from Git'.
+
+You can detect nested projects, by right clicking on your top project folder in the Project Explorer. Then choose *Configure* and *Configure and Detect nested Projects*.
 
 
 

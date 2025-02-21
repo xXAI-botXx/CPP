@@ -124,30 +124,34 @@ Installing the SDL lib:
 
 Congratulations, now you should be able to use SDl lib. Just use it like: 
 ```c++
-#include <SDL3/SDL.h>
+#include <SDL/SDL.h>
 #include <iostream>
 
 int main() {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         std::cerr << "SDL konnte nicht initialisiert werden: " << SDL_GetError() << std::endl;
         return -1;
-    }
+    } else {
     std::cout << "SDL erfolgreich gestartet!" << std::endl;
     SDL_Quit();
     return 0;
+    }
 }
 ```
 
-And compile it with Cygwin: 
-```terminal
-cd /path/to/game
-g++ main.cpp -o sdl_test.exe -I/cygdrive/d/CPPlibs/SDL/include -L/cygdrive/d/CPPlibs/SDL/lib -lSDL3
+
+And compile it using CMake:
+```cmd
+cd D:
+cd Informatik/Projekte/CPP/src/games/01_Simple_SDL_Game
+if exist build rd /s /q build
+mkdir build
+cd build
+cmake -G "MinGW Makefiles" ..
+mingw32-make 
+copy D:\CPPlibs\SDL\bin\SDL3.dll .
 ```
 
-Notice for the compiling with a external lib:
-- **I** adds path where the compiler should search for headers
-- **L** adds a path where to search for lib files (.so, .a, .dll)
-- **l** adds the lib name
 
 
 With this we are ready to program a first simple game and learn some basic concepts.
@@ -168,7 +172,7 @@ bool Initialize(){
 			// create window
 			// ...
 			return true;
-		} else{
+		} else {
 			SDL_Log("Unable to init SDL: %s", SDL_GetError());
 			return false;
 		}

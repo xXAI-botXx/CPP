@@ -1,8 +1,11 @@
 /libs
 #/res
-/.vscode
+**/.vscode
 **/*.exe
 **/*.exe.stackdump
 **/*.o
 /docs/books
 Makefile
+**/build
+**/.settings
+**/.project
