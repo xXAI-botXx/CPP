@@ -8,9 +8,14 @@ Knowledge about game programming is collected here.
 Contents:
 - [Game Loop](#game-loop)
 - [Game Engine](#game-engine)
+- [Game Development](#game-development)
+- [Game Design](#game-design)
+- [Graphics Creation](#graphics-creation)
+- [Audio Creation](#audio-creation)
 - [Ressources](#ressources)
 - Examples
 	- [Simple SDL Game](#simple-sdl-game)
+	- ...
 
 
 
@@ -43,6 +48,86 @@ Note that the game loop is paused during 'pause' (if existing) for example by pr
 
 ...
 
+
+
+
+
+
+
+
+
+---
+### Game Developement
+
+It follows a list of important tasks during game developement. It is helpful to see the overview to be able to control where to focus on and where to exclude the work by using a tool other someone others work (paid or free). Thus this gamedev work can be vary pretty much depending on the settings of your project. But it can be helpful to once think about it. Also notice that some aspects of gamedevelopement might not are covered.
+
+- Gameprogramming
+	- Gameflow
+	- Rendering
+	- Physics
+	- AI (NPC programming)
+	- Audio
+	- Network (Multiplayer/Network feature)
+	- UI/UX
+- Audio
+    - Sound Effects
+    - Musik
+- Graphics 
+    - 3D Models
+    - Textures
+    - Animations
+- Story Writting
+	- World/Lore
+	- Main Quest
+	- Side Quests
+	- Characters
+	- Items (Books, ...)
+- Gamedesign
+    - 3D/2D
+    - Plattform
+    - Player Controls (keyboard/gamepad + attacking, collecting, ...?)
+    - Theme (colorful, dark, ...?)
+    - Timeperiod & Place
+    - Mood (Hard Survival, lifeful beach, ...)
+    - Singleplayer or Multiplayer?
+    - Which "rules" are there? (does not have to make sense)
+    - Map/Level Design
+	- Players goal -> motivation to play
+	- Progression system
+	- Process Feedback
+	- ...
+- Right & Law
+- Selling
+
+
+
+
+
+
+---
+### Game Design
+
+...
+
+
+
+
+
+
+
+---
+### Graphics Creation
+
+...
+
+
+
+
+
+---
+### Audio Creation
+
+...
 
 
 
