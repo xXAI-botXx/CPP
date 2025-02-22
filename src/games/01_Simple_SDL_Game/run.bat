@@ -17,9 +17,14 @@ cmake -G "MinGW Makefiles" ..
 mingw32-make
 
 :: Start your Programm
-start Simple_SDL_Game.exe
+start cmd /k Simple_SDL_Game.exe
+:: start Simple_SDL_Game.exe
+:: start Simple_SDL_Game.exe > output.txt
 
 :: Go back to project folder
 cd ..
+
+:: Keep the window open
+pause
 
 

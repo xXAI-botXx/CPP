@@ -1,4 +1,9 @@
 
+#ifndef GAME_H
+#define GAME_H
+
+#include <vector>
+#include <SDL3/SDL.h>
 
 class Game{
 public:
@@ -24,15 +29,25 @@ private:
 	// 3. Generate Output
 	void GenerateOutput();
 
+	// === VARIABLES ===
 	// SDL Window Creation
 	SDL_Window* window;
 
+	// SDL renderer (graphics drawer)
+	SDL_Renderer* renderer;
+
 	// defines whether to run the game or not
 	bool shouldRun;
+
+	int WINDOW_WIDTH = 1024;
+	int WINDOW_HEIGHT = 768;
+	std::vector<int> WINDOW_TOP_LEFT = {100, 100};
+
+	const char* name;
 };
 
 
-
+#endif // GAME_H
 
 
 

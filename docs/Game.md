@@ -96,7 +96,7 @@ Often the best way to learn something is to just see it in the practise and try 
 ---
 ### Simple SDL Game
 
-A very simple game in C++ using the Simple DirectMedia Library (SDL).
+A very simple game in C++ using the Simple DirectMedia Library (SDL). [See here](../src/games/01_Simple_SDL_Game/Main.cpp) for more details to the real implementation.
 
 Installing the SDL lib:
 1. You can download the **source code** of the lib by downloading the zip folder: https://www.libsdl.org/ and unzipping it. The content can then be copied on a path you know. I recommend to create a 'CPPlibs' (or similiar name) folder and inside a 'uncompiled folder'. In this uncompiled folder you can put every source code lib which is not compiled yet, like our downloaded SDL source code.
@@ -168,7 +168,7 @@ With following style:
 bool Initialize(){
 		// init Video subsystem
 		int sdlResult = SDL_Init(SDL_INIT_VIDEO);
-		if (sdlResult == 0){
+		if (sdlResult >= 0){
 			// create window
 			// ...
 			return true;
@@ -179,6 +179,42 @@ bool Initialize(){
 	}
 ```
 
+**Input Processing**<br>
+From time to time the operating system sends events of actions like Window minimized, button clicked, key pressed, ...<br>
+In SDL these events get saved in a queue and have to be pulled/processed in the input process method in the game loop.<br>
+The *SDL_PollEvent* functions takes a pointer to a *SDL_Event* and writes the next elment if there is another in the queue.<br>
+Keyboard inputs can be pulled with a bool array (pointer) to the return of the *SDL_GetKeyboardState(nullptr)* function. There are constants which can be given as index and shows if the key was pressed or not: example: *keystate[SDL_SCANCODE_ESCAPE]*.
+
+**Graphic Processing**<br>
+Graphics are represented as pixels (one color/light element) as a matrix -> 2 dimensions. The pixels are most likely in the format RGB (Red Green Blue) = pixel image with 3 channels. Sometimes there is also a channel for transparency (alpha). Another important constant is the depth of the pixels or the range of values which the pixels can provide (0-255 -> 8bit depth); also called *color depth*. The color buffer or framebuffer is the memory place where a matrix is which respresents the screen as an pixel image. By changing this color buffer we change the game screen (visual output).<br>
+Example image size with RGBa and 1920x1080 pixels and 8bit color depth:<br>
+$imagesize = 1920\cdot1080\cdot4\cdot8 = 66.355.200 bit = 8.294.400 Byte = 8100 KB \approx 7,91 MB$
+
+Notice:
+- From bit to byte = divion by 8
+- From Byte to Kilobyte = divion by 1020
+- From Byte to Megabyte = divion by 1020
+
+The pixel values can be represented as unsigned integers (0-255) or as a normalized decimal values (0.0-1.0). The normalized values are not bound to the color depth and can easily be scaled to the real color space/depth if needed (for example by outputing the color, we can scale it).
+
+**Double Buffering**<br>
+The FPS of the game (how often the game loop runs) and how often the screen updates/refreshes is most likely different. The problem coming with this is, that it is expected that the display will refresh during the game writes a new color buffer (image) to the memory. This results in screen tearing where 2 frames are partwise rendered. To solve that problem the game need 2 color buffers, one which is be used to render on display (front buffer) and one which is used to write the new game frame (back buffer). In that way the game waits until the new frame is written to the back frame and than switch the buffers.<br>
+Now the game have to synchronize with the montior so that the buffer can be swapped/switched if the monitor is finish with the last drawing (see VSync). 
+
+**VSync**<br>
+Screen tearing still can still happen with double buffering, because the switching of the buffers can happen during the drawing process. Solution is now that the program waits until the drawing on the screen is finish and then swapping the buffers. This process is called *vertical synchronization* (**vsync**) -> named after the signal which monitors send when they are finish with drawing/when they are about to refresh again.<br>
+Conclusionally the framerate of the game will decrease with vsync due to the waiting of the monitor, but the quality increase. 'Stuttering' can be the effectof vsync due to the decreased FPS. It often depend on the computing device and on the game itself, so it is worth trying out.
+
+**Adaptive Refresh Rate**<br>
+A modern and other approach to tackle the synchronization of the buffers is that the game tells the monitor when to refresh. This can lead to a good compromise between screen tearing and framerate stuttering.
+
+**Render Basics**<br>
+Rendering is the process of drawing something graphical.  The renderer is the one who draws graphics.<br>
+The standard render/drawing process involves:
+1. Clear the back buffer (to only black for example) -> remember: the new back buffer is the old front buffer
+2. Draw the game scene
+3. Swap the back buffer with the front buffer (maybe wait if using VSync)
+
 FIXME
 
 
@@ -186,6 +222,7 @@ FIXME
 Take aways:
 - How to include an external library (SDL)
 - Double Buffering Concept
+- VSync
 - ...
 
 

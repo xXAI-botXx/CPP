@@ -785,7 +785,7 @@ Coroutines
 In object oritented programming, classes describe a class of which objects can be created. They get created in the heap with the new keyword, which calls the constructor method of the class. The destructor method will be called when the object is delected.<br>
 Classes/Objects have the advantage of creating own data structures with well isolated methods.<br>
 Passing an object to a function can be very ressource harming, due to the fact that functions always create a copy of the parameter. An common used practise is to pass an object with as **const reference** (const ClassName& var_name), this makes sure that the object can't get changed and it is the real object (not an copy).<br>
-The access to attributes and functions is normally an '.' but if your object is an pointer than you need an '->' for accessing the variables and functions of your object.
+The access to attributes and functions is normally an '.' but if your object is an pointer than you need an '->' for accessing the variables and functions of your object. For example there is also an *this* which is a pointer to the current class object, if you want to make sure that an attribute or method is called from your object than use this->my_int. The '->' must be used because it is a pointer.
 
 Example class:
 ```c++
@@ -793,7 +793,7 @@ class Complex{
 public:
 	// Constructor
 	Complex(float real, float imaginary)
-	:mReal(real) ,mImaginary(imaginary) {    // efficient init listing
+	:this->real(real), this->imaginary(imaginary) {    // efficient init listing
 	// ...
 	}
 	
@@ -802,8 +802,8 @@ public:
 	}
 	
 private:
-	float mReal;
-	float mImaginary;
+	float real;
+	float imaginary;
 };
 
 Complex* c = new Complex(1.0f, 2.0f);
@@ -871,6 +871,32 @@ Compley result = c1+c2;
 
 There is also operator== for example. You can overload / define a behaviour for most likely any sign using the operator method. For example the stream lib from std does this with the \>\> signs to connect outputs.
 
+Another important concept is the inheritance and abstract methods. Classes can have subclasses and to make sure that the subclass implement a method you can use *= 0* after the method head (see the example). The *virtual* keyword defines that the method can be inherited and therefore it makes clear which method to call if you have a object from subclass type but your variable is from the topclass (see example). The constructor can't be virtual because it can't be inherited and there is also no case where this could lead to confusion.<br>
+The *:* after the classname head defines the class rom which to inherit.
+
+
+```c++
+#pragma once
+
+#include <SDL3/SDL.h>
+
+class Entity{
+public:
+	// virtual Entity; -> not possible
+	virtual ~Entity;
+
+	virtual void update() = 0;
+	virtual void draw(SDL_Renderer* renderer) = 0;
+};
+
+class Player : public Entity{
+	// ...
+};
+
+// ... in cpp file:
+Entity* entity = new Player();
+delete entity;  // What happens here?
+```
 
 <br><br>
 
@@ -1264,7 +1290,7 @@ Next another important step is to add MinGW32 to Eclipse. For that open *Window*
 
 For adding a C++ Project you can go to 'File \> Import' and select 'General \> File from Folder' or from 'Git \> Project from Git'.
 
-You can detect nested projects, by right clicking on your top project folder in the Project Explorer. Then choose *Configure* and *Configure and Detect nested Projects*.
+You can detect nested projects by right clicking on your top project folder in the Project Explorer. Then choose *Configure* and *Configure and Detect nested Projects*. Now your subproject should be detected as C++ Project and you should be able to run it (it should use your CMakeLists.txt file). You may have to click on the ⚙️ icon on your build name on the right of the run button and there you can change the compiler to mingw32 if you already add it (like described previously). Now you should be able to run your program in Eclipse! Else you can use your terminal (CMD)/bat file.
 
 
 
