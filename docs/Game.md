@@ -118,7 +118,62 @@ It follows a list of important tasks during game developement. It is helpful to 
 ---
 ### Graphics Creation
 
+In order to create graphics for your game you need a software to handle this. There are many different kinds of graphics and many ways to create graphics. Here we use the free graphics software [Blender](https://www.blender.org/) and for 2D Pixelart I recommend using [Aseprite](https://www.aseprite.org/).
+
+**Pixelart with Aseprite**<br>
+Just buy and download Aseprite in the Steam store. In 2D Pixelart it is most likely pretty easy, we only need 2D png images (because png have transparency information) and that is all. Animations also are just a series of 2D images. Aseprite helps us to create 2D Pixelart and also to create animations.
+
+> Naming: Sprite refers to a 2D graphics/drawing and Canvas refers to a plane where you can draw.
+
+Great on Aseprite is that is easy to use and still offers many helpful and great tools. On the left is the color palette, which contains all used colors. If you use a new color, it will be automatically added there. There are also some presets and you can save and load your color palettes. Remove a color just by selecting it and click 'entf' key-button. You can also choose how your palette is sorted.<br>
+Next thing to know is that you have always 2 colors in aseprite. One on the left and one of the right mouse button.<br>
+Holding the space bar will activate the hand tool for that time and you can move your graphic.<br>
+Next lets talk about the tools of Aseprite which are on the right side:
+1. **Selector**: Here are different tools for selecting your art, for example if there are multiple objects or you want to apply rotation only on a specific part, you want to select it and here are many different tools for that.
+2. **Pencil**: here are your tools to draw.
+3. **Eraser**: this tool allows you to delete things you have done.
+4. **Color Picker**: To pick a color which you see.
+5. **Hand Tool**: Allows to drag the canvas without moving your sprite.
+6. **Move Tool**: Allows you to move your sprite on your canvas.
+7. **Gradient Tool**: Provides functions for creating color gradients.
+8. **Line Tool**: Can be used to create lines and curves with ease!
+9. **Rectangle Tool**: Let you draw rectangle and circles (filled or not).
+10. **Contour Tool**: Let you create a filled shape.
+11. **Blur Tool**: Let your pixelart blurred or fragmented.
+
+Of course all tools have more information and options with changes some aspects of their functions but it is now easy to try it out by yourself.
+
+Your canvas and your sprite on it are of course in the middle of your screen.
+
+Another important concept are the layers and the frames. Your graphic can have multiple layers, which is helpful due to the fact, that you can apply some effects only on one layer without destroying or changing the other layers.
+Create a new layer by going to "Layer" on the top and click "new Layer". The layers can be seen in the bottom middle of the screen together with the frames. The button "show timeline" on bottom right activate/deactivate the layer/frames window.<br> 
+The frames are only important for animations and makes it as simple as it can possible be. There are timesteps (1, 2, 3, ...) and each timestep is its own canvas/sprite.  Meaning if you change something on the canvas in step 2, the canvas in step 1 will stay the same. You create a new frame by clicking "new frame" in the "frame" section on the top.<br>
+You can also work with layers and for example let a layer appear more from step to step by right clicking on a cel (the white circle) and changing its opacity from frame to frame.<br>
+Last important thing is the duration of a frame which can be setted manually for every frame by right clicking on the number of the frame and select "frame properties".
+
+Lastly lets go quickly over the features on the top of Aseprite and then we are finish with introducing Aseprite and you are theoretically ready to start making your own 2D pixel graphics in Aseprite.<br>
+1. **File**: Let you create a new graphic, open a graphic, save a graphic and export an graphic.
+2. **Edit**: Contains some basic file editing functions and general preferences.
+3. **Sprite**: Change and view the properties of your sprite (including a resizing with nearest neighbor).
+4. **Layer**: Provides functionality for your current/active layer.
+5. **Frame**: Provides functionality for your current/active frame.
+6. **Select**: Have useful tools for selecting (like inverting the selection, deselecting and selecting by a specific color range).
+7. **View**: Settings to your view (like showing a grid).
+8. **Help**:  Helps with some important links (like the link to the official documentation).
+
+Now you know everything you need to know to start with Aseprite! 🥳
+
+**Making Pixelart**<br>
 ...
+
+
+
+**3D Game Assets with Blender**<br>
+3D graphics most likely consists in 2 steps. The modelling of the 3D shape and the texturing of the shape (including the material settings). Both can be done in blender.
+
+FIXME
+
+
 
 
 
@@ -127,7 +182,32 @@ It follows a list of important tasks during game developement. It is helpful to 
 ---
 ### Audio Creation
 
-...
+To create soundeffects (like attacking, draw your sword, bumping into an objects, conversations, ...) and to create background music for your game you need a digital audio workstadion (DAW). There are many DAWs which provide different features and are differnt in userfriendliness. Here we will discuss the game audio creation with the software [Cakewalk by BandLab](https://www.bandlab.com/products/cakewalk).<br>
+Expectation is to create simple sounds and songs by experimenting without much music theory knowledge, but of course music theory knowledge is helpful in this process.
+
+
+**Installtion DAW**<br>
+To install Cakewalk by BandLab as DAW, you have to go to the website: https://www.bandlab.com/products/cakewalk and click on the windows download and follow the instructions of the installer. Finish!
+
+
+**Creating Soundeffects** (only using digital sounds)<br>
+FIXME
+
+
+**Creating background music**<br>
+FIXME
+
+
+**Using real sounds**<br>
+You can also record any sounds and use them sololy or modified in Cakewalk, like:
+- nature (water, birds, ...)
+- instruments (guitar, piano, ...)
+- object/action sounds
+- ...
+
+The degree how heavily you edit it is your decision. It is great to turn a usual sound to something very unique.
+
+
 
 
 
