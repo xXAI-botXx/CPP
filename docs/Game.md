@@ -38,7 +38,11 @@ On a high-level this can be splitted into:
 
 Note that the game loop is paused during 'pause' (if existing) for example by pressing the settings or the menu and the game loop not even started if the game is in the start menu. Sometimes some parts of the game still  loops when pasuing the game. For example some games still let update some graphics or sounds.
 
+Following graphic shows that process:
 
+<img src="../res/img/game_process.jpg" width=70%></img>
+
+Created with the helpful and easy to use to from [draw.io](https://draw.io/).
 
 
 

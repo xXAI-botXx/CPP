@@ -4,6 +4,10 @@
 
 #include <vector>
 #include <SDL3/SDL.h>
+#include "Entity.h"
+#include "Player.h"
+#include "Wall.h"
+#include "Ball.h"
 
 class Game{
 public:
@@ -44,6 +48,10 @@ private:
 	std::vector<int> WINDOW_TOP_LEFT = {100, 100};
 
 	const char* name;
+
+	std::vector<Entity*> walls;
+	Player* player;
+	Ball* ball;
 };
 
 

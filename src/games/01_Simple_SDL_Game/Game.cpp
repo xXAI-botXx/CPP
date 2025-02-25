@@ -6,6 +6,11 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_render.h>
 
+#include "Entity.h"
+#include "Player.h"
+#include "Wall.h"
+#include "Ball.h"
+
 #include "Game.h"
 
 
@@ -17,6 +22,19 @@ Game::Game(){
 	WINDOW_HEIGHT = 768;
 	WINDOW_TOP_LEFT = {100, 100};
 	name = "Simple SDL Game >>Pong<<";
+
+	double wall_x_pos = 0.04;
+	double wall_y_pos;
+	for(int column=0; column<20; ++column){
+		wall_x_pos += 0.04;
+		wall_y_pos = 0.01;
+		for(int row=0; row<10; ++row){
+			wall_y_pos += 0.01;
+			walls.push_back(new Wall(wall_x_pos, wall_y_pos));
+		}
+	}
+	player = new Player();
+	ball = new Ball();
 }
 
 // init method
@@ -71,6 +89,12 @@ void Game::Shutdown(){
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
+
+	delete player;
+	delete ball;
+	for(auto wall:walls){
+		delete wall;
+	}
 }
 
 
@@ -97,11 +121,91 @@ void Game::ProcessInput(){
 		shouldRun = false;
 	}
 
+	if(state[SDL_SCANCODE_A] && state[SDL_SCANCODE_D]){
+		player->set_movement(MOVE::NOTHING);
+	} else if(state[SDL_SCANCODE_A]){
+		player->set_movement(MOVE::LEFT);
+	} else if(state[SDL_SCANCODE_D]){
+		player->set_movement(MOVE::RIGHT);
+	}
+
+
+
 }
 
 // 2. Update Game
 void Game::UpdateGame(){
+	// update window sizes
+	player->update_window_size(WINDOW_WIDTH, WINDOW_HEIGHT);
+	ball->update_window_size(WINDOW_WIDTH, WINDOW_HEIGHT);
+	for(Entity* entity:walls){
+		entity->update_window_size(WINDOW_WIDTH, WINDOW_HEIGHT);
+	}
 
+	// input processing
+	player->update();
+	player->set_movement(MOVE::NOTHING);
+
+	// update ball
+	ball->update();
+
+	// update walls
+	for(auto wall:walls){
+			wall->update();
+	}
+
+	// check for collision with bottom
+	if(ball->is_on_bottom()){
+		this->Shutdown();
+	}
+
+	// check for collision with player
+	if(player->collide_with_other(ball)){
+		std::vector<double> pos_info = player->get_pos_info();
+		double player_width = pos_info.at(2);
+		double player_height = pos_info.at(3);
+		double player_x_pos = pos_info.at(0)-player_width/2;
+		double player_y_pos = pos_info.at(1)-player_width/2;
+		double player_x_pos_2 = player_x_pos+player_width;
+		double player_y_pos_2 = player_y_pos+player_height;
+		Vector2D normal = Vector2D(-(player_y_pos_2-player_y_pos), (player_x_pos_2-player_x_pos));    // in stack
+		ball->bounce(normal);
+	} else {
+		// check for collision with wall
+		for (size_t i = 0; i < walls.size(); ++i) {
+			if(ball->collide_with_other(walls.at(i))){
+				std::vector<double> pos_info = walls.at(i)->get_pos_info();
+				double wall_width = pos_info.at(2);
+				double wall_height = pos_info.at(3);
+				double wall_x_pos = pos_info.at(0)-wall_width/2;
+				double wall_y_pos = pos_info.at(1)-wall_width/2;
+				double wall_x_pos_2 = wall_x_pos+wall_width;
+				double wall_y_pos_2 = wall_y_pos+wall_height;
+				Vector2D normal = Vector2D((wall_y_pos_2-wall_y_pos), -(wall_x_pos_2-wall_x_pos));
+				ball->bounce(normal);
+				// destroy and remove the wall from the vector
+				delete walls.at(i);
+				walls.erase(walls.begin() + i);
+				break;
+			}
+		}
+
+		// check for collision with side walls
+		std::vector<double> pos_info = ball->get_pos_info();
+		double ball_width = pos_info.at(2);
+		double ball_height = pos_info.at(3);
+		double ball_x_pos = pos_info.at(0)-ball_width/2;
+		double ball_x_pos_2 = ball_x_pos+ball_width;
+
+		if(ball_x_pos <= 0.0){
+			Vector2D normal = Vector2D(1.0, 0.0);
+			ball->bounce(normal);
+		} else if(ball_x_pos_2 >= WINDOW_WIDTH){
+			Vector2D normal = Vector2D(-1.0, 0.0);
+			ball->bounce(normal);
+		}
+
+	}
 }
 
 // 3. Generate Output
@@ -111,15 +215,11 @@ void Game::GenerateOutput(){
 	SDL_RenderClear(renderer);
 
 	// 2. Draw the game scene
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_FRect rect = {
-		0, 0,
-		static_cast<int>(0.2*WINDOW_WIDTH),
-		static_cast<int>(0.05*WINDOW_HEIGHT)
-	};
-	const SDL_FRect* rect_p = &rect;
-
-	SDL_RenderFillRect(renderer, rect_p);
+	player->draw(renderer);
+	ball->draw(renderer);
+	for(auto wall:walls){
+			wall->draw(renderer);
+	}
 
 	// 3. Swap back buffer and front buffer
 	SDL_RenderPresent(renderer);
