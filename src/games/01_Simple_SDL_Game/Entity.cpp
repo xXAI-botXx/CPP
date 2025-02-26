@@ -1,9 +1,13 @@
 
-#include "Entity.h"
-
 #include <vector>
+#include <string>
 #include <cmath>
+#include <iostream>
 #include <SDL3/SDL.h>
+
+#include "Math.h"
+
+#include "Entity.h"
 
 
 
@@ -11,6 +15,64 @@
 Entity::~Entity() {
 	color.clear();
 }
+
+// Getter
+double Entity::get_abs_x_left_corner(){
+	return (x_pos - width*0.5)*window_width;
+}
+
+double Entity::get_abs_y_left_corner(){
+	return (y_pos - height*0.5)*window_height;
+}
+
+double Entity::get_abs_x_center(){
+	return x_pos*window_width;
+}
+
+double Entity::get_abs_y_center(){
+	return y_pos*window_height;
+}
+
+double Entity::get_rel_x_center(){
+	return x_pos;
+}
+
+double Entity::get_rel_y_center(){
+	return y_pos;
+}
+
+int Entity::get_abs_width(){
+	return width*window_width;
+}
+
+int Entity::get_abs_height(){
+	return height*window_height;
+}
+
+int Entity::get_rel_width(){
+	return width;
+}
+
+int Entity::get_rel_height(){
+	return height;
+}
+
+
+std::string Entity::to_string(){
+	std::string entity_str = "\nEntity:";
+	entity_str += "\n    - rel x: " + double_to_string(get_rel_x_center(), 4);
+	entity_str += "\n    - rel y: " + double_to_string(get_rel_y_center(), 4);
+	entity_str += "\n    - rel width: " + double_to_string(get_rel_width(), 4);
+	entity_str += "\n    - rel height: " + double_to_string(get_rel_height(), 4);
+	entity_str += "\n    - abs x: " + std::to_string(get_abs_x_center());
+	entity_str += "\n    - abs y: " + std::to_string(get_abs_y_center());
+	entity_str += "\n    - abs x (left): " + std::to_string(get_abs_x_left_corner());
+	entity_str += "\n    - abs y (left): " + std::to_string(get_abs_y_left_corner());
+	entity_str += "\n    - abs width: " + std::to_string(get_abs_width());
+	entity_str += "\n    - abs height: " + std::to_string(get_abs_height());
+	return entity_str;
+}
+
 
 // Implement color_scaling() outside the class
 std::vector<int> Entity::color_scaling() {
@@ -43,7 +105,7 @@ bool Entity::collide_with_other(const Entity* other_entity){
 	return false;
 }
 
-std::vector<double> get_pos_info(){
+std::vector<double> Entity::get_pos_info() const {
 	std::vector<double> pos_info;
 	pos_info.push_back(x_pos);
 	pos_info.push_back(y_pos);
@@ -59,20 +121,22 @@ void Entity::draw(SDL_Renderer* renderer){
 	SDL_SetRenderDrawColor(renderer, rgb_color.at(0), rgb_color.at(1), rgb_color.at(2), 255);
 
 	// set position
-	SDL_FRect rect = {
-		static_cast<int>(x_pos*window_width - (width/2)*window_width),
-		static_cast<int>(y_pos*window_height - (height/2)*window_height),
-		static_cast<int>(x_pos*window_width + (width/2)*window_width),
-		static_cast<int>(y_pos*window_height + (height/2)*window_height)
+	SDL_FRect rect = SDL_FRect{
+		static_cast<float>(get_abs_x_left_corner()),
+		static_cast<float>(get_abs_y_left_corner()),
+		// static_cast<float>(x_pos*window_width + (width*0.5)*window_width),
+		// static_cast<float>(y_pos*window_height + (height*0.5)*window_height)
+		static_cast<float>(get_abs_width()),
+		static_cast<float>(get_abs_height())
 	};
-	const SDL_FRect* rect_p = &rect;
+
+	// const SDL_FRect* rect_p = &rect;
 
 	// render
-	SDL_RenderFillRect(renderer, rect_p);
+	SDL_RenderFillRect(renderer, &rect);
 
 	// reset
 	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-	delete rect_p;
 }
 
 

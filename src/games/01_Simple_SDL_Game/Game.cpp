@@ -2,7 +2,11 @@
 
 
 #include <iostream>
+#include <chrono>    // for time stopping
+#include <thread>
+#include <algorithm>
 #include <vector>
+
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_render.h>
 
@@ -18,19 +22,34 @@
 Game::Game(){
 	window = nullptr;
 	shouldRun = true;
+	game_fps_delta_pause = false;
+	graphic_fps_delta_pause = false;
 	WINDOW_WIDTH = 1024;
 	WINDOW_HEIGHT = 768;
 	WINDOW_TOP_LEFT = {100, 100};
 	name = "Simple SDL Game >>Pong<<";
 
-	double wall_x_pos = 0.04;
+	double column_padding = 0.05;
+	int columns = 20;
+	double width = 1.0/(columns*column_padding);
+	double column_step_size = columns*column_padding*width;
+
+
+	double row_padding = 0.05;
+	int rows = 10;
+	double height = 0.5/(rows*row_padding);
+	double row_step_size = rows*row_padding*height;
+
+	std::cout << "width: " << width << ", height: " << height << std::endl;
+
+	double wall_x_pos = column_step_size;
 	double wall_y_pos;
 	for(int column=0; column<20; ++column){
-		wall_x_pos += 0.04;
-		wall_y_pos = 0.01;
+		wall_x_pos += column_step_size;
+		wall_y_pos = row_step_size;
 		for(int row=0; row<10; ++row){
-			wall_y_pos += 0.01;
-			walls.push_back(new Wall(wall_x_pos, wall_y_pos));
+			wall_y_pos += row_step_size;
+			walls.push_back(new Wall(wall_x_pos, wall_y_pos, width, height));
 		}
 	}
 	player = new Player();
@@ -75,12 +94,67 @@ bool Game::Initialize(){
 
 // running the game until the game is over
 void Game::RunLoop(){
+	// init variables
+	std::chrono::time_point<std::chrono::high_resolution_clock> start_frame, end_frame, start_graphics_frame, end_graphics_frame;
+	double seconds_frame, delta_time, seconds_g_frame, delta_g_time ;
+	std::chrono::duration<double> duration_frame, duration_g_frame;
+
 	// while(this->shouldRun){
 	while(shouldRun){
-		// this->ProcessInput();
-		ProcessInput();
-		UpdateGame();
-		GenerateOutput();
+
+		// run frame
+		if(!game_fps_delta_pause){
+			// stop time for delta
+			start_frame = std::chrono::high_resolution_clock::now();
+			ProcessInput();
+			UpdateGame();
+		}
+		if(!graphic_fps_delta_pause || USE_HIGHEST_GRAPHIC_FPS){
+			start_graphics_frame = std::chrono::high_resolution_clock::now();
+			GenerateOutput();    // all output or only graphical?
+		}
+
+		// check Graphics FPS
+		end_graphics_frame = std::chrono::high_resolution_clock::now();
+		duration_g_frame = end_graphics_frame - start_graphics_frame;
+		seconds_g_frame = duration_g_frame.count();
+		delta_g_time = static_cast<double>(GOAL_GRAPHIC_FPS) - seconds_g_frame;
+
+		// add delta time, to come to Game FPS
+		end_frame = std::chrono::high_resolution_clock::now();
+		duration_frame = end_frame - start_frame;
+		seconds_frame = duration_frame.count();
+		delta_time = static_cast<double>(DURATION_GAME_FRAME)-seconds_frame;
+
+		if(delta_time > 0.0 && (delta_g_time > 0.0 || USE_HIGHEST_GRAPHIC_FPS)){
+			if(USE_HIGHEST_GRAPHIC_FPS)
+				delta_g_time = delta_time;
+			// sleep
+			std::this_thread::sleep_for(std::chrono::duration<double>(
+													std::min(delta_time, delta_g_time)    // get the shorter delta_time
+										));
+//			while (std::chrono::high_resolution_clock::now() - end_frame < std::chrono::duration<double>(std::min(delta_time, delta_g_time))) {
+//			    std::this_thread::yield(); // Allows other threads to run
+//			}
+		}
+
+		// set Game pause or not with FPS
+		if(delta_time > 0.0){
+			game_fps_delta_pause = true;
+			// std::this_thread::sleep_for(std::chrono::duration<double>(delta_time));
+		}else{
+			// reset and ready for the next frame
+			game_fps_delta_pause = false;
+		}
+
+		// set Graphics pause or not with FPS
+		if(delta_g_time > 0.0){
+			graphic_fps_delta_pause = true;
+		}else{
+			// reset and ready for the next graphics frame
+			graphic_fps_delta_pause = false;
+		}
+
 	}
 }
 
@@ -147,7 +221,7 @@ void Game::UpdateGame(){
 	player->set_movement(MOVE::NOTHING);
 
 	// update ball
-	ball->update();
+	// ball->update();
 
 	// update walls
 	for(auto wall:walls){

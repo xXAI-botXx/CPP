@@ -42,6 +42,13 @@ private:
 
 	// defines whether to run the game or not
 	bool shouldRun;
+	bool game_fps_delta_pause;
+	bool graphic_fps_delta_pause;
+	bool USE_HIGHEST_GRAPHIC_FPS = false;
+	const int GAME_FPS = 30;
+	const double DURATION_GAME_FRAME = 1.0/static_cast<double>(GAME_FPS);    // every frame have to wait to fill this
+	const int GOAL_GRAPHIC_FPS = 60;
+	const double DURATION_GRAPHIC_FRAME = 1.0/static_cast<double>(GOAL_GRAPHIC_FPS);
 
 	int WINDOW_WIDTH = 1024;
 	int WINDOW_HEIGHT = 768;

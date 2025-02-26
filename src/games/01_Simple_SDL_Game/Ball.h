@@ -11,15 +11,9 @@ public:
 	~Ball();
 
 	void update();
-	void draw(SDL_Renderer* renderer);
 	bool is_on_bottom();
-	void bounce(Vector2D normal);
+	void bounce(const Vector2D& normal);
 
-protected:
-	double x_pos = 0.4;
-	double y_pos = 0.4;
+private:
 	Vector2D* velocity;
-	double width = 0.02;
-	double height = 0.02;
-	std::vector<double> color = {1.0, 1.0, 1.0, 1.0};
 };

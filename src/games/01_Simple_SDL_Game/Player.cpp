@@ -1,4 +1,5 @@
 
+#include <iostream>
 #include<vector>
 #include <SDL3/SDL.h>
 
@@ -7,6 +8,11 @@
 //Constructor
 Player::Player() {
 	cur_movement = MOVE::NOTHING;
+	x_pos = 0.5;
+	y_pos = 0.85;
+	width = 0.05;
+	height = 0.05;
+	color = std::vector<double>{1.0, 1.0, 1.0, 1.0};
 }
 
 // Destructor
@@ -14,7 +20,7 @@ Player::~Player() {
 
 }
 
-void set_movement(MOVE new_move) {
+void Player::set_movement(MOVE new_move) {
 	cur_movement = new_move;
 }
 
@@ -36,9 +42,13 @@ void Player::update(){
 	}
 
 	// move
-	if(new_position_x >= 0.0 && new_position_x+width <= 1.0){
+	if(new_position_x >= 0.0 && new_position_x+width <= 1.0 && false){
 		x_pos = new_position_x;
 	}
+
+	// print
+	// std::cout << "x_pos: " << x_pos << ", y_pos: " << y_pos << ", width: " << width << ", height: " << height << std::endl;
+	// std::cout << this->to_string() << std::endl;
 
 }
 

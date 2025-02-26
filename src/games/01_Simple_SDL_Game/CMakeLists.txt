@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Add source files
 # = ADJUST ME =
-set(SOURCES Main.cpp Game.cpp)
+set(SOURCES Main.cpp Game.cpp Entity.cpp Player.cpp Ball.cpp Wall.cpp Math.cpp)
 
 # Add executable
 add_executable(${PROJECT_NAME} ${SOURCES})
