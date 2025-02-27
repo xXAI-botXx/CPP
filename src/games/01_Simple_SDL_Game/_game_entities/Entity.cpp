@@ -115,28 +115,9 @@ std::vector<double> Entity::get_pos_info() const {
 }
 
 
-void Entity::draw(SDL_Renderer* renderer){
-	// set color
-	std::vector<int> rgb_color = this->color_scaling();
-	SDL_SetRenderDrawColor(renderer, rgb_color.at(0), rgb_color.at(1), rgb_color.at(2), 255);
+std::vector<GraphicsData> get_graphic_data() {
 
-	// set position
-	SDL_FRect rect = SDL_FRect{
-		static_cast<float>(get_abs_x_left_corner()),
-		static_cast<float>(get_abs_y_left_corner()),
-		// static_cast<float>(x_pos*window_width + (width*0.5)*window_width),
-		// static_cast<float>(y_pos*window_height + (height*0.5)*window_height)
-		static_cast<float>(get_abs_width()),
-		static_cast<float>(get_abs_height())
-	};
-
-	// const SDL_FRect* rect_p = &rect;
-
-	// render
-	SDL_RenderFillRect(renderer, &rect);
-
-	// reset
-	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+	return std::vector<GraphicsData>;
 }
 
 

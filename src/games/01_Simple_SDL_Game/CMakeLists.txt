@@ -2,13 +2,21 @@ cmake_minimum_required(VERSION 3.10)
 # = ADJUST ME =
 project(Simple_SDL_Game)
 
+include_directories(_core _game_entities _helper _output _data)
+
 # Set C++ Standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Add source files
 # = ADJUST ME =
-set(SOURCES Main.cpp Game.cpp Entity.cpp Player.cpp Ball.cpp Wall.cpp Math.cpp)
+set(SOURCES Main.cpp 
+			_core/Game.cpp 
+			_game_entities/Entity.cpp _game_entities/Player.cpp _game_entities/Ball.cpp _game_entities/Wall.cpp 
+			_helper/Math.cpp
+			_output/AudioHandler.cpp
+			_output/GraphicsHandler.cpp _output/SDL_Handler.cpp
+			_data/Rectangle.cpp)
 
 # Add executable
 add_executable(${PROJECT_NAME} ${SOURCES})
