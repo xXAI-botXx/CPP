@@ -54,6 +54,12 @@
     <ClCompile Include="SDLHandler.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="SDLInputProcessor.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -99,6 +105,15 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="SDLHandler.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="InputProcessor.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLInputProcessor.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

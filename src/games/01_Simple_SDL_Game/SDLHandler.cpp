@@ -16,6 +16,12 @@ SDLHandler::SDLHandler(std::vector<Entity*>& entities, int FPS, std::string name
 	renderer = nullptr;
 }
 
+SDLHandler::~SDLHandler() {
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
+}
+
 bool SDLHandler::init(int window_top_left_x, int window_top_left_y) {
 	// init Video subsystem
 	int sdlResult = SDL_Init(SDL_INIT_VIDEO);
@@ -67,22 +73,27 @@ void SDLHandler::render() {
 			// Check Type
 			if (Rectangle* rect = dynamic_cast<Rectangle*>(data)) {
 				// extract data from data class
+				
 
 				// set color
-				SDL_SetRenderDrawColor(renderer, rgb_color.at(0), rgb_color.at(1), rgb_color.at(2), 255);
+				SDL_SetRenderDrawColor(renderer, rect->fill_color.at(0), rect->fill_color.at(1), rect->fill_color.at(2), 255);
 
 				// set position
-				SDL_FRect rect = SDL_FRect{
-					static_cast<float>(get_abs_x_left_corner()),
-					static_cast<float>(get_abs_y_left_corner()),
+				double x_left_corner = rect->bounding_box.min_x;
+				double y_left_corner = rect->bounding_box.min_y;
+				double width = rect->bounding_box.max_x - rect->bounding_box.min_x;
+				double height = rect->bounding_box.max_y - rect->bounding_box.min_y;
+				SDL_FRect draw_rect = SDL_FRect{
+					static_cast<float>(x_left_corner),
+					static_cast<float>(y_left_corner),
 					// static_cast<float>(x_pos*window_width + (width*0.5)*window_width),
 					// static_cast<float>(y_pos*window_height + (height*0.5)*window_height)
-					static_cast<float>(get_abs_width()),
-					static_cast<float>(get_abs_height())
+					static_cast<float>(width),
+					static_cast<float>(height)
 				};
 
 				// render
-				SDL_RenderFillRect(renderer, &rect);
+				SDL_RenderFillRect(renderer, &draw_rect);
 			}
 			else if (Sprite* circ = dynamic_cast<Sprite*>(data)) {
 				// FIXME
@@ -92,6 +103,15 @@ void SDLHandler::render() {
 
 	// 3. Swap back buffer and front buffer
 	SDL_RenderPresent(renderer);
+}
+
+
+std::vector<int> SDLHandler::get_window_size() {
+	int window_width, window_height;
+	SDL_GetWindowSize(window, &window_width, &window_height);
+	this->width = window_width;
+	this->height = window_height;
+	return std::vector<int>{window_width, window_height};
 }
 
 

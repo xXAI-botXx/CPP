@@ -27,8 +27,8 @@ void Player::set_movement(MOVE new_move) {
 void Player::update() {
 
 	// new position
-	double new_position_x;
-	double new_position_y;
+	double new_position_x = 0.0;
+	double new_position_y = 0.0;
 
 	switch (cur_movement) {
 	case MOVE::NOTHING:

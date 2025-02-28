@@ -2,6 +2,7 @@
 
 #include "Shape3D.h"
 #include <vector>
+#include <string>
 
 struct Vertex {
     std::vector<double> position;
@@ -11,6 +12,7 @@ struct Vertex {
 
 class Mesh :public Shape3D {
 public:
+    Mesh(std::string texture_path);
     ~Mesh();
     // SendDataResult send_data();
 

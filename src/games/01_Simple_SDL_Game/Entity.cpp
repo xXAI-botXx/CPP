@@ -119,7 +119,6 @@ std::vector<double> Entity::get_pos_info() const {
 
 std::vector<GraphicsData*> Entity::get_graphic_data() {
 	std::vector<GraphicsData*> all_graphics_data;
-	// FIXME -> create data!
 
 	std::vector<int> rgb_color = this->color_scaling();
 

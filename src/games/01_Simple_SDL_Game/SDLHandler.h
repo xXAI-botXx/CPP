@@ -15,6 +15,7 @@ public:
 
 	void render();
 	bool init(int window_top_left_x, int window_top_left_y);
+	std::vector<int> get_window_size();
 protected:
 	// SDL Window Creation
 	SDL_Window* window;

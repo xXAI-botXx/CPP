@@ -5,7 +5,7 @@
 #include "Wall.h"
 
 //Constructor
-Wall::Wall(int x_pos, int y_pos, double width, double height) {
+Wall::Wall(double x_pos, double y_pos, double width, double height) {
 	this->x_pos = x_pos;
 	this->y_pos = y_pos;
 	this->width = width;

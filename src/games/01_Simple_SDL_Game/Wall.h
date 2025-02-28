@@ -5,7 +5,7 @@
 
 class Wall :public Entity {
 public:
-	Wall(int x_pos, int y_pos, double width, double height);
+	Wall(double x_pos, double y_pos, double width, double height);
 	~Wall();
 
 	void update();

@@ -6,6 +6,8 @@
 #include <string>
 #include <SDL3/SDL.h>
 
+#include "GraphicsData.h"
+
 class Entity {
 public:
 	Entity() = default;

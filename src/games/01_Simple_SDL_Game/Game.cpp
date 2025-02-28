@@ -7,8 +7,11 @@
 #include <algorithm>
 #include <vector>
 
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_render.h>
+#include "GraphicsHandler.h"
+#include "SDLHandler.h"
+#include "Event.h"
+#include "InputProcessor.h"
+#include "SDLInputProcessor.h"
 
 #include "Entity.h"
 #include "Player.h"
@@ -20,7 +23,7 @@
 
 // constructor
 Game::Game() {
-	shouldRun = true;
+	should_run = true;
 	game_pause = false;
 	game_fps_delta_pause = false;
 	WINDOW_WIDTH = 1024;
@@ -30,14 +33,14 @@ Game::Game() {
 
 	double column_padding = 0.05;
 	int columns = 20;
-	double width = 1.0 / (columns * column_padding);
-	double column_step_size = columns * column_padding * width;
+	double width = 1.0 / (columns + columns * column_padding);
+	double column_step_size = column_padding + width;
 
 
 	double row_padding = 0.05;
 	int rows = 10;
-	double height = 0.5 / (rows * row_padding);
-	double row_step_size = rows * row_padding * height;
+	double height = 0.5 / (rows  + rows * row_padding);
+	double row_step_size = row_padding + height;
 
 	std::cout << "width: " << width << ", height: " << height << std::endl;
 
@@ -54,44 +57,49 @@ Game::Game() {
 	player = new Player();
 	ball = new Ball();
 
-	Entity* entity_player = *player;
-	Entity* entity_ball = *ball;
-	all_entities.push_back(entity_player);
-	all_entities.push_back(entity_ball);
-	for (Wall cur_wall : walls) {
+	// Entity* entity_player = *player;
+	// Entity* entity_ball = *ball;
+	all_entities.push_back(player);
+	all_entities.push_back(ball);
+	for (Entity* cur_wall : walls) {
 		all_entities.push_back(cur_wall);
 	}
 
 	GOAL_GRAPHICS_FPS = 60;
 	use_highest_graphics_fps = false;
 	graphics_handler = new SDLHandler(all_entities, GOAL_GRAPHICS_FPS, name, WINDOW_WIDTH, WINDOW_HEIGHT, use_highest_graphics_fps);
+	input_processor = new SDLInputProcessor();
 }
 
 // init method
-bool Game::Initialize() {
-	return graphics_handler.init(WINDOW_TOP_LEFT.at(0), WINDOW_TOP_LEFT.at(1));
+bool Game::initialize() {
+	return graphics_handler->init(WINDOW_TOP_LEFT.at(0), WINDOW_TOP_LEFT.at(1));
 }
 
 // running the game until the game is over
-void Game::RunLoop() {
+void Game::run_loop() {
 	// init variables
 	std::chrono::time_point<std::chrono::high_resolution_clock> start_frame, end_frame;
 	double seconds_frame, delta_time;
 	std::chrono::duration<double> duration_frame;
 
 	// start graphics thread
-	// ...
+	std::thread graphic_handler_thread(
+		[&]() { graphics_handler->render_loop(); }
+		// std::thread graphic_handler_thread(&GraphicsHandler::render_loop, this);
+	);
+	graphic_handler_thread.detach();
 
-	// while(this->shouldRun){
-	while (shouldRun) {
+	// while(this->should_run){
+	while (should_run) {
 
 		if (!game_pause) {
 			// run frame
 			if (!game_fps_delta_pause) {
 				// stop time for delta
 				start_frame = std::chrono::high_resolution_clock::now();
-				ProcessInput();
-				UpdateGame();
+				process_input();
+				update_game();
 				// GenerateOutput();
 			}
 
@@ -122,13 +130,12 @@ void Game::RunLoop() {
 			}
 		}
 	}
+	graphics_handler->set_rendering(false);
 }
 
 // shutdown the game
-void Game::Shutdown() {
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+void Game::shutdown() {
+	delete graphics_handler;
 
 	delete player;
 	delete ball;
@@ -140,43 +147,58 @@ void Game::Shutdown() {
 
 
 // 1. Input Processing
-void Game::ProcessInput() {
-	// create var to save one event
-	SDL_Event event;
+void Game::process_input() {
+	// Event var, to store event
+	Event* event = nullptr;
+	std::vector<int> new_size;
+	KEY esc = KEY::ESC;
+
 	// get next event in queue
-	while (SDL_PollEvent(&event)) {
-		switch (event.type) {
-		case SDL_EVENT_QUIT:
-			shouldRun = false;
+	while (input_processor->poll_event(event)) {
+		if (event == nullptr)
 			break;
-		case SDL_EVENT_WINDOW_RESIZED:
-			SDL_GetWindowSize(window, &WINDOW_WIDTH, &WINDOW_HEIGHT);
+
+		switch (event->type) {
+		case EVENT_TYPE::QUIT:
+			graphics_handler->set_rendering(false);
+			should_run = false;
+			break;
+		case EVENT_TYPE::WINDOW_RESIZING:
+			new_size = graphics_handler->get_window_size();
+			WINDOW_WIDTH = new_size.at(0);
+			WINDOW_HEIGHT = new_size.at(1);
+			break;
+		case EVENT_TYPE::PRESSED_KEY:
+			std::vector<KEY> keys = event->pressed_keys;
+			//for (KEY key : keys) {
+			//	// ... if ...
+			//}
+			if (contains(keys, KEY::ESC)) {
+				graphics_handler->set_rendering(false);
+				should_run = false;
+			}
+
+			if (contains(keys, KEY::D) && contains(keys, KEY::A)) {
+				player->set_movement(MOVE::NOTHING);
+			}
+			else if (contains(keys, KEY::A)) {
+				player->set_movement(MOVE::LEFT);
+			}
+			else if (contains(keys, KEY::D)) {
+				player->set_movement(MOVE::RIGHT);
+			}
+
 			break;
 		}
 	}
 
-	// get keyboard inputs
-	const bool* state = SDL_GetKeyboardState(nullptr);
-	if (state[SDL_SCANCODE_ESCAPE]) {
-		shouldRun = false;
-	}
-
-	if (state[SDL_SCANCODE_A] && state[SDL_SCANCODE_D]) {
-		player->set_movement(MOVE::NOTHING);
-	}
-	else if (state[SDL_SCANCODE_A]) {
-		player->set_movement(MOVE::LEFT);
-	}
-	else if (state[SDL_SCANCODE_D]) {
-		player->set_movement(MOVE::RIGHT);
-	}
-
-
+	// cleaning
+	delete event;
 
 }
 
 // 2. Update Game
-void Game::UpdateGame() {
+void Game::update_game() {
 	// update window sizes
 	player->update_window_size(WINDOW_WIDTH, WINDOW_HEIGHT);
 	ball->update_window_size(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -198,7 +220,7 @@ void Game::UpdateGame() {
 
 	// check for collision with bottom
 	if (ball->is_on_bottom()) {
-		this->Shutdown();
+		this->shutdown();
 	}
 
 	// check for collision with player
@@ -253,7 +275,7 @@ void Game::UpdateGame() {
 }
 
 // 3. Generate Output
-void Game::GenerateOutput() {
+void Game::generate_output() {
 
 	//	player->draw(renderer);
 	//	ball->draw(renderer);

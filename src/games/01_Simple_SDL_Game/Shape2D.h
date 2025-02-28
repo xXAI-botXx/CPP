@@ -38,7 +38,7 @@ public:
 	virtual ~Shape2D() = default;
 
 	// virtual SendDataResult send_data() = 0;
-protected:
+// protected:
 	Transform2D transform;
 	BoundingBox bounding_box;
 	BoundingCircle bounding_circle;

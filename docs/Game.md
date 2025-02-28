@@ -268,11 +268,33 @@ Often the best way to learn something is to just see it in the practise and try 
 A very simple game in C++ using the Simple DirectMedia Library (SDL). [See here](../src/games/01_Simple_SDL_Game/Main.cpp) for more details to the real implementation.
 
 Installing the SDL lib:
-1. Download the latest release from https://github.com/libsdl-org/SDL/releases -> make sure to download 'SDL3-devel-3.2.4-VC.zip' (with maybe another version, but VC for Visual Studio)
-2. Add the header files (include the path to the include folder) [as described here](../README.md#vs_)
-3. Add the library files (include the path to the .lib/.dl files) [as described here](../README.md#vs_)
+1. Download the latest release from https://github.com/libsdl-org/SDL/releases -> make sure to download 'SDL3-devel-3.2.4-VC.zip' (with maybe another version, but VC for Visual Studio).
+2. Add the header files (include the path to the include folder) [as described here](../README.md#vs_).
+3. Add the library files (include the path to the .lib/.dl files) [as described here](../README.md#vs_).
+4. Add the dependency (SDL3.lib) to the dependencies [as described here](../README.md#vs_).
+5. Lastly copy the SDL3.dll into your project folder
+
+
+
+For example my settings look now like that:
+*Properties* \> *C/C++* \> *General* \> *Additional Including Paths*:
+
+```
+D:\CPPlibs\SDL3-3.2.4\include
+```
+*Properties* \> *Linker* \> *General* \> *Additional Library Paths*:
+```
+D:\CPPlibs\SDL3-3.2.4\lib\x64
+```
+*Properties* \> *Linker* \> *Input* \> *Additional Dependencies*:
+```
+SDL3.lib
+```
+
+
 
 Congratulations, now you should be able to use SDL lib. Just use it like: 
+
 ```c++
 #include <SDL/SDL.h>
 #include <iostream>

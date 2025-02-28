@@ -20,6 +20,7 @@ GraphicsHandler::GraphicsHandler(std::vector<Entity*>& entities, int FPS, std::s
 }
 
 GraphicsHandler::~GraphicsHandler() {
+	
 }
 
 void GraphicsHandler::render_loop() {

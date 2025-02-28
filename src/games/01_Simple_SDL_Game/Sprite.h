@@ -9,7 +9,6 @@ public:
 		bool have_sprite, std::string sprite_path);
 	~Sprite();
 
-	SendDataResult send_data();
 };
 
 

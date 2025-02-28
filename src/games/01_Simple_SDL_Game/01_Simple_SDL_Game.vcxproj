@@ -110,6 +110,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\CPPlibs\SDL3-3.2.4\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,6 +133,7 @@
     <ClCompile Include="AudioHandler.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Event.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GraphicsHandler.cpp" />
     <ClCompile Include="main.cpp" />
@@ -140,6 +142,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="SDLHandler.cpp" />
+    <ClCompile Include="SDLInputProcessor.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
@@ -147,14 +150,17 @@
     <ClInclude Include="AudioHandler.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GraphicsData.h" />
     <ClInclude Include="GraphicsHandler.h" />
+    <ClInclude Include="InputProcessor.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="SDLHandler.h" />
+    <ClInclude Include="SDLInputProcessor.h" />
     <ClInclude Include="Shape2D.h" />
     <ClInclude Include="Shape3D.h" />
     <ClInclude Include="Sprite.h" />

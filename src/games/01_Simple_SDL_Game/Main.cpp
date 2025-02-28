@@ -1,12 +1,15 @@
 #include "Game.h"
 
 int main(int argc, char** argv) {
-	Game game;
-	bool success = game.Initialize();
+	Game* game = new Game();
+	bool success = game->initialize();
+
 	if (success) {
-		game.RunLoop();
+		game->run_loop();
 	}
-	game.Shutdown();
+
+	game->shutdown();
+	delete game;
 
 	return 0;
 }

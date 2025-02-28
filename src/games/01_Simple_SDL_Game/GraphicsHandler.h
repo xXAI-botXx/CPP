@@ -15,7 +15,7 @@ public:
 	// only one responsibility!
 	virtual void render() = 0;
 	virtual bool init(int window_top_left_x, int window_top_left_y) = 0;
-	// virtual void update_window_size() = 0;
+	virtual std::vector<int> get_window_size() = 0;
 
 	void pause_rendering(bool should_pause_rendering);
 	void set_rendering(bool should_render);

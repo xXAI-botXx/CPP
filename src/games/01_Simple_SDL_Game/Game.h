@@ -12,6 +12,7 @@
 #include "Wall.h"
 #include "Ball.h"
 #include "GraphicsHandler.h"
+#include "InputProcessor.h"
 
 class Game {
 public:
@@ -19,28 +20,28 @@ public:
 	Game();
 
 	// init method
-	bool Initialize();
+	bool initialize();
 
 	// running the game until the game is over
-	void RunLoop();
+	void run_loop();
 
 	// shutdown the game
-	void Shutdown();
+	void shutdown();
 
 private:
 	// 1. Input Processing
-	void ProcessInput();
+	void process_input();
 
 	// 2. Update Game
-	void UpdateGame();
+	void update_game();
 
 	// 3. Generate Output
-	void GenerateOutput();
+	void generate_output();
 
 	// === VARIABLES ===
 
 	// defines whether to run the game or not
-	bool shouldRun;
+	bool should_run;
 	bool game_pause;
 	bool game_fps_delta_pause;
 	const int GAME_FPS = 30;
@@ -50,6 +51,8 @@ private:
 	int WINDOW_HEIGHT = 768;
 	std::vector<int> WINDOW_TOP_LEFT = { 100, 100 };
 	GraphicsHandler* graphics_handler;
+
+	InputProcessor* input_processor;
 
 	std::string name;
 

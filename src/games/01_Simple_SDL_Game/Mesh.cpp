@@ -1,9 +1,9 @@
 #include "Mesh.h"
 #include <vector>
 
-Mesh::Mesh(std::string texture path) {
+Mesh::Mesh(std::string texture_path) {
 	// FIXME
-	vertices = Vertex();
+	// vertices = Vertex();
 	indices = std::vector<unsigned int>{};
 
 	// Shape 3D
@@ -15,7 +15,7 @@ Mesh::Mesh(std::string texture path) {
 	//	animation = Animation3D();
 
 	has_texture = false;
-	texture_path = ;     // std::string
+	texture_path = texture_path;     // std::string
 
 	// If animation and texture -> first animation, then show texture
 
@@ -25,7 +25,7 @@ Mesh::Mesh(std::string texture path) {
 
 	has_border_color = false;
 	border_color_format = COLOR_REPRESENTATION::RGBA;
-	border_color = ;    // std::vector<double>
+	border_color;    // std::vector<double>
 
 	// GraphicData
 	z_index = 0;
@@ -36,4 +36,4 @@ Mesh::~Mesh() {
 
 }
 
-};
+

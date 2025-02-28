@@ -1329,10 +1329,39 @@ Project_Name
 The structure should be self explainable and well structured. Most likely first you want to make a *main.cpp* in the Source folder and yeah that its.
 
 **Importing External Libs**<br>
-It is recommend to create one folder on your PC with all external C++ libs. Like on *D:/cpplibs* or something like that.<br>
-Now you *right click in Visual Studio on your project folder* and go to *properties* and to *C/C++* and there to *General*. There is an option for *additional include paths* where you click and edit to add for example: 'D:\CPPlibs\SDL3-3.2.4\include'. You add there the path to the folder where the header files of your external libs are, commonly in an include folder but not always!
+It is recommend to create one folder on your PC with all external C++ libs. Like on *D:/cpplibs* or something like that.
 
-Next you have to add your library files (not headers) to the paths. For that *right click in Visual Studio on your project folder* and go to *properties* again but next to *Linker* and there to *General*.  There is an option which keeps all paths of *additional external libraries*. You have to open this option and add the path to your lib files (some external libs does not need that) -> mos tlikely .dll, .a.lib and .lib files, example: 'D:\CPPlibs\SDL3-3.2.4\lib\x64'.
+*Additional Include Directories*<br>Right click on your project name in the explorer of visual studio: *Properties* \> *C/C++* \> *General* \> *Additional Including Paths* and add there the path to the including folder (to the folder where the header files are). <br>Example:
+
+``````
+D:\CPPlibs\GLFW\include
+D:\CPPlibs\GLM
+D:\CPPlibs\VulkanSDK\1.4.304.1\Include
+``````
+
+
+
+*Additional Library Directories*<br>Staying in the project properties go to *Properties* \> *Linker* \> *Input* \> *Additional External Libraries Paths* and there the path to the folder where the .lib, .dll, .a files are stored.<br>Example:
+
+``````
+D:\CPPlibs\VulkanSDK\1.4.304.1\Lib
+D:\CPPlibs\GLFW\lib-vc2022
+``````
+
+
+
+*Additional Dependencies*<br>Lastly click on *Properties* \> *Linker* \> *General* \> *Additional Dependencies* and add just the name of the lib files.<br>Example:
+
+``````
+vulkan-1.lib
+glfw3.lib
+``````
+
+
+The specific names can vary due to language or updates, but the meaning stays the same.
+
+Now the import of the external libs should be working!
+
 
 **Importing External Projects**<br>
 Importing  your own custom C++ project and transform it into an Visual Studio Project is quite weird, but there is a simple way. 
