@@ -18,6 +18,7 @@ May use it as a reference ❤️
 - <h4><a href="#runcppcode">Run C++ Code with GNU</a></h4>
 - <h4><a href="#cmake_">CMake</a></h4>
 - <h4><a href="#ide_">Using an IDE</a></h4>
+- <h4><a href="#vs_">IDE and Compiler in one</a></h4>
 
 <br><br>
 
@@ -314,7 +315,7 @@ In modern C++ the old C-Style array is not the only option. The standard library
  - std::array -> constant array  (#include <array>)
  - std::vector -> dynamic array  (#include <vector>)
  - std::string -> dynamic char array  (#include <string>)
- 
+
  std::array has a fixed size but provides some usefule methods:
  - size() -> Returns the number of elements (fixed at compile-time).
  - .at(index) -> Accesses an element with bounds checking. Throws exception if out of range.
@@ -330,7 +331,7 @@ In modern C++ the old C-Style array is not the only option. The standard library
  	arr.fill(0);
  }
  ```
- 
+
  The dynamic array (std::vector) is also a very useful datatype. The vector is a list, with no fixed size.
  ```c++
  #include <vector>
@@ -345,32 +346,32 @@ Methods for Accesss:
  - .front() -> Returns the first element.
  - .back() -> Returns the last element.
  - .data() -> Returns a pointer to the first element (useful for C-style functions).
- 
+
  Methods for modifying:
  - .push_back(x) -> Adds an value to the vector
  - .insert(pos, x) -> Adds an element on the given position
  - .pop_back() -> Remove last element
  - .erase(pos) -> Remove element at position
  - .clear() -> Remove all elements
- 
+
  Methods for Size & Capacity
  - .size() -> Returns the number of elements
  - .capacity() -> Returns the allocated memory size
  - .resize(n) -> Resizes to n elements
  - .shrink_to_fit() -> Reduces capacity to match size
  - .reserve(n) -> Allocates memory for at least n elements (prevents reallocation overhead)
- 
+
  Methods for Iterators:
  - .begin() -> Iterator to the first element
  - .end() -> Iterator to one past the last element
  - .rbegin() -> Reverse iterator (last element)
  - .rend() -> Reverse iterator (before first)
- 
+
  Methods for Utility:
  - .empty() -> Returns true if vector is empty
  - .swap(otherVec) -> Swaps contents with another vector
  - .assign(n, x) -> Assigns n copies of x
- 
+
  ```c++
 #include <vector>
 #include <iostream>
@@ -402,22 +403,22 @@ int main() {
     return 0;
 }
  ```
- 
+
  Lastly lets see methods of the string datatype.
- 
+
  Methods for Accesss:
  - .at(i) -> Access element (with bounds check)
  - .front() -> Returns the first element.
  - .back() -> Returns the last element.
  - .data() -> Returns a pointer to the first element (useful for C-style functions).
- 
+
  Methods for modifying:
  - .append(x) -> Adds an value to the string
  - .insert(pos, x) -> Adds an element on the given position
  - .erase(pos) -> Remove element at position
  - .replace(pos, len, x) -> Replace len chars from pos with x
  - .clear() -> Remove all elements
- 
+
  Methods for searching and finding:
  - .find(x) -> Finds x (returns index or std::string::npos if not found)
  - .rfind(x) -> Finds last occurrence of x
@@ -425,31 +426,31 @@ int main() {
  - .find_last_of(x) -> Finds last occurrence of any char in x
  - .find_first_not_of(x) -> Finds first character not in x
  - .find_last_not_of(x) -> Finds last character not in x
- 
+
  Methods for Extracting & Manipulating Substrings:
  - .substr(pos, len) -> Extract substring
  - .compare(x) -> Compare with another string (==, >, <)
  - .c_str() -> Convert to C-style string (const char*)
- 
+
  Methods for Size & Capacity:
  - .length() -> Returns the number of characters
  - .size() -> Same as .length()
  - .capacity() -> Returns allocated memory size
  - .shrink_to_fit() -> Reduces capacity to fit size
  - .reserve(n) -> Allocates memory for n characters (prevents reallocations)
- 
+
  Methods for Checking & Comparing:
  - .empty() -> Returns true if string is empty
  - str == x -> Checks equality
  - str != x -> Checks inequality
- 
+
  Functions of String Module:
  - std::to_string(num) -> Converts number to string
  - std::stoi(str) -> Converts string to int
  - std::stof(str) -> Converts string to float
  - std::stod(str) -> Converts string to double
- 
- 
+
+
  ```c++
  #include <iostream>
 #include <string>
@@ -482,14 +483,14 @@ int main() {
     return 0;
 }
  ```
- 
- 
+
+
  <a name="basics_collections_" href="#bascis_top_">^</a><br>
 **Collections**<br>
  We previously saw some important collections like the **Vector**. Here are some more.
- 
+
  A **linked list** is a collection of pointers. So every element can be in another place in the memory.
- 
+
  ```c++
  #include <list>
  std::list<int> my_list;
@@ -498,9 +499,9 @@ int main() {
  my_list.push_back(8);
  ms_list.push_front(2);
  ```
- 
+
  Another collection is the **Queue** which works with the FIFO (first in, first out). It is like a queue on a icecream shop.
- 
+
  ```c++
  #include <queue>
  std::queue<int> my_q;
@@ -509,9 +510,9 @@ int main() {
  my_q.front();    // returns the current first obj/data in the queue but does not remove it
  my_q.pop();    // return and remove first elem in the queue
  ```
- 
+
  The opposite is the **Stack**. It works with the LIFO priciple (last in, first out). The last element which got added will be the first which get out from the stack. Like a stack of papers on a table of a busy worker in the 80s.
- 
+
  ```c++
  #include <stack>
  std::stack<int> my_stack;
@@ -520,9 +521,9 @@ int main() {
  my_stack.top();    // only return the current first elem
  my_stack.pop();    // returns and removes the first (last added) elem
  ```
- 
+
  Most performant data structures are the maps and hash maps. The difference is that maps are ordered and hash maps using hashing to allow unordered lists. They work with a key which lead to a value...like a dictionary.
- 
+
  ```c++
  #include <map>
  std::map<int,std::string> months;
@@ -531,7 +532,7 @@ int main() {
  
  std::cout << month[2];
  ```
- 
+
  Hash-maps:
  ```c++
  #include <unoredered_map>
@@ -541,9 +542,9 @@ int main() {
  
  std::cout << month[2];
  ```
- 
+
  Important for collections is to itterate over them and this is sometimes not easy possible. For that we can use **Iterator** which are objects which help to traverse the object.
- 
+
  ```c++
  std::list<int> numbers; 
  numbers.emplace_back(2); 
@@ -554,7 +555,7 @@ int main() {
  	std::cout << *iter << std::endl; 
  }
  ```
- 
+
  For maps:
  ```c++
  // Get an iterator to the element with the key 2 
@@ -565,9 +566,9 @@ int main() {
  	std::cout << iter->second << std::endl; // Outputs February
  }
  ```
+
  
- 
- 
+
 
 <br><br>
 
@@ -1259,7 +1260,7 @@ target_link_libraries(${PROJECT_NAME} "${SDL_DIR}/lib/libSDL3.dll.a")
 
 
 
-
+<!--
 ---
 <h3><a href='top' name='ide_'>Using an IDE</a></h3>
 
@@ -1292,15 +1293,63 @@ For adding a C++ Project you can go to 'File \> Import' and select 'General \> F
 
 You can detect nested projects by right clicking on your top project folder in the Project Explorer. Then choose *Configure* and *Configure and Detect nested Projects*. Now your subproject should be detected as C++ Project and you should be able to run it (it should use your CMakeLists.txt file). You may have to click on the ⚙️ icon on your build name on the right of the run button and there you can change the compiler to mingw32 if you already add it (like described previously). Now you should be able to run your program in Eclipse! Else you can use your terminal (CMD)/bat file.
 
+-->
+
+
+
 
 
 
 
 ---
+<h3><a href='top' name='vs_'>IDE and Compiler in one</a></h3>
+
+If you does not want to compile your code on a low level by "yourself" with mingw, cmake and a bat file and want to use an IDE for more than only a texteditor, then **Visual Studio** is your way and probably the most recommended way on Windows to create C++ Code!<br>
+To be clear: the low level way is great to do and works fine but the integration in an IDE (like Eclipse) often seems to not fully work and it is more recommended to do so once and to seeing the compiling process, but then offers no comfort and therefore switching to an IDE with an integrated C++ compiler is a good idea.
+
+**Installation**<br>
+Installation is easy:
+1. Go to the [Visual Studio website](https://visualstudio.microsoft.com/de/downloads/) and download the installer
+2. Follow the installer and choose something like 'Desktop Developement with C++' all other add-ons are most likely not needed (but choose as you wish)
+3. Set your installation path (most likely: D:/ or C:/ Visual Studio/2022/Community, Visual Studio/Packages, Visual Studio/Shared)
+
+And you are finish.
+
+Now you can create new C++ projects with Visual Studio.
+
+**Creating new C++ Projects**<br>
+Create a new empty C++ project with Visual Studio and name the project likeyou want + make sure to check the box to include the projectmap file and the project itself to one folder. Now ther should be following files and folder (the name can vary but you should be able to found them):
+```text
+Project_Name
+----| External Libs
+----| Header Files
+----| Source Files
+----| Ressource Files
+```
+The structure should be self explainable and well structured. Most likely first you want to make a *main.cpp* in the Source folder and yeah that its.
+
+**Importing External Libs**<br>
+It is recommend to create one folder on your PC with all external C++ libs. Like on *D:/cpplibs* or something like that.<br>
+Now you *right click in Visual Studio on your project folder* and go to *properties* and to *C/C++* and there to *General*. There is an option for *additional include paths* where you click and edit to add for example: 'D:\CPPlibs\SDL3-3.2.4\include'. You add there the path to the folder where the header files of your external libs are, commonly in an include folder but not always!
+
+Next you have to add your library files (not headers) to the paths. For that *right click in Visual Studio on your project folder* and go to *properties* again but next to *Linker* and there to *General*.  There is an option which keeps all paths of *additional external libraries*. You have to open this option and add the path to your lib files (some external libs does not need that) -> mos tlikely .dll, .a.lib and .lib files, example: 'D:\CPPlibs\SDL3-3.2.4\lib\x64'.
+
+**Importing External Projects**<br>
+Importing  your own custom C++ project and transform it into an Visual Studio Project is quite weird, but there is a simple way. 
+1. Just copy all your project files into an new folder and delte the olds and also the top folder. 
+2. Create a new empty C++ project with Visual Studio and name the project like your top folder name was + make sure to check the box to include the projectmap file and the project itself to one folder. 
+3. You have to create every source file and header file new in Visual Studio and then copy and paste the code in the new file. Drag and drop the files will only link the path to these files! BE careful and make it the longer but more secure way as described.
+4. Add now your external libraries as describes in the section before.
+
+Now you should be fine!
 
 
 
 
+
+
+
+---
 
 
 

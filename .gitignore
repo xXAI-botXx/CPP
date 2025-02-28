@@ -9,3 +9,5 @@ Makefile
 **/build
 **/.settings
 **/.project
+**/.vs/
+**/debug/

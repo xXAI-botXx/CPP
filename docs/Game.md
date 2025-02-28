@@ -268,30 +268,11 @@ Often the best way to learn something is to just see it in the practise and try 
 A very simple game in C++ using the Simple DirectMedia Library (SDL). [See here](../src/games/01_Simple_SDL_Game/Main.cpp) for more details to the real implementation.
 
 Installing the SDL lib:
-1. You can download the **source code** of the lib by downloading the zip folder: https://www.libsdl.org/ and unzipping it. The content can then be copied on a path you know. I recommend to create a 'CPPlibs' (or similiar name) folder and inside a 'uncompiled folder'. In this uncompiled folder you can put every source code lib which is not compiled yet, like our downloaded SDL source code.
-2. Next you also have to make sure that the lib is compiled to can use it. For that open your CMD/terminal and navigate to your external lib folder and in your SDL folder:<br>
-	```terminal
-	D:
-	cd CPPlibs/uncompiled
-	cd SDL-release-3.2.4
-	```
-3. Creating the Makefile for SDL Lib and set the output to the folder you want to have the lib:<br>
-	```terminal
-	mkdir build
-	cd build
-	cmake -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=D:/CPPlibs/SDL ..
-	```
-4. Compile your project/build:
-	```terminal
-	mingw32-make
-	mingw32-make install
-	```
-5. Now there should be 3 files in your SDL target folder:
-	- D:/CPPlibs/SDL/include/SDL3
-	- D:/CPPlibs/SDL/lib/libSDL3.a
-	- D:/CPPlibs/SDL/bin/SDL3.dll
+1. Download the latest release from https://github.com/libsdl-org/SDL/releases -> make sure to download 'SDL3-devel-3.2.4-VC.zip' (with maybe another version, but VC for Visual Studio)
+2. Add the header files (include the path to the include folder) [as described here](../README.md#vs_)
+3. Add the library files (include the path to the .lib/.dl files) [as described here](../README.md#vs_)
 
-Congratulations, now you should be able to use SDl lib. Just use it like: 
+Congratulations, now you should be able to use SDL lib. Just use it like: 
 ```c++
 #include <SDL/SDL.h>
 #include <iostream>
@@ -309,19 +290,7 @@ int main() {
 ```
 
 
-And compile it using CMake:
-```cmd
-cd D:
-cd Informatik/Projekte/CPP/src/games/01_Simple_SDL_Game
-if exist build rd /s /q build
-mkdir build
-cd build
-cmake -G "MinGW Makefiles" ..
-mingw32-make 
-copy D:\CPPlibs\SDL\bin\SDL3.dll .
-```
-
-
+And compile it using Visual Studio.
 
 With this we are ready to program a first simple game and learn some basic concepts.
 
@@ -402,7 +371,6 @@ Take aways:
 
 
 ---
-
 
 
 
