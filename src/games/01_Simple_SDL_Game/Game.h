@@ -1,18 +1,19 @@
 
-#ifndef GAME_H
-#define GAME_H
+#pragma once
+
+#include "GraphicsHandler.h"
+#include "Entity.h"
+#include "Player.h"
+#include "Wall.h"
+#include "Ball.h"
+#include "InputProcessor.h"
 
 #include <vector>
 #include <string>
 
 #include <SDL3/SDL.h>
 
-#include "Entity.h"
-#include "Player.h"
-#include "Wall.h"
-#include "Ball.h"
-#include "GraphicsHandler.h"
-#include "InputProcessor.h"
+class GraphicsHandler;
 
 class Game {
 public:
@@ -27,6 +28,8 @@ public:
 
 	// shutdown the game
 	void shutdown();
+
+	std::vector<Entity*> get_render_entities();
 
 private:
 	// 1. Input Processing
@@ -56,7 +59,7 @@ private:
 
 	std::string name;
 
-	std::vector<Entity*> walls;
+	std::vector<Wall*> walls;
 	Player* player;
 	Ball* ball;
 
@@ -67,7 +70,6 @@ private:
 };
 
 
-#endif // GAME_H
 
 
 

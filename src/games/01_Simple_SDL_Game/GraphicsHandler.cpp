@@ -1,3 +1,5 @@
+#include "GraphicsHandler.h"
+
 #include <atomic>
 #include <chrono>
 #include <thread>
@@ -7,10 +9,10 @@
 #include "Rectangle.h"
 #include "Sprite.h"
 #include "Entity.h"
-#include "GraphicsHandler.h"
+#include "Game.h"
 
-GraphicsHandler::GraphicsHandler(std::vector<Entity*>& entities, int FPS, std::string name, int width, int height, bool use_highest_fps)
-	:entities(entities), GOAL_GRAPHIC_FPS(FPS), name(name),   // Initlist
+GraphicsHandler::GraphicsHandler(Game* game, int FPS, std::string name, int width, int height, bool use_highest_fps)
+	: game(game), GOAL_GRAPHIC_FPS(FPS), name(name),   // Initlist
 	USE_HIGHEST_GRAPHIC_FPS(use_highest_fps),
 	width(width), height(height) {
 
@@ -20,7 +22,7 @@ GraphicsHandler::GraphicsHandler(std::vector<Entity*>& entities, int FPS, std::s
 }
 
 GraphicsHandler::~GraphicsHandler() {
-	
+
 }
 
 void GraphicsHandler::render_loop() {
@@ -28,6 +30,11 @@ void GraphicsHandler::render_loop() {
 	while (should_render.load()) {
 		if (!render_pause.load() && (!graphic_fps_delta_pause || USE_HIGHEST_GRAPHIC_FPS)) {
 			start_graphics_frame = std::chrono::high_resolution_clock::now();
+
+			// Update Entities
+			this->entities = this->game->get_render_entities();
+			
+			// rendering
 			render();
 		}
 

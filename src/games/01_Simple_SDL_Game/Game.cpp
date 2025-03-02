@@ -32,24 +32,24 @@ Game::Game() {
 	name = "Simple SDL Game >>Pong<<";
 
 	double column_padding = 0.05;
-	int columns = 20;
+	int columns = 10;
 	double width = 1.0 / (columns + columns * column_padding);
 	double column_step_size = column_padding + width;
 
 
 	double row_padding = 0.05;
-	int rows = 10;
-	double height = 0.5 / (rows  + rows * row_padding);
+	int rows = 5;
+	double height = 0.5 / (rows + rows * row_padding);
 	double row_step_size = row_padding + height;
 
 	std::cout << "width: " << width << ", height: " << height << std::endl;
 
 	double wall_x_pos = column_step_size;
 	double wall_y_pos;
-	for (int column = 0; column < 20; ++column) {
+	for (int column = 0; column < columns; ++column) {
 		wall_x_pos += column_step_size;
 		wall_y_pos = row_step_size;
-		for (int row = 0; row < 10; ++row) {
+		for (int row = 0; row < rows; ++row) {
 			wall_y_pos += row_step_size;
 			walls.push_back(new Wall(wall_x_pos, wall_y_pos, width, height));
 		}
@@ -57,17 +57,16 @@ Game::Game() {
 	player = new Player();
 	ball = new Ball();
 
-	// Entity* entity_player = *player;
-	// Entity* entity_ball = *ball;
-	all_entities.push_back(player);
+	/*all_entities.push_back(player);
 	all_entities.push_back(ball);
 	for (Entity* cur_wall : walls) {
 		all_entities.push_back(cur_wall);
-	}
+	}*/
+	get_render_entities();
 
 	GOAL_GRAPHICS_FPS = 60;
 	use_highest_graphics_fps = false;
-	graphics_handler = new SDLHandler(all_entities, GOAL_GRAPHICS_FPS, name, WINDOW_WIDTH, WINDOW_HEIGHT, use_highest_graphics_fps);
+	graphics_handler = new SDLHandler(this, GOAL_GRAPHICS_FPS, name, WINDOW_WIDTH, WINDOW_HEIGHT, use_highest_graphics_fps);
 	input_processor = new SDLInputProcessor();
 }
 
@@ -99,7 +98,7 @@ void Game::run_loop() {
 				// stop time for delta
 				start_frame = std::chrono::high_resolution_clock::now();
 				process_input();
-				update_game();
+				// update_game();
 				// GenerateOutput();
 			}
 
@@ -179,13 +178,13 @@ void Game::process_input() {
 			}
 
 			if (contains(keys, KEY::D) && contains(keys, KEY::A)) {
-				player->set_movement(MOVE::NOTHING);
+				player->set_movement(MOVE2D::NOTHING);
 			}
 			else if (contains(keys, KEY::A)) {
-				player->set_movement(MOVE::LEFT);
+				player->set_movement(MOVE2D::LEFT);
 			}
 			else if (contains(keys, KEY::D)) {
-				player->set_movement(MOVE::RIGHT);
+				player->set_movement(MOVE2D::RIGHT);
 			}
 
 			break;
@@ -208,7 +207,7 @@ void Game::update_game() {
 
 	// input processing
 	player->update();
-	player->set_movement(MOVE::NOTHING);
+	player->set_movement(MOVE2D::NOTHING);
 
 	// update ball
 	// ball->update();
@@ -282,6 +281,22 @@ void Game::generate_output() {
 	//	for(auto wall:walls){
 	//			wall->draw(renderer);
 	//	}
+}
+
+
+
+std::vector<Entity*> Game::get_render_entities() {
+	// refresh the all entity list
+	for (Entity* e:all_entities) {
+		delete e;
+	}
+	all_entities.clear();
+	all_entities.push_back(new Player(*player));
+	all_entities.push_back(new Ball(*ball));
+	for (Wall* cur_wall : walls) {
+		all_entities.push_back(new Wall(*cur_wall));
+	}
+	return all_entities;
 }
 
 

@@ -5,12 +5,13 @@
 
 #include <SDL3/SDL.h>
 
-#include "Entity.h"
 #include "GraphicsHandler.h"
+#include "Entity.h"
+#include "Game.h"
 
 class SDLHandler :public GraphicsHandler {
 public:
-	SDLHandler(std::vector<Entity*>& entities, int FPS, std::string name, int width, int height, bool use_highest_fps);
+	SDLHandler(Game* game, int FPS, std::string name, int width, int height, bool use_highest_fps);
 	~SDLHandler();
 
 	void render();

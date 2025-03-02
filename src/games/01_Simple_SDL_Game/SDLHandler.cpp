@@ -8,10 +8,11 @@
 #include "Rectangle.h"
 #include "Sprite.h"
 #include "GraphicsHandler.h"
+#include "Game.h"
 #include "SDLHandler.h"
 
-SDLHandler::SDLHandler(std::vector<Entity*>& entities, int FPS, std::string name, int width, int height, bool use_highest_fps)
-	: GraphicsHandler(entities, FPS, name, width, height, use_highest_fps) {
+SDLHandler::SDLHandler(Game* game, int FPS, std::string name, int width, int height, bool use_highest_fps)
+	: GraphicsHandler(game, FPS, name, width, height, use_highest_fps) {
 	window = nullptr;
 	renderer = nullptr;
 }
@@ -73,7 +74,7 @@ void SDLHandler::render() {
 			// Check Type
 			if (Rectangle* rect = dynamic_cast<Rectangle*>(data)) {
 				// extract data from data class
-				
+
 
 				// set color
 				SDL_SetRenderDrawColor(renderer, rect->fill_color.at(0), rect->fill_color.at(1), rect->fill_color.at(2), 255);

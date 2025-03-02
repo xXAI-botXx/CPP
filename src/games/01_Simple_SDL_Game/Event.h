@@ -6,7 +6,7 @@
 enum KEY {
 	A,
 	B,
-	C, 
+	C,
 	D,
 	E,
 	F,

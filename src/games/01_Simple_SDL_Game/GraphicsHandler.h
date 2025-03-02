@@ -1,15 +1,18 @@
 #pragma once
 
+#include "Game.h"
+#include "Entity.h"
+
 #include <vector>
 #include <atomic>
 #include <chrono>
 #include <string>
 
-#include "Entity.h"
+class Game;
 
 class GraphicsHandler {
 public:
-	GraphicsHandler(std::vector<Entity*>& entities, int FPS, std::string name, int width, int height, bool use_highest_fps);
+	GraphicsHandler(Game* game, int FPS, std::string name, int width, int height, bool use_highest_fps);
 	virtual ~GraphicsHandler();
 	// all in absolute values -> so that the specific game can have rel or abs system and the render still works
 	// only one responsibility!
@@ -26,6 +29,7 @@ public:
 	// void update_render_entities(std::vector<Entity*> entities);    // -> not neede, we have the real exact same vector, changes will also apply on this entity vector
 
 protected:
+	Game* game;
 	std::vector<Entity*> entities;
 	int width, height;
 	std::string name;
@@ -41,8 +45,6 @@ protected:
 	double seconds_g_frame, delta_g_time;
 	std::chrono::duration<double> duration_g_frame;
 	bool graphic_fps_delta_pause = false;
-
-
 };
 
 

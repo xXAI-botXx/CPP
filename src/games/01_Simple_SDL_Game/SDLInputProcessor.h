@@ -4,7 +4,7 @@
 #include "GraphicsHandler.h"
 #include "InputProcessor.h"
 
-class SDLInputProcessor:public InputProcessor{
+class SDLInputProcessor :public InputProcessor {
 public:
 	SDLInputProcessor();
 	~SDLInputProcessor();

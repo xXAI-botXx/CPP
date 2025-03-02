@@ -371,6 +371,7 @@ A modern and other approach to tackle the synchronization of the buffers is that
 **Render Basics**<br>
 Rendering is the process of drawing something graphical.  The renderer is the one who draws graphics.<br>
 The standard render/drawing process involves:
+
 1. Clear the back buffer (to only black for example) -> remember: the new back buffer is the old front buffer
 2. Draw the game scene
 3. Swap the back buffer with the front buffer (maybe wait if using VSync)

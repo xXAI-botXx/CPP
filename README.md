@@ -1339,6 +1339,18 @@ D:\CPPlibs\GLM
 D:\CPPlibs\VulkanSDK\1.4.304.1\Include
 ``````
 
+or relative if you copied the lib in a libs folder in your project:
+
+``````
+$(SolutionDir)/libs/GLFW/include
+$(SolutionDir)/libs/GLM
+$(SolutionDir)/libs/VulkanSDK/1.4.304.1/Include
+``````
+
+
+
+> Important note: You should make sure to hit 'Configurations' on the top left corner to 'all' 
+
 
 
 *Additional Library Directories*<br>Staying in the project properties go to *Properties* \> *Linker* \> *Input* \> *Additional External Libraries Paths* and there the path to the folder where the .lib, .dll, .a files are stored.<br>Example:
@@ -1347,6 +1359,15 @@ D:\CPPlibs\VulkanSDK\1.4.304.1\Include
 D:\CPPlibs\VulkanSDK\1.4.304.1\Lib
 D:\CPPlibs\GLFW\lib-vc2022
 ``````
+
+or relative if you copied the lib in a libs folder in your project:
+
+``````
+$(SolutionDir)/libs/VulkanSDK/1.4.304.1/Lib
+$(SolutionDir)/libs/GLFW/lib-vc2022
+``````
+
+
 
 
 

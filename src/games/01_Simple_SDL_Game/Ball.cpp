@@ -17,7 +17,14 @@ Ball::Ball() {
 
 // Destructor
 Ball::~Ball() {
-	delete velocity;
+	if (velocity) {
+		delete velocity;
+		velocity = nullptr;
+	}
+}
+
+Ball::Ball(const Ball& other) : Entity(other) {
+	velocity = new Vector2D(*other.velocity);
 }
 
 void Ball::update() {

@@ -5,8 +5,8 @@
 
 
 
-SDLInputProcessor::SDLInputProcessor(){
-	
+SDLInputProcessor::SDLInputProcessor() {
+
 }
 
 SDLInputProcessor::~SDLInputProcessor() {
@@ -30,7 +30,8 @@ bool SDLInputProcessor::poll_event(Event*& event_to_store_new_event) {
 			break;
 		}
 		return true;
-	}else{
+	}
+	else {
 		std::vector<KEY> pressed_keys;
 
 		// get keyboard inputs
@@ -39,7 +40,7 @@ bool SDLInputProcessor::poll_event(Event*& event_to_store_new_event) {
 		if (state[SDL_SCANCODE_ESCAPE]) {
 			pressed_keys.push_back(KEY::ESC);
 		}
-		
+
 		if (state[SDL_SCANCODE_A]) {
 			pressed_keys.push_back(KEY::A);
 		}
@@ -51,7 +52,7 @@ bool SDLInputProcessor::poll_event(Event*& event_to_store_new_event) {
 		if (state[SDL_SCANCODE_C]) {
 			pressed_keys.push_back(KEY::C);
 		}
-		
+
 		if (state[SDL_SCANCODE_D]) {
 			pressed_keys.push_back(KEY::D);
 		}
@@ -184,10 +185,11 @@ bool SDLInputProcessor::poll_event(Event*& event_to_store_new_event) {
 			pressed_keys.push_back(KEY::ZERO);
 		}
 
-		if(pressed_keys.size() > 0){
+		if (pressed_keys.size() > 0) {
 			event_to_store_new_event = new Event(EVENT_TYPE::PRESSED_KEY, pressed_keys);
 			return true;
-		}else {
+		}
+		else {
 			event_to_store_new_event = nullptr;
 			return false;
 		}

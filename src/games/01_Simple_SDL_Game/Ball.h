@@ -8,6 +8,7 @@
 class Ball :public Entity {
 public:
 	Ball();
+	Ball(const Ball& other);
 	~Ball();
 
 	void update();

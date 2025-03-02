@@ -3,11 +3,12 @@
 #include<vector>
 #include <SDL3/SDL.h>
 
+#include "Entity.h"
 #include "Player.h"
 
 //Constructor
 Player::Player() {
-	cur_movement = MOVE::NOTHING;
+	cur_movement = MOVE2D::NOTHING;
 	x_pos = 0.5;
 	y_pos = 0.85;
 	width = 0.05;
@@ -20,10 +21,6 @@ Player::~Player() {
 
 }
 
-void Player::set_movement(MOVE new_move) {
-	cur_movement = new_move;
-}
-
 void Player::update() {
 
 	// new position
@@ -31,12 +28,12 @@ void Player::update() {
 	double new_position_y = 0.0;
 
 	switch (cur_movement) {
-	case MOVE::NOTHING:
+	case MOVE2D::NOTHING:
 		break;
-	case MOVE::LEFT:
+	case MOVE2D::LEFT:
 		new_position_x = x_pos - step_size;
 		break;
-	case MOVE::RIGHT:
+	case MOVE2D::RIGHT:
 		new_position_x = x_pos + step_size;
 		break;
 	}

@@ -8,9 +8,18 @@
 
 #include "GraphicsData.h"
 
+
+enum MOVE2D {
+	LEFT,
+	RIGHT,
+	NOTHING
+};
+
+
 class Entity {
 public:
 	Entity() = default;
+	Entity(const Entity& other);
 	// virtual Entity; -> not possible
 	virtual ~Entity();
 
@@ -35,6 +44,7 @@ public:
 	void update_window_size(int window_width, int window_height);
 	bool collide_with_other(const Entity* other_entity);
 	std::vector<double> get_pos_info() const;
+	void set_movement(MOVE2D new_move);
 
 protected:    // is accessible in subclasses
 	double x_pos{};    // brace initialization -> init with 0
@@ -47,6 +57,9 @@ protected:    // is accessible in subclasses
 
 	int window_width{};
 	int window_height{};
+
+	double step_size = 0.01;
+	MOVE2D cur_movement = MOVE2D::NOTHING;
 };
 
 

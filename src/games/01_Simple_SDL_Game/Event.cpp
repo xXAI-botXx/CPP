@@ -6,7 +6,7 @@ Event::Event(EVENT_TYPE type) : type(type) {
 }
 
 Event::Event(EVENT_TYPE type, std::string value) : type(type), value(value) {
-	
+
 }
 
 Event::Event(EVENT_TYPE type, std::vector<KEY> pressed_keys) : type(type), pressed_keys(pressed_keys) {

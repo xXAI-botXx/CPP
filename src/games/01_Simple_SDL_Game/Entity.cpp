@@ -12,6 +12,21 @@
 #include "Entity.h"
 
 
+Entity::Entity(const Entity& other) {
+	x_pos = other.x_pos;    // brace initialization -> init with 0
+	y_pos = other.y_pos;
+	width = other.width;
+	height = other.height;
+
+	color = other.color;
+	// color_max = other.color_max;
+
+	window_width = other.window_width;
+	window_height = other.window_height;
+
+	step_size = other.step_size;
+	cur_movement = other.cur_movement;
+}
 
 // Destructor implementation
 Entity::~Entity() {
@@ -123,22 +138,32 @@ std::vector<GraphicsData*> Entity::get_graphic_data() {
 	std::vector<int> rgb_color = this->color_scaling();
 
 	GraphicsData* graphics_data = new Rectangle(
-										get_abs_x_left_corner(),
-										get_abs_y_left_corner(),
-										0.0,
-										1.0,
-										get_abs_width(),
-										get_abs_height(),
-										true,
-										COLOR_REPRESENTATION::RGBA,
-										rgb_color,
-										false,
-										COLOR_REPRESENTATION::RGBA,
-										std::vector<int>{}
-									);
+		get_abs_x_left_corner(),
+		get_abs_y_left_corner(),
+		0.0,
+		1.0,
+		get_abs_width(),
+		get_abs_height(),
+		true,
+		COLOR_REPRESENTATION::RGBA,
+		rgb_color,
+		false,
+		COLOR_REPRESENTATION::RGBA,
+		std::vector<int>{}
+	);
 
 	all_graphics_data.push_back(graphics_data);
 	return all_graphics_data;
 }
+
+
+
+void Entity::set_movement(MOVE2D new_move) {
+	cur_movement = new_move;
+}
+
+
+
+
 
 
