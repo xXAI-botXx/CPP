@@ -27,9 +27,9 @@ Ball::Ball(const Ball& other) : Entity(other) {
 	velocity = new Vector2D(*other.velocity);
 }
 
-void Ball::update() {
-	x_pos += velocity->get_x();
-	y_pos += velocity->get_y();
+void Ball::update(double delta_time) {
+	x_pos += velocity->get_x();    // * delta_time
+	y_pos += velocity->get_y();    // * delta_time
 }
 
 

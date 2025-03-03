@@ -8,7 +8,7 @@ public:
 	Wall(double x_pos, double y_pos, double width, double height);
 	~Wall();
 
-	void update();
+	void update(double delta_time);
 
 };
 

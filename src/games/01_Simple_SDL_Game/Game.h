@@ -19,6 +19,7 @@ class Game {
 public:
 	// constructor
 	Game();
+	~Game();
 
 	// init method
 	bool initialize();
@@ -36,7 +37,7 @@ private:
 	void process_input();
 
 	// 2. Update Game
-	void update_game();
+	void update_game(double delta_time);
 
 	// 3. Generate Output
 	void generate_output();

@@ -8,7 +8,7 @@ public:
 	Player();
 	~Player();
 
-	void update();
+	void update(double delta_time);
 };
 
 

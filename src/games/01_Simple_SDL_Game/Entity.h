@@ -3,6 +3,7 @@
 #pragma once
 
 #include <vector>
+#include <queue>
 #include <string>
 #include <SDL3/SDL.h>
 
@@ -38,13 +39,13 @@ public:
 	double get_rel_height();
 	std::vector<GraphicsData*> get_graphic_data();
 
-	virtual void update() = 0;
+	virtual void update(double delta_time) = 0;
 
 	std::vector<int> color_scaling();
 	void update_window_size(int window_width, int window_height);
 	bool collide_with_other(const Entity* other_entity);
 	std::vector<double> get_pos_info() const;
-	void set_movement(MOVE2D new_move);
+	void add_movement(MOVE2D new_move);
 
 protected:    // is accessible in subclasses
 	double x_pos{};    // brace initialization -> init with 0
@@ -58,8 +59,8 @@ protected:    // is accessible in subclasses
 	int window_width{};
 	int window_height{};
 
-	double step_size = 0.01;
-	MOVE2D cur_movement = MOVE2D::NOTHING;
+	double step_size = 0.1;
+	std::queue<MOVE2D> movement_queue;
 };
 
 

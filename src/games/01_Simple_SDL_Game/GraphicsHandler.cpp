@@ -19,6 +19,10 @@ GraphicsHandler::GraphicsHandler(Game* game, int FPS, std::string name, int widt
 	render_pause.store(false);
 	should_render.store(true);
 	start_graphics_frame = std::chrono::high_resolution_clock::now();
+
+	seconds_g_frame = 0.0;
+	delta_g_time = 0.0;
+	duration_g_frame = std::chrono::duration < double>(0.0);
 }
 
 GraphicsHandler::~GraphicsHandler() {

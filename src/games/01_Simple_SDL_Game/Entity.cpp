@@ -1,5 +1,6 @@
 
 #include <vector>
+#include <queue>
 #include <string>
 #include <cmath>
 #include <iostream>
@@ -25,7 +26,7 @@ Entity::Entity(const Entity& other) {
 	window_height = other.window_height;
 
 	step_size = other.step_size;
-	cur_movement = other.cur_movement;
+	movement_queue = other.movement_queue;
 }
 
 // Destructor implementation
@@ -35,11 +36,11 @@ Entity::~Entity() {
 
 // Getter
 double Entity::get_abs_x_left_corner() {
-	return (x_pos - width * 0.5) * window_width;
+	return (x_pos - (width * 0.5)) * window_width;
 }
 
 double Entity::get_abs_y_left_corner() {
-	return (y_pos - height * 0.5) * window_height;
+	return (y_pos - (height * 0.5)) * window_height;
 }
 
 double Entity::get_abs_x_center() {
@@ -158,8 +159,8 @@ std::vector<GraphicsData*> Entity::get_graphic_data() {
 
 
 
-void Entity::set_movement(MOVE2D new_move) {
-	cur_movement = new_move;
+void Entity::add_movement(MOVE2D new_move) {
+	movement_queue.push(new_move);
 }
 
 

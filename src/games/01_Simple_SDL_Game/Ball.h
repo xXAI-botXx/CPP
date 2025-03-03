@@ -11,7 +11,7 @@ public:
 	Ball(const Ball& other);
 	~Ball();
 
-	void update();
+	void update(double delta_time);
 	bool is_on_bottom();
 	void bounce(const Vector2D& normal);
 

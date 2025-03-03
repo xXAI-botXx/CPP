@@ -18,7 +18,7 @@ Wall::~Wall() {
 
 }
 
-void Wall::update() {
+void Wall::update(double delta_time) {
 
 }
 

@@ -14,7 +14,10 @@ SDLInputProcessor::~SDLInputProcessor() {
 }
 
 bool SDLInputProcessor::poll_event(Event*& event_to_store_new_event) {
-	delete event_to_store_new_event;
+	if (event_to_store_new_event) {
+		delete event_to_store_new_event;
+		event_to_store_new_event = nullptr;
+	}
 
 	SDL_Event event;
 
