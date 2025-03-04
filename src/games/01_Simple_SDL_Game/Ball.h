@@ -15,6 +15,8 @@ public:
 	bool is_on_bottom();
 	void bounce(const Vector2D& normal);
 
+	Vector2D* get_velocity();
+
 private:
 	Vector2D* velocity;
 };

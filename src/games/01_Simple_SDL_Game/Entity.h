@@ -59,7 +59,7 @@ protected:    // is accessible in subclasses
 	int window_width{};
 	int window_height{};
 
-	double step_size = 0.1;
+	double step_size = 0.85;
 	std::queue<MOVE2D> movement_queue;
 };
 

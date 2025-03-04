@@ -68,6 +68,7 @@ private:
 
 	int GOAL_GRAPHICS_FPS = 60;
 	bool use_highest_graphics_fps;
+	double DELTA_TIME_LIMIT = 1.0;
 };
 
 

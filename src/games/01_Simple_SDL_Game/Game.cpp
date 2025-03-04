@@ -86,7 +86,7 @@ bool Game::initialize() {
 void Game::run_loop() {
 	// init variables
 	std::chrono::time_point<std::chrono::high_resolution_clock> start_frame, end_frame;
-	double seconds_frame, delta_time;
+	double delta_time, goal_delta_time;
 	delta_time = 0.0;
 	std::chrono::duration<double> duration_frame;
 
@@ -100,6 +100,8 @@ void Game::run_loop() {
 	// while(this->should_run){
 	while (should_run) {
 
+		delta_time = std::min(delta_time, DELTA_TIME_LIMIT);
+
 		// run frame
 		if (!game_fps_delta_pause) {
 			// stop time for delta
@@ -112,23 +114,23 @@ void Game::run_loop() {
 		// add delta time, to come to Game FPS
 		end_frame = std::chrono::high_resolution_clock::now();
 		duration_frame = end_frame - start_frame;
-		seconds_frame = duration_frame.count();
-		delta_time = static_cast<double>(DURATION_GAME_FRAME) - seconds_frame;
+		delta_time = duration_frame.count();
+		goal_delta_time = static_cast<double>(DURATION_GAME_FRAME) - delta_time;
 
-		if (delta_time > 0.0) {
+		if (goal_delta_time > 0.0) {
 			// sleep
 			// std::this_thread::sleep_for(std::chrono::duration<double>(delta_time));
 
 			// wait the delta time
-			while (std::chrono::high_resolution_clock::now() - end_frame < std::chrono::duration<double>(delta_time)) {
+			while (std::chrono::high_resolution_clock::now() - end_frame < std::chrono::duration<double>(goal_delta_time)) {
 				std::this_thread::yield(); // Allows other threads to run
 			}
 		}
 
 		// set Game pause or not with FPS
-		if (delta_time > 0.0) {
+		if (goal_delta_time > 0.0) {
 			game_fps_delta_pause = true;
-			// std::this_thread::sleep_for(std::chrono::duration<double>(delta_time));
+			// std::this_thread::sleep_for(std::chrono::duration<double>(goal_delta_time));
 		}
 		else {
 			// reset and ready for the next frame
@@ -235,7 +237,7 @@ void Game::update_game(double delta_time) {
 		}
 
 		// check for collision with player
-		if (player->collide_with_other(ball)) {
+		if (ball->collide_with_other(player)) {
 			std::vector<double> pos_info = player->get_pos_info();
 			double player_width = pos_info.at(2);
 			double player_height = pos_info.at(3);
@@ -243,7 +245,8 @@ void Game::update_game(double delta_time) {
 			double player_y_pos = pos_info.at(1) - player_width / 2;
 			double player_x_pos_2 = player_x_pos + player_width;
 			double player_y_pos_2 = player_y_pos + player_height;
-			Vector2D normal = Vector2D((player_y_pos_2 - player_y_pos), (player_x_pos_2 - player_x_pos));    // in stack
+			// Vector2D normal = Vector2D((player_y_pos_2 - player_y_pos), (player_x_pos_2 - player_x_pos));    // in stack
+			Vector2D normal = Vector2D(0.0, 1.0);
 			ball->bounce(normal);
 		}
 		else {

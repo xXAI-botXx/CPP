@@ -39,10 +39,10 @@ void Player::update(double delta_time) {
 			case MOVE2D::NOTHING:
 				break;
 			case MOVE2D::LEFT:
-				new_position_x = x_pos - step_size;    // * delta_time
+				new_position_x = x_pos - step_size * delta_time;
 				break;
 			case MOVE2D::RIGHT:
-				new_position_x = x_pos + step_size;    // * delta_time
+				new_position_x = x_pos + step_size * delta_time;
 				break;
 			}
 

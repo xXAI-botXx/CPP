@@ -1,5 +1,6 @@
 
-#include<vector>
+#include <vector>
+#include <random>
 #include <SDL3/SDL.h>
 
 #include "Math.h"
@@ -12,7 +13,12 @@ Ball::Ball() {
 	width = 0.02;
 	height = width;
 	color = std::vector<double>{ 1.0, 1.0, 1.0, 1.0 };
-	velocity = new Vector2D(0.01, 0.01);    // in heap
+
+	std::random_device rd;  // Hardware-Seed (if available)
+	std::mt19937 gen(rd()); // Mersenne Twister PRNG
+	std::uniform_real_distribution<double> dist(-0.25, 0.25);
+	double x_speed = dist(gen);
+	velocity = new Vector2D(x_speed, 0.25-x_speed);    // in heap
 }
 
 // Destructor
@@ -28,8 +34,8 @@ Ball::Ball(const Ball& other) : Entity(other) {
 }
 
 void Ball::update(double delta_time) {
-	x_pos += velocity->get_x();    // * delta_time
-	y_pos += velocity->get_y();    // * delta_time
+	x_pos += velocity->get_x() * delta_time;
+	y_pos += velocity->get_y() * delta_time;
 }
 
 
@@ -46,6 +52,11 @@ void Ball::bounce(const Vector2D& normal) {
 	Vector2D* n = new Vector2D(normal.normalize());    // in stack
 	velocity = new Vector2D((*velocity) - (*n) * (2 * (*velocity).dot(*n)));
 	delete n;
+}
+
+
+Vector2D* Ball::get_velocity() {
+	return this->velocity;
 }
 
 

@@ -4,13 +4,16 @@
 #include <string>
 #include <cmath>
 #include <iostream>
+#include <algorithm>
 #include <SDL3/SDL.h>
 
 #include "Math.h"
 #include "GraphicsData.h"
 #include "Rectangle.h"
+#include "Ball.h"
 
 #include "Entity.h"
+
 
 
 Entity::Entity(const Entity& other) {
@@ -114,10 +117,23 @@ bool Entity::collide_with_other(const Entity* other_entity) {
 	double other_width = pos_info.at(2);
 	double other_height = pos_info.at(3);
 
+	double other_radius = std::max(other_width / 2, other_height / 2);
+	double radius = std::max(width / 2, height / 2);
+
 	// check fast with circle distant and then with SAT
 	if (abs(x_pos - other_x_pos) + abs(y_pos - other_y_pos) <= (width / 2 + other_width / 2 + height / 2 + other_height / 2)) {
 		// calc now with SAT
 		// ... FIXME
+
+		// only if velocity is towards the object
+		if (Ball* ball = dynamic_cast<Ball*>(this)) {
+			if (this->y_pos >= other_y_pos && ball->get_velocity()->get_y() >= 0.0) {
+				return false;
+			}
+			else if (this->y_pos < other_y_pos && ball->get_velocity()->get_y() < 0.0) {
+				return false;
+			}
+		}
 		return true;
 	}
 	return false;

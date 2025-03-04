@@ -376,7 +376,13 @@ The standard render/drawing process involves:
 2. Draw the game scene
 3. Swap the back buffer with the front buffer (maybe wait if using VSync)
 
-FIXME
+**Games have 2 FPS's**<br>Games often have 2 different FPS (Frames per Seconds), one which defines the goal frames per seconds for updating the game logic and one for rendering the game scene to the screen. Most likely a game runs in different threads. One for the main game loop, one for rendering and one for the audio system. In that way the rendering have it's own loop and can have more FPS than the game logic, which is pretty common. To keep this goal of frames per seconds we wait if the frame was too fast (called **frame limiting**). For example if we want to have 30 frames per second, every frame should not be faster than $1/30$. If the frame is faster, we wait or set a bool to not updating, until the time of the frame is enough.
+
+**Delta Time**<br>The delta time is the time from the last frame to the new frame and it get used to check if the goal FPS is reached or not. But delta time is also used for something else, games often want to make movement updates dependent on the delta time. This allows to change the FPS (not rendering) of the game and still have the same gameplay, else the game would be much faster or slower. It changes the subject from *movement frame per second* to *movement per second* because the delta time should be about 1.0 after one second. So the variables should be set to reach this value in one second and not every frame, in that the movement is independent of the amount of frames.<br>It also can be important to limit the delta time, so it can't get too high, for example during debugging the code.
+
+```c++
+delta_time = std::min(delta_time, DELTA_TIME_LIMIT);
+```
 
 
 
@@ -384,7 +390,11 @@ Take aways:
 - How to include an external library (SDL)
 - Double Buffering Concept
 - VSync
-- ...
+- 2 FPS
+- Frame Limiting
+- Delta Time
+- Graphic Threading (in the code)
+- Abstraction of for example Graphics and Input-Processing, for easy changing these (see code)
 
 
 

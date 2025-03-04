@@ -13,108 +13,138 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Quelldateien\core">
+      <UniqueIdentifier>{ecd76af6-c25e-41da-92ee-ffb618ea323a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\input">
+      <UniqueIdentifier>{20985f98-9672-4501-be5d-9baf5b4fe609}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\output">
+      <UniqueIdentifier>{c0bd765b-a3d4-4a30-9b4a-d31fdf5cf80f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\entities">
+      <UniqueIdentifier>{2b2e54b1-8db6-4b3d-bbfd-63a3848c1501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\helper">
+      <UniqueIdentifier>{93f6f7ab-fdce-43b5-a820-f1269f473945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\core">
+      <UniqueIdentifier>{79b7c419-988d-4fab-9d39-20918adfb090}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\entities">
+      <UniqueIdentifier>{26e375b3-4632-44cc-b13c-c76960eda4bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\helper">
+      <UniqueIdentifier>{41fcb9ae-d36b-4491-b946-83329d0ed7bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\output">
+      <UniqueIdentifier>{9a719a56-a9ff-43dd-bba4-c073d74a62cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\input">
+      <UniqueIdentifier>{d07dfc11-bea9-4816-a882-a059ed00f882}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Rectangle.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Quelldateien</Filter>
+    <ClCompile Include="AudioHandler.cpp">
+      <Filter>Quelldateien\output</Filter>
     </ClCompile>
     <ClCompile Include="Ball.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\entities</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Math.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioHandler.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicsHandler.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="SDLHandler.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="SDLInputProcessor.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\entities</Filter>
     </ClCompile>
     <ClCompile Include="Event.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Quelldateien\core</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsHandler.cpp">
+      <Filter>Quelldateien\output</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Quelldateien\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>Quelldateien\helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Quelldateien\output</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Quelldateien\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>Quelldateien\output</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLHandler.cpp">
+      <Filter>Quelldateien\output</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLInputProcessor.cpp">
+      <Filter>Quelldateien\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Quelldateien\output</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicsData.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Rectangle.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Shape2D.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Shape3D.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Headerdateien</Filter>
+    <ClInclude Include="AudioHandler.h">
+      <Filter>Headerdateien\output</Filter>
     </ClInclude>
     <ClInclude Include="Ball.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\entities</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Math.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioHandler.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicsHandler.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="SDLHandler.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="InputProcessor.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\entities</Filter>
     </ClInclude>
     <ClInclude Include="Event.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Headerdateien\core</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsData.h">
+      <Filter>Headerdateien\output</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsHandler.h">
+      <Filter>Headerdateien\output</Filter>
+    </ClInclude>
+    <ClInclude Include="InputProcessor.h">
+      <Filter>Headerdateien\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Headerdateien\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Headerdateien\output</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Headerdateien\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Headerdateien\output</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLHandler.h">
+      <Filter>Headerdateien\output</Filter>
     </ClInclude>
     <ClInclude Include="SDLInputProcessor.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape2D.h">
+      <Filter>Headerdateien\output</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape3D.h">
+      <Filter>Headerdateien\output</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Headerdateien\output</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>Headerdateien\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
