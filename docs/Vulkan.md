@@ -28,6 +28,10 @@ It is recommended to install all external C++ libs in one folder (CPPlibs or cpp
 
 
 
+The **GLFW** is used to create a window and as an interface to the operating system. There are also other frameworks which also could be used instead...for example SDL.<br>**GLM** is used for mathematics. It is a specific library for math for OpenGL and therefore also can be used for vulkan.<br>And **Vulkan** is the graphic/render library itself.
+
+
+
 ---
 
 ### The First Program
@@ -41,6 +45,10 @@ D:\CPPlibs\GLFW\include
 D:\CPPlibs\GLM
 D:\CPPlibs\VulkanSDK\1.4.304.1\Include
 ``````
+
+
+
+> Make sure to hit 'configuration:' on the top-left corner and choose *all*.
 
 
 
@@ -64,7 +72,55 @@ glfw3.lib
 
 The specific names can vary due to language or updates, but the meaning stays the same.
 
-Now you are ready to program!
+Now you are ready to program! Following main.cpp code should check if your setup works. The extension count should be about the number 12 it says how much extensions of vulkan are found.
+
+
+
+````c++
+#include <iostream>
+
+// #include <vulkan/vulkan.h>
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
+
+#define GLM_FORCE_RADIANS
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#include <glm/glm.hpp>
+#include <glm/mat4x4.hpp>
+
+
+int main() {
+	// init window with glfw
+	glfwInit();
+	// init window to no API, because not OpenGL, we use Vulkan
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+	GLFWwindow* window = glfwCreateWindow(800, 600, "Test Window", nullptr, nullptr);
+	
+	// vulkan check
+	uint32_t extension_count = 0;
+	vkEnumerateInstanceExtensionProperties(nullptr, &extension_count, nullptr);
+
+	printf("Extension Count:%i\n", extension_count);
+
+	// glm check
+	glm::mat4 test_matrix(1.0f);
+	glm::vec4 test_vector(1.0f);
+	auto test_result = test_matrix * test_vector;
+
+
+	while (!glfwWindowShouldClose(window)) {
+		glfwPollEvents();
+	}
+
+	// destroying
+	glfwDestroyWindow(window);
+	glfwTerminate();
+
+	return 0;
+}
+````
+
+
 
 
 
