@@ -99,6 +99,9 @@ void SDLHandler::render() {
 			else if (Sprite* circ = dynamic_cast<Sprite*>(data)) {
 				// FIXME
 			}
+
+			// cleanup
+			delete data;
 		}
 	}
 
