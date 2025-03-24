@@ -9,6 +9,7 @@ Knowledge about graphics rendering with Vulkan is collected here.
 Contents:
 - [Installation](#installation)
 - [The First Program](#the-first-program)
+- [Vulkan Init](#vulkan-init)
 - ...
 
 
@@ -121,6 +122,20 @@ int main() {
 ````
 
 
+
+---
+
+### Vulkan Init
+
+Every Vulkan application first have to create a **Vulkan Instance** which is a reference to the vulkan context. A vulkan application have to set the vulkan version and the used device in order to init the Vulkan Instance.
+
+A **Device** can be *Physical Device* or a *Logical Device*. <br>A physical device is a real existing device like the GPU. It have a memory and queues which contains the commands processed by the GPU. A physical device have most likely multiple queues and the queues are grouped for different taks (seperated into queue families). There are *graphics queues*, *compute queues* and *transfer queues* (for transfering data to another location). When choosing/enumerate the right physical device, it have to be ensured that the device have the queue families which will be used. Different to most other vulkan concepts physical devices can't be created but only retrieved through it is a real device and can't be created.<br>Logical devices are just interfaces for the real/physical devices to interact with the physical devices. Logical devices have to be created with a definition of the available queue families, the amount of queues in the families, the device features (like Geometry Shader, anisotropy, ...), and the used extensions.
+
+**Extensions** are external code which defines the window on the given platform and helps vulkan rendering the image to the window. Most common extensions come with Vulkan. An easy way is to use GLFW as window extension and it will automatically choose the right extensions for us.
+
+**GLFW** stands for *Graphics Library Framework* and was originally designed for OpenGL, but works fine with Vulkan. It is also cross-plattform and makes the window creation. Theoratically it is possible to make this by your own, but to make it cross-platform it would be much harder. As said GLFW will detect the current operating system and will choose the right vulkan extension for window creation. The function is: *glfwGetRequiredInstanceExtensions(...)* which will return a list of the vulkan extensions needed.
+
+**Validation Layers** are needed to validate your vulkan code, else it will be very hard to find mistakes. There are different layers to check different parts of the vulkan code and validations are similiar to extensions, because they are external and does not come from the core.
 
 
 
