@@ -185,7 +185,7 @@ bool VulkanRenderer::check_instance_extensions_support(std::vector<const char*>*
 }
 
 bool VulkanRenderer::check_device_suitable(VkPhysicalDevice device) {
-	/*
+	/**
 	// Get Information about the device (ID, name, type, vendor, etc.)
 	VkPhysicalDeviceProperties device_properties;
 	vkGetPhysicalDeviceProperties(device, &device_properties);

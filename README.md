@@ -14,12 +14,13 @@ May use it as a reference ❤️
 - <h4><a href="./docs/Game.md">Gaming</a></h4>
 - <h4><a href="./docs/OpenGL.md">OpenGL</a></h4>
 - <h4><a href="./docs/Vulkan.md">Vulkan</a></h4>
+- <h4><a href="./docs/Vulkan_Compute.md">Vulkan Compute</a></h4>
 - <h4><a href="#installation_">Installation of GNU Compiler Collection</a></h4>
 - <h4><a href="#runcppcode">Run C++ Code with GNU</a></h4>
 - <h4><a href="#cmake_">CMake</a></h4>
 - <h4><a href="#ide_">Using an IDE</a></h4>
 - <h4><a href="#vs_">IDE and Compiler in one</a></h4>
-- - <h4><a href="#own_cpp_lib_">Own C++ Library</a></h4>
+- <h4><a href="#own_cpp_lib_">Own C++ Library</a></h4>
 
 <br><br>
 
@@ -1356,17 +1357,17 @@ $(SolutionDir)/libs/VulkanSDK/1.4.304.1/Include
 
 *Additional Library Directories*<br>Staying in the project properties go to *Properties* \> *Linker* \> *Input* \> *Additional External Libraries Paths* and there the path to the folder where the .lib, .dll, .a files are stored.<br>Example:
 
-``````
+```
 D:\CPPlibs\VulkanSDK\1.4.304.1\Lib
 D:\CPPlibs\GLFW\lib-vc2022
-``````
+```
 
 or relative if you copied the lib in a libs folder in your project:
 
-``````
+```
 $(SolutionDir)/libs/VulkanSDK/1.4.304.1/Lib
 $(SolutionDir)/libs/GLFW/lib-vc2022
-``````
+```
 
 
 
@@ -1374,10 +1375,10 @@ $(SolutionDir)/libs/GLFW/lib-vc2022
 
 *Additional Dependencies*<br>Lastly click on *Properties* \> *Linker* \> *General* \> *Additional Dependencies* and add just the name of the lib files.<br>Example:
 
-``````
+```
 vulkan-1.lib
 glfw3.lib
-``````
+```
 
 
 The specific names can vary due to language or updates, but the meaning stays the same.
@@ -1407,34 +1408,34 @@ If you want to create your own C++ library than you are here right. In following
 3. Open Visual Studio and create a new *Dynamische Bibliothek (DLL)* or *Statische Bibliothek (LIB)* -> dynamic if you have many external libraries else static should be fine + make sure to create the solution file outside of the project folder (uncheck the box) + the location should be the folder, where your git project was created/cloned to and the name should be same from the git and vs
 4. create a *tensor-rush.hpp* with -> same name as your project:
 	```cpp
-#pragma once
+    #pragma once
 
 
-#ifdef TENSOR_RUSH_EXPORTS
-#define TENSOR_RUSH_API __declspec(dllexport)
-#else
-#define TENSOR_RUSH_API __declspec(dllimport)
-#endif
+    #ifdef TENSOR_RUSH_EXPORTS
+    #define TENSOR_RUSH_API __declspec(dllexport)
+    #else
+    #define TENSOR_RUSH_API __declspec(dllimport)
+    #endif
 
 
-class TENSOR_RUSH_API MeineKlasse {
-public:
-    MeineKlasse();
-    void sagHallo();
-};
-	```
-5. create a *tensor-rush.cpp* with -> same name as your project:
-	```cpp
-#include "pch.h"
-#include "tensor-rush.hpp"
+    class TENSOR_RUSH_API MeineKlasse {
+    public:
+        MeineKlasse();
+        void sagHallo();
+    };
+        ```
+    5. create a *tensor-rush.cpp* with -> same name as your project:
+        ```cpp
+    #include "pch.h"
+    #include "tensor-rush.hpp"
 
-#include <iostream>
+    #include <iostream>
 
-MeineKlasse::MeineKlasse() {}
+    MeineKlasse::MeineKlasse() {}
 
-void MeineKlasse::sagHallo() {
-    std::cout << "Hallo von der Bibliothek!" << std::endl;
-}
+    void MeineKlasse::sagHallo() {
+        std::cout << "Hallo von der Bibliothek!" << std::endl;
+    }
 	```
 6. You also have to add the Export key, so go to ```right-click on the lib project > properties > C/C++ > Preprocessor > Preprocessordefinitions``` and add there *TENSOR_RUSH_EXPORTS*
 7. With ```right-click on the project > build```, you can *build* it, which will create the .dll and .lib files 
@@ -1445,14 +1446,14 @@ void MeineKlasse::sagHallo() {
 	4. You have to ```right-click on the test project > properties > Linker > Input > Additional Dependencies``` and add all .lib names (here for example tensor-rush.lib)
 	5. Now  you can try to use your lib.  Main.cpp:
         ```cpp
-#include <iostream>
-#include "meine_lib.hpp"
+        #include <iostream>
+        #include "meine_lib.hpp"
 
-int main() {
-    MeineKlasse obj;
-    obj.sagHallo();
-    return 0;
-}
+        int main() {
+            MeineKlasse obj;
+            obj.sagHallo();
+            return 0;
+        }
         ```
 	6. To run the test, you have to click the small arrow next to the green running arrow button and choose *startproject configure* and choose there that the test should run if the button is clicked.
 9. You can share your .h, .dll and .lib, so that other can use your library.
