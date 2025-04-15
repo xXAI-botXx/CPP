@@ -21,6 +21,7 @@ May use it as a reference ❤️
 - <h4><a href="#ide_">Using an IDE</a></h4>
 - <h4><a href="#vs_">IDE and Compiler in one</a></h4>
 - <h4><a href="#own_cpp_lib_">Own C++ Library</a></h4>
+- <h4><a href="#testing_">Testing</a></h4>
 
 <br><br>
 
@@ -1466,13 +1467,13 @@ It is often recommended to create a folder structure, so that your code is well 
 ```
 tensor-rush/
 │── include/                  # header files
-│   ├── tensor-rush.hpp       # main header
+│   ├── tensor-rush.h         # main header
 │   ├── core/
-│   │   ├── log.hpp           # Logging-Functions
-│   │   ├── math.hpp          # Math-Functions
+│   │   ├── log.h             # Logging-Functions
+│   │   ├── math.h            # Math-Functions
 │   ├── utils/
-│   │   ├── file_io.hpp       # File Operations
-│   │   ├── string_utils.hpp  # String-Utilities
+│   │   ├── file_io.h         # File Operations
+│   │   ├── string_utils.h    # String-Utilities
 │
 │── src/                      # cpp files
 │   ├── tensor-rush.cpp       # main implementation
@@ -1499,12 +1500,68 @@ Congratulations!!! You should be able now to make your own lib! 😇
 
 
 
+
+
 ---
+<h3><a href='top' name='testing_'>Testing</a></h3>
+
+One of the easiest and best testing methods with C++ is the [Catch 2](https://github.com/catchorg/Catch2/releases). It is super simple.
+
+1. Go to https://github.com/catchorg/Catch2/releases/tag/v2.13.9 and download the latest .hpp file from the version **v2** (only the hpp file)
+2. Add the .hpp into your project
+3. Add testing code into a new test.cpp file
+4. Compile your test file:
+    ```
+    g++ -std=c++17 tests.cpp -o tests
+    ```
+    Run:
+    ```
+    ./tests
+    ```
+
+That's it. Let's look at the tests.cpp:
+
+```cpp
+// test head
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
+
+// import code to test
+// -> #include "your_file.h"
+// lets define some code here for this example, but commonly you just want to include your code
+int add(int a, int b) {
+    return a + b;
+}
+
+int multiply(int a, int b) {
+    return a * b;
+}
+
+// start testing
+
+TEST_CASE("Addition works", "[math]") {
+    REQUIRE(add(2, 3) == 5);
+    REQUIRE(add(-1, 1) == 0);
+    REQUIRE(add(0, 0) == 0);
+}
+
+TEST_CASE("Multiplication works", "[math]") {
+    REQUIRE(multiply(2, 3) == 6);
+    REQUIRE(multiply(5, 0) == 0);
+    REQUIRE(multiply(-2, 3) == -6);
+}
+
+TEST_CASE("Failing test example", "[fail]") {
+    REQUIRE(add(1, 1) == 2);  // This will pass
+    // REQUIRE(add(1, 1) == 3);  // Uncomment to see failure
+
+```
 
 
 
 
 
+---
 
 
 
