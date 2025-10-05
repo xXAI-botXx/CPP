@@ -47,25 +47,107 @@ May use it as a reference ❤️
 This part contains the most essential knowledge about C++ shorten for a lunch break.
 
 <a name="bascis_top_">Contents:</a>
+- <a href="#basics_header_cpp">Header and C++ Files</a>
 - <a href="#basics_stack_and_heap_">Stack and Heap</a>
 - <a href="#basics_datatypes_">Datatypes</a>
 - <a href="#basics_flow_structures_">Flow Structures</a>
 - <a href="#basics_value_categories_">Value Categories</a>
 - <a href="#basics_variable modifier_">Variable Modifiers</a>
 - <a href="#basics_pointers_">Pointers</a>
+- <a href="#basics_smart_pointers_">Smart Pointers</a>
 - <a href="#basics_references_">References</a>
 - <a href="#basics_arrays_">Arrays</a>
 - <a href="#basics_templates_">Templates</a>
 - <a href="#basics_namespaces_">Namespaces and Headerfiles</a>
 - <a href="#basics_std_">Standard Library</a>
 - <a href="#basics_classes_">Classes</a>
+- <a href="#basics_error_handling_">Error Handling</a>
 - <a href="#basics_best_practises_">Best Practises</a>
+- <a href="#basics_modern_cpp_">Modern C++</a>
 - <a href="#basics_examples_">Examples</a>
 
 
 
 
 It follows some keyconcepts to keep in mind when working with C++.
+
+<br><br>
+
+<a name="basics_header_cpp" href="#bascis_top_">^</a><br>
+**Header Files and C++ Files**
+
+In modern C++, projects are typically divided into header files (.h / .hpp) and implementation files (.cpp).<br>
+This separation improves readability, reusability, and compile times.
+
+<br><br>
+
+**Header Files (`.h` / `.hpp`)**
+
+Header files contain declarations — not implementations.
+
+They usually include:
+- Class and struct definitions
+- Function declarations (signatures)
+- Constants, enums, type aliases
+- Inline or template function definitions (when required)
+
+Example:
+```c++
+// MathUtils.hpp
+
+#ifndef MATHUTILS_HPP
+#define MATHUTILS_HPP
+#include <vector>
+
+class MathUtils {
+public:
+	static double mean(const std::vector<double>& values);
+};
+
+#endif
+```
+
+During the prepare step the code from the header files will be added to the places where `#include "my_awesome.h"` calls them. To make sure that your definitions only get imported once (duplicated definitions are not allowed) you have to add code to make sure that your code only processes once.
+
+A modern but not standard way is one line in the .h file `#pragma once` but soe compiler may process this differently. Therfeore this standard method is recommended:
+```c++
+#ifndef MY_FILE_NAME_H
+#define MY_FILE_NAME_H
+
+// ...
+
+#endif
+```
+
+The name have to given capatelized and with `H` or `HPP`.
+
+Not standard way:
+```c++
+#pragma once
+
+// ...
+```
+
+<br><br>
+
+**Implementation Files (`.cpp`)**
+
+Implementation files contain the definitions (bodies) of declared functions and methods.
+
+```c++
+// MathUtils.cpp
+#include "MathUtils.hpp"
+#include <numeric>
+
+double MathUtils::mean(const std::vector<double>& values) {
+	if (values.empty()) return 0.0;
+	double sum = std::accumulate(values.begin(), values.end(), 0.0);
+	return sum / values.size();
+}
+```
+
+
+<br><br>
 
 <a name="basics_stack_and_heap_" href="#bascis_top_">^</a><br>
 **Stack and Heap**<br>
@@ -287,6 +369,101 @@ int main() {
 }
 ```
 Important: 'const' makes not the pointer constant but it's value address.
+
+> Do not use such pointers in modern code!!! Use smartpointers instead.
+
+
+<br><br>
+
+<a name="basics_smart_pointers_" href="#bascis_top_">^</a><br>
+**Smart Pointer**
+
+Smart pointers are **RAII (Resource Acquisition Is Initialization)** objects that automatically manage memory.
+They are defined in `<memory>` and replace raw pointers (`new` / `delete`) in modern C++.
+
+Smart pointers ensure that dynamically allocated memory is **automatically released** when the pointer goes out of scope — avoiding memory leaks and dangling pointers.
+
+Use:<br>
+`std::make_unique<T>()` and `std::make_shared<T>()`
+
+<br><br>
+
+**std::unique_ptr**
+
+Owns a resource exclusively. Only one unique_ptr can manage a given object at a time.
+
+```c++
+#include <memory>
+#include <iostream>
+
+struct Entity {
+	Entity(int id) : id(id) { std::cout << "Created " << id << '\n'; }
+	~Entity() { std::cout << "Destroyed " << id << '\n'; }
+	int id;
+};
+
+int main() {
+    // std::unique_pointer<Entity> e = std::make_unique<Entity>(42);
+	auto e = std::make_unique<Entity>(42);
+	std::cout << e->id << '\n';
+
+	// Ownership transfer
+	auto e2 = std::move(e);   // e is now nullptr
+	if (!e) std::cout << "e no longer owns the Entity\n";
+}
+```
+
+> Do not copy a `unique_ptr`. Ownership can only be moved.
+
+<br><br>
+
+**std::shared_ptr**
+
+Allows shared ownership of a resource.
+The object is destroyed automatically when the last `shared_ptr` reference is gone.
+
+```c++
+#include <memory>
+#include <iostream>
+
+struct Entity {
+	Entity() { std::cout << "Created\n"; }
+	~Entity() { std::cout << "Destroyed\n"; }
+};
+
+int main() {
+	auto e1 = std::make_shared<Entity>();
+	{
+		auto e2 = e1; // shared ownership
+		std::cout << "Use count: " << e1.use_count() << '\n';
+	} // e2 destroyed, count decreases
+
+	std::cout << "Use count: " << e1.use_count() << '\n';
+} // last shared_ptr destroyed -> object deleted
+```
+
+**std::weak_ptr**
+
+A non-owning reference to a shared_ptr resource.<br>
+Used to observe shared ownership without extending its lifetime.
+
+```c++
+#include <memory>
+#include <iostream>
+
+struct Entity {
+	void speak() { std::cout << "Hello!\n"; }
+};
+
+int main() {
+	auto shared = std::make_shared<Entity>();
+	std::weak_ptr<Entity> weak = shared;
+
+	if (auto locked = weak.lock()) { // try to get a shared_ptr
+		locked->speak();
+	}
+} // shared destroyed -> weak becomes expired
+```
 
 
 
@@ -839,7 +1016,7 @@ public:
 		delete[] this.mArray 
 	}
 	
-	// MEthods
+	// Methods
 	int& at(int index){
 		return this.mArray[index];
 	}
@@ -884,8 +1061,8 @@ Compley result = c1+c2;
 
 There is also operator== for example. You can overload / define a behaviour for most likely any sign using the operator method. For example the stream lib from std does this with the \>\> signs to connect outputs.
 
-Another important concept is the inheritance and abstract methods. Classes can have subclasses and to make sure that the subclass implement a method you can use *= 0* after the method head (see the example). The *virtual* keyword defines that the method can be inherited and therefore it makes clear which method to call if you have a object from subclass type but your variable is from the topclass (see example). The constructor can't be virtual because it can't be inherited and there is also no case where this could lead to confusion.<br>
-The *:* after the classname head defines the class rom which to inherit.
+Another important concept is the inheritance and abstract methods. Classes can have subclasses and to make sure that the subclass implement a method you can use `= 0` after the method head (see the example). The `virtual` keyword defines that the method can be inherited and therefore it makes clear which method to call if you have a object from subclass type but your variable is from the topclass (see example). The constructor can't be virtual because it can't be inherited and there is also no case where this could lead to confusion.<br>
+The `:` after the classname head defines the class rom which to inherit.
 
 
 ```c++
@@ -913,15 +1090,196 @@ delete entity;  // What happens here?
 
 <br><br>
 
+<a name="basics_error_handling_" href="#bascis_top_">^</a><br>
+**Error Handling**
+
+Modern C++ encourages safe and expressive error handling that avoids undefined behavior and ensures resources are released automatically.
+
+**Exceptions**
+
+Exceptions are the standard mechanism to report and handle errors in modern C++.
+
+```c++
+#include <stdexcept>
+#include <iostream>
+
+int divide(int a, int b) {
+	if (b == 0)
+		throw std::invalid_argument("Division by zero");
+	return a / b;
+}
+
+int main() {
+	try {
+		std::cout << divide(10, 0) << '\n';
+	} 
+	catch (const std::exception& e) {
+		std::cerr << "Error: " << e.what() << '\n';
+	}
+}
+```
+
+Common exceptions (`<stdexcept>`):
+- `std::invalid_argument`
+- `std::out_of_range`
+- `std::runtime_error`
+- `std::logic_error`
+- `std::overflow_error`
+
+Throwing an exception is easy:
+```c++
+#include <stdexcept>
+
+throw std::runtime_error("Cannot open file");
+```
+
+You can mark functions as noexcept when they are guaranteed not to throw.
+```c++
+void logMessage(const std::string& msg) noexcept {
+	std::cout << msg << '\n';
+}
+```
+
+Example for files after the *Resource Acquisition Is Initialization* (RAII):
+```c++
+#include <fstream>
+#include <stdexcept>
+
+void writeFile() {
+	std::ofstream file("output.txt");
+	if (!file)
+		throw std::runtime_error("Cannot open file");
+	file << "Hello Modern C++!\n";
+} // file closed automatically here
+```
+
+> Always manage resources (files, memory, sockets, etc.) with RAII objects or smart pointers (`std::unique_ptr`, `std::shared_ptr`).
+
+
+<br><br>
+
 <a name="basics_best_practises_" href="#bascis_top_">^</a><br>
 **Best Practises**
+
+Always use modern C++ and modern methods, these are always more safe.
 
 Parameters:
 - Pass non-basic data types as reference, const, reference or pointer(s) -> to avoid making a copy
 - Pass a variable always with a const if the function should not change it
 - ...
 
+Modern Best Practices:
+- Prefer `std::unique_ptr` and `std::make_shared` over raw pointers
+- Use RAII and smart containers instead of manual memory management
+- Use `auto`, `constexpr`, and `enum class` for clarity and safety
+- Prefer range-based loops and standard algorithms (`std::for_each`, `std::transform`)
+- Use move semantics to avoid unnecessary copies
+- Favor immutability (`const`) and references over raw pointers
+- Use modules (C++20+) to reduce compile time and dependency complexity
+- Avoid macros for logic — use `constexpr` or inline functions instead
+- Avoid manual `new`, `delete`, and `malloc`
 
+<a name="basics_modern_cpp_" href="#bascis_top_">^</a><br>
+**Modern C++**<br>
+
+Modern C++ refers to the evolution of the C++ language starting with C++11 and continuing through C++14, C++17, C++20, and C++23.
+The goal of modern C++ is to write safer, cleaner, and more expressive code — without sacrificing performance.
+
+Modern C++ encourages:
+- **RAII (Resource Acquisition Is Initialization)** — automatic resource management
+- **Value semantics** — prefer copying/moving over raw pointers
+- **Type inference** — let the compiler deduce types
+- **Zero-cost abstractions** — high-level code that compiles to optimal machine code
+- **Safety through ownership and immutability** — avoid manual memory handling
+
+**Key Features**
+- **Type Inference**
+    ```c++
+    auto x = 42;           // deduced as int
+    auto message = "Hi!";  // deduced as const char*
+    ```
+    Improves readability and reduces redundancy.<br>
+    Use auto for clarity, not to hide meaning.
+- **Range-based Loops**
+    ```c++
+    std::vector<int> nums{1, 2, 3, 4};
+    for (int n : nums) {
+        std::cout << n << ' ';
+    }
+    ```
+- **Smart Pointers (RAII)**
+    ```c++
+    #include <memory>
+    auto ptr = std::make_unique<int>(10);  // automatically deleted
+    ```
+- **Move Semantics**<br>Enables efficient transfer of ownership for large objects.
+    ```c++
+    std::vector<int> a{1, 2, 3};
+    std::vector<int> b = std::move(a);  // move instead of copy
+    ```
+- **Lambdas**<br>Inline anonymous functions with captures.
+    ```c++
+    auto square = [](int x) { return x * x; };
+    std::cout << square(5);
+    ```
+    Useful in algorithms and functional-style code.
+- **(auto,) decltype, and constexpr**
+    ```c++
+    constexpr int add(int a, int b) { return a + b; }  // compile-time evaluation
+    decltype(auto) getValue() { return 42; }          // deduce return type
+    ```
+    Allows compile-time computations and stronger type safety.
+- **Structured Bindings (C++17)**
+    ```c++
+    std::pair<int, std::string> p{1, "A"};
+    auto [id, name] = p;
+    ```
+    Makes tuple and pair unpacking clean and readable.
+- **Ranges and Concepts (C++20)**
+    ```c++
+    #include <ranges>
+    #include <vector>
+    #include <iostream>
+
+    std::vector<int> v{1, 2, 3, 4, 5};
+    for (int n : v | std::views::filter([](int x){ return x % 2 == 0; })) {
+        std::cout << n << ' ';
+    }
+    ```
+    Concepts add compile-time constraints to templates:
+    ```c++
+    template <std::integral T>
+    T add(T a, T b) { return a + b; }
+    ```
+- **Coroutines (C++20)**<br>Used for asynchronous programming and generators.
+    ```c++
+    #include <coroutine>
+    #include <iostream>
+
+    auto generator() -> std::generator<int> {
+        for (int i = 0; i < 3; ++i)
+            co_yield i;
+    }
+    ```
+- **std::expected (C++23)**<br>A safer alternative to exceptions for predictable errors.
+    ```c++
+    #include <expected>
+    #include <string>
+
+    std::expected<int, std::string> divide(int a, int b) {
+        if (b == 0) return std::unexpected("Division by zero");
+        return a / b;
+    }
+    ```
+
+> Also do not use C-Style arrays, instead use `std:.vectors`!
+
+Modern C++ combines *high performance* with *high-level expressiveness*.
+It encourages writing code that is:
+- **Safe** (no memory leaks or dangling pointers)
+- **Readable** (less boilerplate)
+- **Efficient** (no runtime overhead)
+- **Composable** (works well with templates, ranges, and RAII)
 
 
 <br><br>

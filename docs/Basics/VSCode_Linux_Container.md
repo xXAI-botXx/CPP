@@ -33,7 +33,7 @@ On every platform you can start an Ubuntu container and access the container via
 3. Now you can run/start a new container. This can be typed into any bash/Powershell or again in the shell from Docker Desktop (in the right bottom):
     ```docker
     cd D:\Users\Tobia\cpp-project && D:
-    docker run -it --rm -v .:/workspace -v C:\Users\Tobia\external-libs\myLib:/external/myLib ` -w /workspace cpp-dev bash
+    docker run -it --rm -v .:/workspace -v C:\Users\Tobia\external-libs\myLib:/external/myLib -w /workspace cpp-dev bash
     ```
     Now you can open VSCode and open your container with navigating to the container section in VSCode and then clicking on the running container -> something like "Attaching in VSCode Window" and then opening the `workspace` folder.
 
