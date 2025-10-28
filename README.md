@@ -62,7 +62,8 @@ This part contains the most essential knowledge about C++ shorten for a lunch br
 - <a href="#basics_std_">Standard Library</a>
 - <a href="#basics_classes_">Classes</a>
 - <a href="#basics_error_handling_">Error Handling</a>
-- <a href="#basics_best_practises_">Best Practises</a>
+- <a href="#basics_cpp_paradigms_">Programming Paradigms</a>.
+- <a href="#basics_best_practices_">Best Practices</a>
 - <a href="#basics_modern_cpp_">Modern C++</a>
 - <a href="#basics_examples_">Examples</a>
 
@@ -318,7 +319,10 @@ const (Constant Variable)
 <br><br>
 
 <a name="basics_pointers_" href="#bascis_top_">^</a><br>
-**Pointers**<br>
+**Pointers**
+
+> The first part is about legacy pointers, which can be interesting to know, but please **use the smartpointers, which are described in <a href="#basics_smart_pointers_">the next chapter</a>**.
+
 Pointers are variables pointing to another memory address. A pointer have a own memory adress and the value saved is the memory address where the pointer points to.<br>
 Pointer are important to use the heap efficiently.<br>
 Pointer are declared with a \* and need to get a memory address, which can be provided with a & before the target variable.
@@ -483,8 +487,11 @@ Key difference to pointer: references can't have/refer to no value (easier handl
 <br><br>
 
 <a name="basics_arrays_" href="#bascis_top_">^</a><br>
-**Arrays**<br>
-Arrays is a collection of n elements of the same datatype. An array can be thought as a primitive form of an list.<br>
+**Arrays**
+
+> Please use modern dynamic arrays (std::vector from <vector>) which are described a bit further down. C-Style arrays should not be used anymore but can be interesting to know.
+
+Arrays are a collection of n elements of the same datatype. An array can be thought as a primitive form of an list.<br>
 Create and acces an array:
 ```c++
 int arr_1[5] = {23, 4, -1, 34, 4};
@@ -521,7 +528,9 @@ In modern C++ the old C-Style array is not the only option. The standard library
  }
  ```
 
- The dynamic array (std::vector) is also a very useful datatype. The vector is a list, with no fixed size.
+ <br><br>
+
+ The dynamic array (std::vector) is the modern standard array, which should always be prefered over the C-Style array. The vector is a list, with no fixed size.
  ```c++
  #include <vector>
  
@@ -763,7 +772,52 @@ int main() {
 
 <a name="basics_templates_" href="#bascis_top_">^</a><br>
 **Templates**<br>
-...
+Templates are function defintions which use generic/at pre-compile time not defined datatypes.
+Templates itself are no function and will first be added to your execution code, when a specific use of the function is there. If you call the template with for example int and string, 2 functions will be added at compile time.
+
+It follows a perfect example with multiple use of templates. This can be defined only in a .h/.hpp file:
+
+```cpp
+#include <string>
+#include <stdexcept>
+#include <type_traits>  // std::is_arithmetic_v, std::is_same_v
+
+template <typename T>
+T getDefaultValue() {
+    T default_value;
+    if constexpr (std::is_arithmetic_v<T>) {
+        default_value = 0;
+    } else if constexpr (std::is_same_v<T, std::string>) {
+        default_value = "";
+    } else {
+        throw std::logic_error("Type must be arithmetic or string!");
+    }
+
+    return default_value;
+}
+
+template <typename T>
+T multiplyElement(const T& element, const int& multiplicator) {
+    T multiplicationResult = getDefaultValue<T>();
+
+    for (int i=0; i < multiplicator; ++i) {
+        multiplicationResult += element;
+    }
+
+    return multiplicationResult;
+};
+
+template <typename T, typename U>
+requires std::is_arithmetic_v<U>
+T scaledSum(const T& x, const U& n) {
+    T summation = multiplyElement(x, 0);
+    for (int i=0; i <= n; ++i) {
+        summation += multiplyElement(x, i);
+    }
+
+    return summation;
+};
+```
 
 
 <br><br>
@@ -977,54 +1031,50 @@ Classes/Objects have the advantage of creating own data structures with well iso
 Passing an object to a function can be very ressource harming, due to the fact that functions always create a copy of the parameter. An common used practise is to pass an object with as **const reference** (const ClassName& var_name), this makes sure that the object can't get changed and it is the real object (not an copy).<br>
 The access to attributes and functions is normally an '.' but if your object is an pointer than you need an '->' for accessing the variables and functions of your object. For example there is also an *this* which is a pointer to the current class object, if you want to make sure that an attribute or method is called from your object than use this->my_int. The '->' must be used because it is a pointer.
 
-Example class:
-```c++
+> Declare all available functions, classes, variables and methods in a .h/.hpp. Declase/implement all of these concept in a .cpp file with the same name. Sometimes you might want to declare and define everything in the .h/.hpp. 
+
+Example class:<br>
+complex.h
+```cpp
+#ifndef COMPLEX_H
+#define COMPLEX_H
+
 class Complex{
 public:
 	// Constructor
-	Complex(float real, float imaginary)
-	:this->real(real), this->imaginary(imaginary) {    // efficient init listing
-	// ...
-	}
+	Complex(float real, float imaginary);
+    ~Complex() = default;
 	
-	void Negate() {
-		// ...
-	}
+	void Negate();
 	
 private:
 	float real;
 	float imaginary;
 };
 
-Complex* c = new Complex(1.0f, 2.0f);
-
-c->Negate();
+#endif
 ```
 
-Let's watch another example with destructor:
+complex.cpp
+```cpp
+#include <memory>
 
-```c++
-class AwesomeArray {
-public:
-	// Constructor
-	AwesomeArray(int size):mSize(size){
-		this.mArray = nullptr;
-		this.mArray = new int[mSize];
-	}
-	// Destructor
-	~AwesomeArray(){
-		delete[] this.mArray 
-	}
-	
-	// Methods
-	int& at(int index){
-		return this.mArray[index];
-	}
-
-private:
-	int mSize;
-	int* mArray;
+// Constructor
+Complex::Complex(float real, float imaginary)
+:real(real), imaginary(imaginary) {    // efficient init listing
+// ...
 }
+
+void Complex::Negate() {
+    // ...
+}
+	
+
+// Run the code, maybe in a main.cpp
+
+std::unique_ptr<Complex> c = std::make_unique<Complex>(1.0f, 2.0f);
+
+c->Negate();
 ```
 
 With this-> you can access an objects attributes and functions. If not setted the compiler will take a local attribute with this name and if there is no then taking the attribute from the class.
@@ -1033,18 +1083,17 @@ There are also copy constructors which takes one object from the same class and 
 Self declared deep copy constructor:
 
 ```c++
-class AwesomeArray{
+class Complex{
 public:
 	//...
 	
-	AwesomeArray(const AwesomeArray& other_obj) {
-		mSize = other_obj.mSize;
-		mArray = new int[mSize];
-		for (int i=0; i < mSize; ++i){
-			mArray[i] = other_obj.mArray[i];
-		}
+	Complex(const Complex& other_obj) {
+		this->real = other_obj.real;
+	    this->imaginary = other_obj.imaginary;
 	}
-}
+
+    // ...
+};
 ```
 
 Classes which handle dynamic allocated data (pointer, arrays, ...) should always define a destructor, copy constructor and  assignment operator. -> **rule of three**
@@ -1087,6 +1136,51 @@ class Player : public Entity{
 Entity* entity = new Player();
 delete entity;  // What happens here?
 ```
+
+<br><br>
+
+In C++ automatic convertions are allowed. For example you have a constructor with one int parameter, than you can pass a int into a function which expects an object from this class and the int will be automatically converted into the object which is in most cases not good. The so called implicit version is not readable, confusing and can lead to missunderstanding when the class does not really represents the passed value.
+
+Example:
+```cpp
+class Vec2 {
+public:
+    int x, y;
+
+    // Normal constructor
+    Vec2(int x, int y) : x(x), y(y) {}
+
+    // Single-argument constructor (implicit)
+    Vec2(int value) : x(value), y(value) {}
+};
+```
+
+Now you can call:
+```cpp
+// some function
+void printVec(Vec2 v) {
+    std::cout << v.x << "," << v.y << std::endl;
+}
+
+printVec(5);  // <-- Works! Implicitly converts int → Vec2(5)
+```
+
+You can block such automatic conversions by using the `explicit` keyword before the constructor:
+
+```cpp
+class Vec2 {
+public:
+    int x, y;
+    explicit Vec2(int value) : x(value), y(value) {}
+};
+```
+
+Now this result in:
+```cpp
+printVec(5);  // Error :(
+printVec(Vec2(5));  // Works :)
+```
+
 
 <br><br>
 
@@ -1156,19 +1250,130 @@ void writeFile() {
 > Always manage resources (files, memory, sockets, etc.) with RAII objects or smart pointers (`std::unique_ptr`, `std::shared_ptr`).
 
 
+<a name="basics_cpp_paradigms_" href="#bascis_top_">^</a><br>
+**Choosing the right Programming Paradigm in C++**<br>
+
+C++ is a multi-paradigm language -> you can use procedural, object-oriented, generic, and functional styles in the same project.<br>
+Choosing the right paradigm for each part of your system is key to writing clean, efficient, and maintainable code.
+
 <br><br>
 
-<a name="basics_best_practises_" href="#bascis_top_">^</a><br>
-**Best Practises**
+\>\>\> Procedural Programming (Imperative)
 
-Always use modern C++ and modern methods, these are always more safe.
+Procedural Programming is like a sub-category of imperative programming and uses function-calls (outside of a class) are primary logic. Imperative programming uses only statements for logic.
 
-Parameters:
-- Pass non-basic data types as reference, const, reference or pointer(s) -> to avoid making a copy
-- Pass a variable always with a const if the function should not change it
-- ...
+> When to use: small, self-contained logic or low-level operations.
 
-Modern Best Practices:
+- Use for simple algorithms, math routines, and performance-critical code.
+- Keeps execution flow explicit and easy to debug.
+- Ideal for utilities, data transformations, and embedded code.
+- Avoid over-engineering — sometimes a clean loop is all you need.
+
+Example:
+```cpp
+double computeAverage(const std::vector<double>& values) {
+    double sum = 0.0;
+    for (double v : values) sum += v;
+    return sum / values.size();
+}
+```
+
+<br><br>
+
+\>\>\> Object-Oriented Programming (OOP)
+
+OOP encapsulate data and logic into object-units defined by classes and methods. And these classes can also share and use code from top/base-classes, to reduce redundancy, which is primarly important for similiar code with interferences but with partwise variations (for example: every dog have 4 legs and share much data and logic and therefore much can be defined for all dogs and sub-classes define specific concepts).
+
+> When to use: modeling entities that have state and behavior.
+
+- Good for systems with clear data hierarchies or interacting entities (e.g., game objects, UI elements).
+- Encapsulate data and logic within classes.
+- Use inheritance only when the relationship is a true “is-a”.
+- Prefer composition (“has-a”) over inheritance to increase flexibility.
+
+Example:
+```cpp
+class Renderer {
+public:
+    void Render(const Mesh& mesh);
+};
+
+class SceneObject {
+public:
+    Renderer renderer;
+    Mesh mesh;
+    void Draw() { renderer.Render(mesh); }
+};
+```
+
+<br><br>
+
+\>\>\> Generic / Template Programming
+
+> When to use: reusable logic that’s independent of data type.
+
+- Great for containers, algorithms, and utilities.
+- Enables compile-time polymorphism with zero runtime overhead.
+- Combine with concepts (C++20+) for clearer constraints and errors.
+
+Example:
+```cpp
+template<typename T>
+concept Number = std::is_arithmetic_v<T>;
+
+template<Number T>
+T Add(T a, T b) { return a + b; }
+```
+
+<br><br>
+
+\>\>\> **Functional Programming**
+
+C++ is not a functional programming language but have concepts of functional programming. In functional programming functions are the key element but in a math way. So it should be independed to external states (`const` -> const-correctness) and also should not effect external states (no side-effects -> pure functions).
+
+This also include:
+- Recursion: A function calls itself.
+- High Order Functions: functions as parameter. This is more complicated with C++.
+
+> When to use: data processing, transformations, and concurrency.
+
+- Avoids side effects -> easier testing and parallelization.
+- Encourages use of lambdas, std::transform, std::accumulate, and std::ranges.
+- Combine with immutability (const) for safe, predictable code.
+
+Example:
+```cpp
+std::vector<int> squared;
+std::ranges::transform(values, std::back_inserter(squared),
+                       [](int v){ return v * v; });
+```
+
+<br><br>
+
+\>\>\>
+
+
+
+<br><br>
+
+<a name="basics_best_practices_" href="#bascis_top_">^</a><br>
+**Best Practices**
+
+These guidelines help maintain code that is safe, maintainable, and efficient.<br>
+Modern C++ offers many features that make manual memory management and unsafe patterns unnecessary.<br>
+Be carefully with C++ legacy code! And be careful with AI-generated code, which is often not maintainable and only "functional".
+
+**General Principles:**
+- Always use modern C++ (C++17 or newer) — safer and more expressive
+- Prefer clarity and correctness over cleverness
+- Keep functions, classes, and modules small and focused
+
+**Parameter Passing:**
+- Pass non-trivial types as `const` & (read-only) or by reference/pointer if modification is needed
+- Avoid passing by value unless the function truly needs a copy
+- Mark parameters as `const` whenever the function should not modify them
+
+**Modern Best Practices:**
 - Prefer `std::unique_ptr` and `std::make_shared` over raw pointers
 - Use RAII and smart containers instead of manual memory management
 - Use `auto`, `constexpr`, and `enum class` for clarity and safety
@@ -1178,6 +1383,54 @@ Modern Best Practices:
 - Use modules (C++20+) to reduce compile time and dependency complexity
 - Avoid macros for logic — use `constexpr` or inline functions instead
 - Avoid manual `new`, `delete`, and `malloc`
+
+**Memory Safe:**
+- Avoid side effects in functions; keep them pure when possible
+- Always initialize variables before use
+- Avoid undefined behavior and non-deterministic patterns
+
+**Testing and Maintainability:**
+- Follow a test-driven or at least test-supported approach
+      -  Write unit tests before or after implementing functionality
+- Clean and refactor after adding new code — technical debt accumulates fast
+    - With every line of new code, you increase your technical debt. Or in other words: you make your code uglier with every new code
+    - After new code/new features, it is important to take time to clean the new (and maybe the old code), and maybe refactor some parts. Making some parts more modular or using polymorphy and more smaller functions.
+- Modularize and generalize where duplication occurs (DRY principle)
+
+> Remember on your technical debts! It is often seen that code gets worse and worse over time which is completly normal and that is the reason why for example live-service games get more bugs after some years then at the beginning. So remeber to take some time for clean-up and refactoring!
+
+**Function Design:**
+- Each function should have only one responsibility
+- Keep functions short (ideally <= 10 lines)
+- Avoid more than 3 parameters if possible
+- Minimize branching (few `if` / `switch` paths)
+- Function names should be verbs (e.g., `loadFile()`, `computeAverage()`).
+
+**Variables should:**
+- Name variables as carefully as you would name your first-born
+- Use expressive, meaningful names
+- Be consistent: choose camelCase or snake_case, not both
+- Avoid abbreviations unless widely recognized (idx, pos, ...)
+
+**Class Design:**
+- Class names should be nouns and singular
+- Inheritance should only represent a clear “is-a” relationship
+- Prefer composition and modularity over deep inheritance chains
+- Modularity should be prevert over polymorphy
+
+**Modularity and Code Reuse:**
+- Prefer modular, reusable code through:
+    - Functions
+    - Templates / Generics
+    - Polymorphism (only when needed)
+
+> **Rule of thumb:** Modularity should be preferred over polymorphism -> choose the right paradigm for the task and combine them for maximum clarity and efficiency.
+
+Also choose the right programmin paradigm for the right tasks. <a href="#basics_cpp_paradigms_">See this chapter</a>.
+
+> These are only rules which should be targeted during developement. There are many edge cases where it is good to break some of these rules, but it is important that this happens conscious.
+
+
 
 <a name="basics_modern_cpp_" href="#bascis_top_">^</a><br>
 **Modern C++**<br>
