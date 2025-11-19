@@ -14,6 +14,7 @@ May use it as a reference ❤️
     - <a href="./docs/Basics/Installation.md">Installation</a>
     - <a href="./docs/Basics/Execution.md">Code Execution</a>
     - <a href="./docs/Basics/Environment.md">Coding Environment</a>
+    - <a href="./docs/Basics/Introduction.md">Introduction</a>
 - **Language Basics**
     - <a href="#basics_">Quickreference</a>
     - <a href="./docs/Language_Basics/Own_Lib.md">Own C++ Library</a>
@@ -27,6 +28,7 @@ May use it as a reference ❤️
         - <a href="./docs/External_Libraries/Rendering/Vulkan_Compute.md">Vulkan Compute</a>
 - **Additional Topics**
     - <a href="./docs/Additional_Topics/Game.md">Gaming</a>
+    - <a href="./docs/Additional_Topics/CPP_to_Python.md">C++ to Python</a>
 
 
 
@@ -78,7 +80,8 @@ It follows some keyconcepts to keep in mind when working with C++.
 **Header Files and C++ Files**
 
 In modern C++, projects are typically divided into header files (.h / .hpp) and implementation files (.cpp).<br>
-This separation improves readability, reusability, and compile times.
+This separation improves readability, reusability, and compile times.<br>
+But there some exceptions, where a header file also includes the implementation directly.
 
 <br><br>
 
