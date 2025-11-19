@@ -1184,6 +1184,46 @@ printVec(Vec2(5));  // Works :)
 
 <br><br>
 
+You can also call the constructor of the super class by using the initalizationlist:
+```cpp
+#ifndef ITEM_H 
+#define ITEM_H 
+#include <string> 
+
+struct Item { 
+    std::string name; 
+    int sellIn; 
+    int quality; 
+}; 
+
+class ItemUpdater { 
+public: 
+    ItemUpdater(Item item): item_(item) {}; 
+    ItemUpdater(std::string name, int sellIn, int quality): item_(Item(name, sellIn, quality)) {}; 
+    virtual ~ItemUpdater() = default; 
+    
+    virtual void updateQuality() = 0; 
+    
+protected: 
+    Item item_; 
+}; 
+
+class StandardItemUpdater : public ItemUpdater { 
+public: 
+    StandardItemUpdater(Item item): {ItemUpdater(item)}; 
+    StandardItemUpdater(std::string name, int sellIn, int quality): {ItemUpdater(name, sellIn, quality)}; 
+    virtual ~StandardItemUpdater() = default; 
+    
+    virtual void updateQuality() override;     
+}; 
+    
+
+#endif
+```
+
+
+<br><br>
+
 <a name="basics_error_handling_" href="#bascis_top_">^</a><br>
 **Error Handling**
 
