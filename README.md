@@ -29,6 +29,8 @@ May use it as a reference ❤️
 - **Additional Topics**
     - <a href="./docs/Additional_Topics/Game.md">Gaming</a>
     - <a href="./docs/Additional_Topics/CPP_to_Python.md">C++ to Python</a>
+- **Example projects**
+    - [3D C++ Game-Engine: Emerging-Light-Engine](https://github.com/xXAI-botXx/Emerging-Light-Engine) 
 
 
 
@@ -63,6 +65,8 @@ This part contains the most essential knowledge about C++ shorten for a lunch br
 - <a href="#basics_namespaces_">Namespaces and Headerfiles</a>
 - <a href="#basics_std_">Standard Library</a>
 - <a href="#basics_classes_">Classes</a>
+- <a href="#basics_brace_init_">Brace Initialization</a>
+- <a href="#basics_move_semantics_">Move Semantics</a>
 - <a href="#basics_error_handling_">Error Handling</a>
 - <a href="#basics_cpp_paradigms_">Programming Paradigms</a>.
 - <a href="#basics_best_practices_">Best Practices</a>
@@ -113,7 +117,7 @@ public:
 
 During the prepare step the code from the header files will be added to the places where `#include "my_awesome.h"` calls them. To make sure that your definitions only get imported once (duplicated definitions are not allowed) you have to add code to make sure that your code only processes once.
 
-A modern but not standard way is one line in the .h file `#pragma once` but soe compiler may process this differently. Therfeore this standard method is recommended:
+A modern but not standard way is one line in the .h file `#pragma once` but some compiler may process this differently. Therfeore the standard method is recommended:
 ```c++
 #ifndef MY_FILE_NAME_H
 #define MY_FILE_NAME_H
@@ -123,7 +127,7 @@ A modern but not standard way is one line in the .h file `#pragma once` but soe 
 #endif
 ```
 
-The name have to given capatelized and with `H` or `HPP`.
+The macro definition which you do with these 3 lines is not connected to your actual file and just is a definition name. So do not think too much about this definition name. A good convention is to name it like the file but everything uppercase and special tokens like `.` and `-` have get changed to `_`.
 
 Not standard way:
 ```c++
@@ -421,6 +425,8 @@ int main() {
 ```
 
 > Do not copy a `unique_ptr`. Ownership can only be moved.
+
+<a href="#basics_move_semantics_">Click here to learn more about the Move Semantic.</a>
 
 <br><br>
 
@@ -1223,6 +1229,196 @@ public:
 
 #endif
 ```
+
+<br><br>
+
+<a name="basics_brace_init_" href="#bascis_top_">^</a><br>
+**Brace Initialization**
+
+In modern C++ you can not only use the standard equal sign initialization but also a brace initialization.
+
+Let's start with showing this in practise:
+
+```cpp
+struct Window {
+    int width{512};        // brace initialization
+    int height = 512;      // equals sign initialization
+    bool active{true};
+};
+```
+
+> Notice that you propably already saw this brace init. Even on this quick guide we often used that init method.
+
+In many cases there is no difference visible but let me list some differences:<br>
+- brace init does not perform silent type conversions:
+    ```cpp
+    int x{3.5}; // ERROR: narrowing conversion from double to int
+    int y = 3.5; // Allowed, silently truncates to 3
+    ```
+- brace init can be used to init with default values:
+    ```cpp
+    int x{};
+    int y = // Equal Init has nothing like that!
+    ```
+- uniform init of many different types:
+    - Built-in types: `int x{5};`
+    - Objects: `std::tuple<int,int> t{0,0};`
+    - Arrays: `int arr[3]{1,2,3};`
+    - Containers: `std::vector<int> v{1,2,3};`
+
+The difference behind the scenes is that the equal init will call the `copy-initialization` and the brace init will call the `direct-list-initialization`.
+
+```cpp
+class MyBool {
+public:
+    bool value;
+    MyBool(bool v) : value(v) {}             // constructor
+    MyBool(const MyBool& other) { value = other.value; } // copy constructor
+};
+
+MyBool b{true};   // direct-list-initialization: calls only constructor MyBool(bool)
+MyBool c = b;     // copy-initialization: calls copy constructor (just as reference here)
+MyBool b = MyBool(true);  // copy-initialization: temporary object + copy constructor
+```
+
+I think the code above explains everything clearly. The equal initialization always comes with the call of the copy constructor (and sometimes a temproray object). While the brace initialization does only call the constructor which is more efficient.
+
+
+> Notice that modern C++ compilers might use the **Mandatory Copy Elision** to compile equal-initialization statements the same as they would with brace-initialization. So it depends on the used compiler how the statements/expressions are actually compiled (makes sense I guess).
+
+Small general clearification:
+- Expression: Something which evaluates to a value. Example: `1+2/x`, `func()`, `"Hello" + " World"`
+- Statement: A line of code which does something. Example: `return;`, `x = func()`, `while (x < 5) { ... }`
+
+
+<a name="basics_move_semantics_" href="#bascis_top_">^</a><br>
+**Move Semantics**
+
+`std::move` is most likely used with `std::unique_ptr` (Unique Smartpointer) where only one variable hold the reference to the heap-memory (object). It comes from `#include <utility>` and what happens is pretty easy.<br>
+
+// During  or which do nothing else than a cast from rvalue to lvalue.
+
+Let's say we have 2 ways we want to xray inside of C++ compiler:
+1. ```cpp
+    ResourceHandle a;
+
+    ResourceHandle b = createResourceHandle();
+
+    ResourceHandle c = std::move(a);
+    ```
+2. ```cpp
+    ResourceHandle a;
+    ResourceHandle b;
+
+    b = std::move(a);
+    ```
+
+There are two basic ways to assign a value in C++, and at first glance the difference may seem small, but the compiler handles them differently. When creating a new object, like ResourceHandle `c = std::move(a);` or `ClassName b = a;`, the move constructor (spoiler) or copy constructor is called, respectively. When assigning to an existing object, like `b = std::move(a);` or `b = a;`, the move assignment operator or copy assignment operator is called.
+
+So I already spoilered you `std::move` does just call another method which you can define by yourself and in C++ there are 2 different types of assignments, so we can define 2 different move methods and if we change one we should change the other too.<br>
+Here is the `solution` of our 2 examples.
+
+1. ```cpp
+    ResourceHandle a;
+
+    // 1. Moving a temporary returned from a function
+    ResourceHandle b = createResourceHandle(); // move constructor called
+
+    // 2. Using std::move on an existing object to initialize a new one
+    ResourceHandle c = std::move(a);           // move constructor called
+    ```
+2. ```cpp
+    ResourceHandle a;
+    ResourceHandle b;
+
+    // Move assignment
+    b = std::move(a);   // move assignment operator called
+    ```
+
+Basic Signature of the 2 move methods and for reference the 2 standard methods which are called if not using `std::move`:
+| Operation                | Standard signature                                 | Usage |
+| --- | --- | --- |
+| Copy constructor         | `ClassName(const ClassName& other)`                | `ClassName b = a` and `ClassName b = ClassName()` |
+| Copy assignment operator | `ClassName& operator=(const ClassName& other)`     | `ClassName b; b = a` |
+| Move constructor         | `ClassName(ClassName&& other) noexcept`            | `ClassName b = std::move(a)` |
+| Move assignment operator | `ClassName& operator=(ClassName&& other) noexcept` | `ClassName b; b = std::move(a)` |
+
+<br><br>
+
+> Notice that `ClassName b = ClassName()` is the same as `ClassName b = a`, because it creates a temporary object and then calls the copy constructor. For direct constructor without the temporary object and calling the copy-constructor: use brace-init `ClassName b{}`.
+
+
+But what happens inside of this other assignment/constructor method?<br>
+First let me show you the code:
+```cpp
+ResourceHandle::ResourceHandle(ResourceHandle&& other) noexcept {
+    this->resource_ = other.resource_;
+    other.resource_ = nullptr;
+}
+
+
+
+ResourceHandle& ResourceHandle::operator=(ResourceHandle&& other) noexcept {
+    if (this != &other) {
+        if (this->resource_ != nullptr) {
+            releaseResource(this->resource_);
+        }
+        this->resource_ = other.resource_;
+        other.resource_ = nullptr;
+    } 
+    return *this;
+}
+```
+
+We just have to take the pointer to the heap-memory (a heap-address) and set the other object pointer to null. Ad here we can see the little difference from constructor and assignment method because in the assignment we have additionally have to check if the other object is not ourself and we also have to release/delete the current pointer/ressource the object have because when we call assignment operator then our object already exist and could already have another ressource. And when we call the constructor we also can't pass the same object because the object does not exist, we are about to create it the first time, which makes our live a little bit more relax.
+
+Maybe you noticed that the biggest and most important difference is `ResourceHandle&&`...as you might know `ResourceHandle&` is a reference to the object and not a copy so it is the actual object, but what if there 2x&? It is still a reference but not from a normal object (also called `lvalue`) but it is a reference from an `rvalue`. So let's understand what a reference, a lvalue and a rvalue is and then we should have every part of the puzzle.<br>
+The following code creates a lvalue reference. A reference just says "this new variable x is now an alias for variable y". So the compiler treat both variables as they would be the same.
+```cpp
+int x = 42;
+int& ref = x; // ref is a reference to x
+
+ref = 100;
+std::cout << x; // prints 100
+```
+So far so easy. An `lvalue` is everything which have an **persistent memory address**. For example most named variables are saved persistent into the memory address (= lvalues). Here an practical example:
+```cpp
+int x = 10; // x is an lvalue
+int* p = &x; // you can take its address
+```
+`rvalue`'s on the other side are values which are only **temporary** and you can only read them.
+
+With that following datatyp signatures are for `lvalues`/`rvalues` references:
+| Reference type     | What it can bind to | Typical use                      |
+| --- | --- | --- |
+| `T&` (lvalue ref)  | lvalues only        | Modify existing object           |
+| `const T&`         | lvalues and rvalues | Read-only access, avoids copying |
+| `T&&` (rvalue ref) | rvalues only        | Move / steal resources           |
+
+Lastly one hint towards the unique smartpointers, because they are often used in `std::move` but the unique pointer has a persistent memory address and therefore is an lvalue and exactly that is the point. The move operator casts the old unique pointer reference into an rvalue because it only accepts rvalue references and therefore the old pointer will be casted into an rvalue. This is important because the whole point of the unique smartpointer is that there is always only 1 variable holding the pointer.<br>
+Let's see an example for this:
+```cpp
+std::unique_ptr<int> p1 = std::make_unique<int>(42);
+std::unique_ptr<int> p2 = p1; // error: copy constructor deleted, a unique pointer is move-only!
+```
+Ok now let's see the way it works:
+```cpp
+std::unique_ptr<int> p1 = std::make_unique<int>(42);
+std::unique_ptr<int> p2 = std::move(p1); // calls the move constructor + casts p1 to nullptr because it value gets rvalue
+```
+The tricky part is to understand that `T&&` gives the compiler the permission to steal ressources even id the actual expression is an lvalue. 
+
+Let's go through it a last time, to put together all the puzzle pieces with our previous example:
+```cpp
+std::unique_ptr<int> p1 = std::make_unique<int>(42);
+std::unique_ptr<int> p2 = std::move(p1);
+```
+In line 1 our first unique smartpointer gets created, by creating a temporary (rvalue) object and then automatically calling the move-constructor operator, because it is an rvalue. Notice that modern C++ compiler might use the Mandatory Copy Elision to compile such statements the same as it would with brace-initialization. <br>
+In line 2 it get more interesting. Here we call `std::move` which lead to calling the move constructor not the copy constructor and this method takes the p1 value as rvalue reference while p1 stays an lvalue in reality but with that we have the permission to reference to the same pointer-value and then set p1 to nullptr. Then we are finish.
+
+> This gets us to other breaking news: In modern C++ the compiler most likely uses the move-constructor in complex datatypes (hint: if not using the Mandatory Copy Elision...yes it get even more complicated). For example we have a class `T`, then this code: `T a = T();` will create an temporary object and therefore the compiler most likely prefares to use the move constructor in such cases but notice that he also can use the normal copy constructor because the signature have const `T& operator=(const T& t)` which is also ok for rvalues becuase it is read-only.<br>Primitive datatypes are not affected by this because they are not classes and can be only copied and not moved because of this (image the bits are literally copied).
+
+I hope this little explanation was helpful, it is not a easy topic and you have to think about it before understanding it...in the end it is pretty easy.
 
 
 <br><br>
