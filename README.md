@@ -64,6 +64,7 @@ This part contains the most essential knowledge about C++ shorten for a lunch br
 - <a href="#basics_smart_pointers_">Smart Pointers</a>
 - <a href="#basics_references_">References</a>
 - <a href="#basics_arrays_">Arrays</a>
+- <a href="#basics_collections_">Collections</a>
 - <a href="#basics_templates_">Templates</a>
 - <a href="#basics_namespaces_">Namespaces and Headerfiles</a>
 - <a href="#basics_std_">Standard Library</a>
@@ -1032,7 +1033,9 @@ int main() {
  ```
 
 
- <a name="basics_collections_" href="#bascis_top_">^</a><br>
+<br><br>
+
+<a name="basics_collections_" href="#bascis_top_">^</a><br>
 **Collections**<br>
 We previously saw some important collections like the **Vector**. Here are some more with my most favourite, the unordered_map (Hash-Map or in Python would be a dictionary).
 
@@ -1166,6 +1169,22 @@ months[2]
 ```
 
 > Using brackets for accessing values (`months[2]`) is most likely not recommended because with the sideffect that it will create an entry if no key is found and therefore the used key need to have an default-constructor (without any parameter) which is sometimes not given (for example if using a class as key which must get an parameter for construction, for example an ID).<br>In such cases it is better to use `months.at(2)` or `months.find(2)->second`.
+
+When setting a value you should use `emplace` or `try_emplace` and do not use the brackets.
+
+Benefits of using `try_emplace`:
+- Constructs key-object in-place
+- Only inserts if key doesn't exist
+- No default constructor needed
+- No temporary objects
+- One lookup
+
+`emplace`:
+- No default constructor called
+- May still create a temporary
+- Does nothing if key exists (silently)
+
+> only use brackets if handling primitve datatypes, like: `std::unordered_map<int, int>`
 
 
 <br><br>
