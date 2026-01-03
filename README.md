@@ -77,6 +77,7 @@ This part contains the most essential knowledge about C++ shorten for a lunch br
 - <a href="#basics_best_practices_">Best Practices</a>
 - <a href="#basics_modern_cpp_">Modern C++</a>
 - <a href="#basics_examples_">Examples</a>
+- <a href="#basics_common_errors_">Common Errors</a>
 
 
 
@@ -1159,7 +1160,12 @@ if (it != months.end()) {
 }
 
 months.try_emplace(2, "NewValue"); // does NOT overwrite if key exists
+months.at(2)
+months[2]
+// and functions most like std::map
 ```
+
+> Using brackets for accessing values (`months[2]`) is most likely not recommended because with the sideffect that it will create an entry if no key is found and therefore the used key need to have an default-constructor (without any parameter) which is sometimes not given (for example if using a class as key which must get an parameter for construction, for example an ID).<br>In such cases it is better to use `months.at(2)` or `months.find(2)->second`.
 
 
 <br><br>
@@ -1500,7 +1506,7 @@ complex.cpp
 
 // Constructor
 Complex::Complex(float real, float imaginary)
-:real(real), imaginary(imaginary) {    // efficient init listing
+: real(real), imaginary(imaginary) {    // efficient init listing
 // ...
 }
 
@@ -1517,6 +1523,8 @@ c->Negate();
 ```
 
 With this-> you can access an objects attributes and functions. If not setted the compiler will take a local attribute with this name and if there is no then taking the attribute from the class.
+
+IMPORTANT Rule: If a member has no default constructor, it MUST be initialized in the initializer list because the compiler will first init all members and then run the code in the constructor. If given via init list, it will be executed during the construction. The `Complex(float real, float imaginary)` is an example for exactly this. If you try to make the same the standard way and assign the variables in the constructor, then the compiler will first try to compile all member variables with a standard constructor if there is no standard constructor it will throw an error.
 
 There are also copy constructors which takes one object from the same class and gives a new object with the same values. C++ creates a copy method automatically but in case you use pointer you should write it by yourself, because the pointers will still reference to the same object -> calles shallow copy.<br>
 Self declared deep copy constructor:
@@ -2539,12 +2547,154 @@ Games/Projects:
 
 
 
+<br><br>
+
+<a name="basics_common_errors_" href="#bascis_top_">^</a><br>
+**Common Errors**
+
+Compile-Time Errors (Syntax & Type Issues)
+
+| Error                            | Cause                                  | How to Fix                     |
+| -------------------------------- | -------------------------------------- | ------------------------------ |
+| `expected ';'`                   | Missing semicolon                      | Add `;` at end of statement    |
+| `undeclared identifier`          | Variable not declared or wrong scope   | Declare before use / fix scope |
+| `cannot convert 'X' to 'Y'`      | Type mismatch                          | Use correct type or cast       |
+| `no matching function for call`  | Wrong arguments                        | Match function signature       |
+| `invalid use of incomplete type` | Forward declaration without definition | Include full header            |
+| `expected ')' before '{'`        | Mismatched parentheses                 | Fix bracket pairing            |
+| `redefinition of 'X'`            | Defined twice                          | Remove duplicate definition    |
+| `Member not default-constructible` | Initialized in constructor body      | Use initializer list           |
 
 
 
+<br><br>
+
+Linker Errors
+
+| Error                             | Cause                                     | How to Fix                                    |
+| --------------------------------- | ----------------------------------------- | --------------------------------------------- |
+| `undefined reference to function` | Function declared but not defined         | Implement function                            |
+| `multiple definition of symbol`   | Defined in multiple `.cpp` files          | Use `inline`, `static`, or move to one source |
+| `undefined reference to vtable`   | Missing virtual destructor implementation | Define destructor                             |
+| `cannot find -l<library>`         | Library not linked                        | Add `-l` or correct path                      |
+| `LNK2005 / LNK1169` (MSVC)        | Multiple definitions                      | Use include guards                            |
+
+<br><br>
+
+Runtime Errors (Crashes & Exceptions)
+
+| Error                                | Cause                 | How to Fix                      |
+| ------------------------------------ | --------------------- | ------------------------------- |
+| Segmentation fault                   | Invalid memory access | Check pointers & bounds         |
+| Stack overflow                       | Infinite recursion    | Add base case                   |
+| `std::bad_alloc`                     | Memory exhausted      | Reduce allocation / check leaks |
+| Division by zero                     | Zero denominator      | Validate before dividing        |
+| `terminate called without exception` | Uncaught exception    | Use try-catch                   |
+| Access violation                     | Dangling pointer      | Ensure object lifetime          |
+
+<br><br>
+
+Memory Management Errors
+
+| Error                 | Cause                       | How to Fix                 |
+| --------------------- | --------------------------- | -------------------------- |
+| Memory leak           | `new` without `delete`      | Use RAII / smart pointers  |
+| Double delete         | Deleting same pointer twice | Set pointer to `nullptr`   |
+| Dangling pointer      | Object deleted too early    | Manage ownership properly  |
+| Buffer overflow       | Out-of-bounds access        | Use `std::vector`          |
+| Use-after-free        | Access after delete         | Avoid raw pointers         |
+| Mismatched new/delete | `new[]` with `delete`       | Match `new[]` → `delete[]` |
+
+<br><br>
+
+Logic Errors (Compiles but Wrong Result)
+
+| Error                        | Cause                            | How to Fix               |
+| ---------------------------- | -------------------------------- | ------------------------ |
+| Infinite loop                | Condition never changes          | Fix loop condition       |
+| Off-by-one error             | Wrong index limits               | Use `< size()`           |
+| Wrong operator (`=` vs `==`) | Assignment instead of comparison | Use `==`                 |
+| Uninitialized variable       | No initial value                 | Initialize immediately   |
+| Wrong precedence             | Missing parentheses              | Add explicit parentheses |
+| Floating-point comparison    | Precision issues                 | Use epsilon comparison   |
+
+<br><br>
+
+STL & Container Mistakes
+
+| Error                             | Cause                    | How to Fix                 |
+| --------------------------------- | ------------------------ | -------------------------- |
+| Iterator invalidation             | Modifying container      | Re-fetch iterator          |
+| Access out of range               | Using `[]` unsafely      | Use `.at()`                |
+| Using erased iterator             | Iterator no longer valid | Update iterator            |
+| Copying large objects             | Pass-by-value            | Use `const &`              |
+| Forgetting `#include <algorithm>` | Missing header           | Include correct STL header |
+| `unordered_map::operator[]` fails | Value type not default-constructible | Use `emplace`, `try_emplace`, or `insert` |
 
 
+<br><br>
 
+Object-Oriented Programming Errors
+
+| Error                           | Cause                              | How to Fix              |
+| ------------------------------- | ---------------------------------- | ----------------------- |
+| Missing virtual destructor      | Base class deleted polymorphically | Add `virtual ~Base()`   |
+| Object slicing                  | Passing object by value            | Use references/pointers |
+| Not overriding virtual function | Signature mismatch                 | Use `override`          |
+| Calling virtual in constructor  | Undefined behavior                 | Avoid virtual calls     |
+| Shallow copy                    | Raw pointers in class              | Implement Rule of 3/5   |
+
+
+<br><br>
+
+Modern C++ (C++11+) Pitfalls
+
+| Error                            | Cause              | How to Fix            |
+| -------------------------------- | ------------------ | --------------------- |
+| Dangling reference from `auto&`  | Temporary binding  | Use `auto`            |
+| Misusing `std::move`             | Moving too early   | Move only when done   |
+| Capturing by reference in lambda | Object destroyed   | Capture by value      |
+| Forgetting `constexpr`           | Runtime evaluation | Use `constexpr`       |
+| Using raw pointers               | Manual lifetime    | Prefer smart pointers |
+
+
+<br><br>
+
+Header & Include Errors
+
+| Error                  | Cause                | How to Fix               |
+| ---------------------- | -------------------- | ------------------------ |
+| Circular dependency    | Mutual includes      | Use forward declarations |
+| Missing include guards | Multiple inclusion   | Use `#pragma once`       |
+| Including `.cpp` files | Bad practice         | Include headers only     |
+| Wrong include order    | Missing dependencies | Include headers first    |
+
+<br><br>
+
+Debugging & Build Configuration Errors
+
+| Error                            | Cause                          | How to Fix             |
+| -------------------------------- | ------------------------------ | ---------------------- |
+| Works in Debug, fails in Release | UB exposed                     | Fix undefined behavior |
+| Optimizer breaks code            | Invalid assumptions            | Remove UB              |
+| Different behavior on OS         | Platform-specific code         | Use standard APIs      |
+| Undefined behavior               | Uninitialized / invalid access | Use sanitizers         |
+
+<br><br>
+
+Best Tools to Catch These Early
+
+| Tool                       | Purpose           |
+| -------------------------- | ----------------- |
+| `-Wall -Wextra -Werror`    | Compiler warnings |
+| AddressSanitizer           | Memory errors     |
+| UndefinedBehaviorSanitizer | UB detection      |
+| Valgrind                   | Memory leaks      |
+| clang-tidy                 | Static analysis   |
+| cppcheck                   | Code quality      |
+
+
+<br><br>
 
 ---
 
