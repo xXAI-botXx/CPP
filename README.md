@@ -53,7 +53,10 @@ This part contains the most essential knowledge about C++ shorten for a lunch br
 <a name="bascis_top_">Contents:</a>
 - <a href="#basics_header_cpp">Header and C++ Files</a>
 - <a href="#basics_stack_and_heap_">Stack and Heap</a>
+- <a href="#basics_main_">Main</a>
 - <a href="#basics_datatypes_">Datatypes</a>
+- <a href="#basics_char_and_strings_">Chars and Strings</a>
+- <a href="#basics_optional_">Optional</a>
 - <a href="#basics_flow_structures_">Flow Structures</a>
 - <a href="#basics_value_categories_">Value Categories</a>
 - <a href="#basics_variable modifier_">Variable Modifiers</a>
@@ -65,6 +68,8 @@ This part contains the most essential knowledge about C++ shorten for a lunch br
 - <a href="#basics_namespaces_">Namespaces and Headerfiles</a>
 - <a href="#basics_std_">Standard Library</a>
 - <a href="#basics_classes_">Classes</a>
+- <a href="#basics_structs_">Structs</a>
+- <a href="#basics_class_methods">Class Methods</a>
 - <a href="#basics_brace_init_">Brace Initialization</a>
 - <a href="#basics_move_semantics_">Move Semantics</a>
 - <a href="#basics_error_handling_">Error Handling</a>
@@ -165,6 +170,25 @@ The heap always need pointer to its values and the programmer can decide which o
 More about how to create variables where comes in a next chapter.<br>
 'Dynamic allocation' refers to variables which lay in the heap because they are dynamic managed in the heap by the programmer and not bound to the scope/program flow. 'Static allocation' (or automatic allocation) refers to variables which are created in the stack. They are static because they are bound to it's scope/program flow.
 
+
+<br><br>
+
+<a name="basics_main_" href="#bascis_top_">^</a><br>
+**Main**<br>
+
+Every C++ program start with a `main` function. This function have to return the exit state of the program (`0` in normal case) and it comes in 2 forms:
+```cpp
+int main();
+int main(int argc, char *argv[]);
+```
+
+One without commandline arguments and another with.
+
+In `int main(int argc, char *argv[])` `argc` defines the amount of passed arguments and *argv[] is an c-style array of the arguments (c-style arrays are always a pointer to the first element). The argument range is from `argv[0]` (if there is more than 0 elements) to `argv[argc-1]`.
+
+
+
+
 <br><br>
 
 <a name="basics_datatypes_" href="#bascis_top_">^</a><br>
@@ -240,6 +264,321 @@ STD Threading-Types
 - std::thread → Start threads
 - std::mutex → Locks resources to threads
 - std::atomic<T> → Thread-safe atomic operations
+
+
+<br><br>
+
+<a name="basics_char_and_strings_" href="#bascis_top_">^</a><br>
+**Chars and Strings**
+
+For me, who came from Python, `chars` where a bit confusing for me at first. So let's wrap this topic up a bit.
+
+**Chars** - single character
+
+```cpp
+char c = 'A';    // single character
+```
+
+Rules:
+- Must use single quotes `'A'`
+- Holds a single byte (typically ASCII)
+- Cannot store `"Hello"` → that's a string
+- Can do arithmetic on char (like `'A'` + 1 → `'B'`)
+
+There are also chars for Unicode:
+| Type       | Literal | Size               | Notes     |
+| ---------- | ------- | ------------------ | --------- |
+| `char16_t` | `u'A'`  | 16-bit             | UTF-16    |
+| `char32_t` | `U'A'`  | 32-bit             | UTF-32    |
+| `wchar_t`  | `L'A'`  | platform-dependent | wide char |
+
+```cpp
+char16_t c16 = u'Ω';
+char32_t c32 = U'🌟';
+```
+
+
+<br><br>
+
+**String literals** - multi character array
+
+```cpp
+const char* hello = "Hello";
+```
+
+Rules:
+- Must use double quotes "Hello"
+- Type: const char* (pointer to first character in array)
+- Immutable (cannot change content safely)
+- Null-terminated ('\0' at the end)
+
+So be careful with that datatype and most likely use the real string from std instead, else this can happen:
+
+```cpp
+hello[0] = 'h'; // undefined behavior, "not allowed"
+```
+
+<br><br>
+
+**`std::string`** - real C++ String
+
+```cpp
+#include <string>
+
+std::string s = "Hello";
+s += " World";        // concatenate
+std::cout << s[0];    // access first char: 'H'
+```
+
+Features:
+- Dynamic size
+- Can be concatenated (+ or +=)
+- Can convert from const char* automatically
+
+
+String construction:
+```cpp
+std::string name = "Alice";  // is ok, but in some cases can be also interpretated as String literal, so be careful
+std::string name2 = std::string("Alice");  // explicit
+```
+
+String methods:
+| Operation   | Example                 |
+| ----------- | ----------------------- |
+| size        | `s.size()`              |
+| empty       | `s.empty()`             |
+| concatenate | `s1 + s2` or `s1 += s2` |
+| access      | `s[i]`, `s.at(i)`       |
+| substring   | `s.substr(1, 3)`        |
+| find        | `s.find("llo")`         |
+| erase       | `s.erase(1, 3)`         |
+| insert      | `s.insert(0, "Hi")`     |
+
+
+Converting string to char:
+```cpp
+char c = 'A';
+std::string s(1, c);   // convert char → string "A"
+
+std::string str = "B";
+char c2 = str[0];      // first char
+```
+
+Other helpful functions come with `#include <string>`
+
+| Function / Feature                                                                 | Header                                        | Notes                                            |
+| ---------------------------------------------------------------------------------- | --------------------------------------------- | ------------------------------------------------ |
+| `std::string`                                                                      | `<string>`                                    | The main C++ string class                        |
+| `std::to_string(int/double/...)`                                                   | `<string>`                                    | Convert numbers to strings                       |
+| `std::stoi`, `std::stol`, `std::stod`, etc                                         | `<string>`                                    | Convert string → number                          |
+| `std::getline`                                                                     | `<string>` (with `<istream>` or `<iostream>`) | Read a line from stream into a string            |
+| `std::ostringstream` / `std::stringstream`                                         | `<sstream>`                                   | Build strings by streaming data                  |
+| String member functions like `size()`, `substr()`, `find()`, `insert()`, `erase()` | `<string>`                                    | Standard string operations                       |
+
+
+<br><br>
+
+**String Streams** - buffered Strings
+
+(special case, most likely no need for it)
+
+`std::stringstream` is a standard C++ stream that writes to a string instead of a file or console.<br>
+Think of it as a buffer where you can “stream” text and numbers, then get the final string at the end.
+
+Usage:
+```cpp
+#include <sstream>
+#include <string>
+#include <iostream>
+
+int main() {
+    std::stringstream ss;
+
+    std::string name = "Alice";
+    int age = 30;
+
+    // stream like you would to std::cout
+    ss << "Name: " << name << ", Age: " << age;
+
+    // convert to string
+    std::string result = ss.str();
+
+    std::cout << result << std::endl;
+}
+```
+
+Append numbers and strings:
+```cpp
+int x = 10;
+double y = 3.14;
+std::stringstream ss;
+
+ss << "x=" << x << ", y=" << y;
+
+std::string out = ss.str();  // "x=10, y=3.14"
+```
+
+Reset the stream:
+```cpp
+ss.str("");       // reset content
+ss.clear();       // reset error flags
+ss << "Hello";    // reuse
+```
+
+Build complex messages (logging):
+```cpp
+std::stringstream log;
+log << "Controller " << cid << " pressed button " << button;
+std::string message = log.str();
+std::cout << message << std::endl;
+```
+
+Bonus: you can add such an streaming operation to your own class, see this example:
+
+```cpp
+#include <iostream>
+#include <string>
+
+class MyClass {
+    std::string name;
+    int value;
+
+public:
+    MyClass(std::string n, int v) : name(n), value(v) {}
+
+    // declare friend operator
+    friend std::ostream& operator<<(std::ostream& os, const MyClass& obj);
+};
+
+// define operator
+std::ostream& operator<<(std::ostream& os, const MyClass& obj) {
+    os << "Name: " << obj.name << ", Value: " << obj.value;
+    return os;  // must return os to allow chaining
+}
+
+int main() {
+    MyClass obj("Alice", 42);
+    std::cout << obj << std::endl;
+}
+```
+
+<br><br>
+(Last) Bonus:
+
+F-string style formatting:
+```cpp
+#include <iostream>
+#include <format>
+
+int my_int = 12;
+std::cout << std::format("My favourite number is {}. I really love it.", my_int) << std::endl;
+```
+
+
+<br><br>
+
+<a name="basics_optional_" href="#bascis_top_">^</a><br>
+**Optional**<br>
+
+- **Header:** `<optional>`
+- **Namespace:** std
+- **C++ Standard:** C++17+
+
+Definition:<br>
+`std::optional<T>` is a type that may or may not contain a value of type T. It is a safer, modern alternative to using raw pointers or sentinel values like -1 or nullptr to represent "no value".
+
+```cpp
+#include <optional>
+#include <string>
+
+std::optional<int> maybe_number;        // empty optional
+std::optional<std::string> maybe_name;  // empty optional
+```
+- Default-constructed optional is empty (`nullopt`)
+- Can hold any copyable or movable type
+
+<br><br>
+
+Assigning to values:
+```cpp
+maybe_number = 42;            // optional now holds 42
+maybe_name = "Alice";         // optional holds a string
+maybe_number = std::nullopt;  // make it empty again
+```
+
+- `std::nullopt` is a constant representing "no value"
+- `.reset()` is equivalent to assigning `std::nullopt`
+
+```cpp
+maybe_number.reset();  // clears the value
+```
+
+<br><br>
+
+Check for a value:
+```cpp
+if (maybe_number.has_value()) {
+    std::cout << "Value: " << maybe_number.value() << "\n";
+}
+
+if (maybe_name) {  // implicit conversion to bool
+    std::cout << "Name: " << *maybe_name << "\n";
+}
+
+if (maybe_number == std::nullopt) {
+    std::cout << "No value\n";
+}
+```
+
+- `.has_value()` returns `true` if optional contains a value
+- `*opt` or `opt.value()` accesses the contained value
+- `opt.value()` throws `std::bad_optional_access` if empty
+
+<br><br>
+
+Accessing values safely:
+- Default fallback value:
+    ```cpp
+    int n = maybe_number.value_or(0);  // 0 if empty
+    std::string s = maybe_name.value_or("Unknown");
+    ```
+- Conditional access:
+    ```cpp
+    if (maybe_number) {
+        int val = *maybe_number;  // use value
+        // or
+        // int val = maybe_number.value();
+    } else {
+        // handle empty case
+    }
+    ```
+
+<br><br>
+
+Examle usage in a function (often used in functions as parameters for optional arguments):
+
+```cpp
+#include <optional>
+
+void update_button(bool pressed, std::optional<DpadState> dpad = std::nullopt) {
+    if (dpad) {
+        current_dpad = *dpad;
+    }
+}
+```
+
+<br><br>
+
+Summary:
+
+| Function             | Description                                       |
+| -------------------- | ------------------------------------------------- |
+| `.has_value()`       | Returns true if optional contains a value         |
+| `.value()`           | Returns the value (throws if empty)               |
+| `*opt`               | Dereference to get value                          |
+| `.value_or(default)` | Get value or fallback if empty                    |
+| `.reset()`           | Remove contained value, makes optional empty      |
+| `operator bool()`    | Implicit conversion to `true` if contains a value |
 
 
 <br><br>
@@ -694,85 +1033,176 @@ int main() {
 
  <a name="basics_collections_" href="#bascis_top_">^</a><br>
 **Collections**<br>
- We previously saw some important collections like the **Vector**. Here are some more.
+We previously saw some important collections like the **Vector**. Here are some more with my most favourite, the unordered_map (Hash-Map or in Python would be a dictionary).
 
- A **linked list** is a collection of pointers. So every element can be in another place in the memory.
+Notice: `emplace`/`emplace_back` constructs an element directly inside the container. You can also use `push_back` most of the time.<br>
+Example:
+```cpp
+my_list.push_back(MyType(a, b));   // create object, then copy/move it
+my_list.emplace_back(a, b);        // construct object directly in the list
+```
+Advantages of `emplace`:
+- More efficient (no temporary object)
+- Constructs elements in-place
+- Works especially well for complex objects
 
- ```c++
- #include <list>
- std::list<int> my_list;
- my_list.push_back(4);
- my_list.push_back(6);
- my_list.push_back(8);
- ms_list.push_front(2);
- ```
+| Container                                | Method                          |
+| ---------------------------------------- | ------------------------------- |
+| `std::list`, `std::vector`, `std::deque` | `emplace_back`, `emplace_front` |
+| `std::map`, `std::unordered_map`         | `emplace`, `try_emplace`        |
+| `std::set`                               | `emplace`                       |
+| `std::queue`, `std::stack`               | `emplace`                       |
 
- Another collection is the **Queue** which works with the FIFO (first in, first out). It is like a queue on a icecream shop.
 
- ```c++
- #include <queue>
- std::queue<int> my_q;
- my_q.push(10);
- my_q.push(20);
- my_q.front();    // returns the current first obj/data in the queue but does not remove it
- my_q.pop();    // return and remove first elem in the queue
- ```
+<br><br>
 
- The opposite is the **Stack**. It works with the LIFO priciple (last in, first out). The last element which got added will be the first which get out from the stack. Like a stack of papers on a table of a busy worker in the 80s.
+A **linked list** is a collection of pointers. So every element can be in another place in the memory.
 
- ```c++
- #include <stack>
- std::stack<int> my_stack;
- my_stack.push(10);
- my_stack.push(20);
- my_stack.top();    // only return the current first elem
- my_stack.pop();    // returns and removes the first (last added) elem
- ```
+```c++
+#include <list>
 
- Most performant data structures are the maps and hash maps. The difference is that maps are ordered and hash maps using hashing to allow unordered lists. They work with a key which lead to a value...like a dictionary.
+std::list<int> my_list;
 
- ```c++
- #include <map>
- std::map<int,std::string> months;
- months.emplace(1, "Januray");
- months.emplace(2, "February");
- 
- std::cout << month[2];
- ```
+my_list.push_back(4);
+my_list.push_back(6);
+my_list.push_back(8);
+my_list.push_front(2);
 
- Hash-maps:
- ```c++
- #include <unoredered_map>
- std::unordered_map<int, std:.string> months;
- months.emplace(1, "Januray");
- months.emplace(2, "February");
- 
- std::cout << month[2];
- ```
+my_list.emplace_back(10);   // constructs directly
+my_list.emplace_front(0);
 
- Important for collections is to itterate over them and this is sometimes not easy possible. For that we can use **Iterator** which are objects which help to traverse the object.
+my_list.front();     // first element
+my_list.back();      // last element
+my_list.pop_front();
+my_list.pop_back();
+my_list.size();
+my_list.empty();
+my_list.clear();
+```
 
- ```c++
- std::list<int> numbers; 
- numbers.emplace_back(2); 
- numbers.emplace_back(4); 
- numbers.emplace_back(6); 
- 
- for (std::list<int>::iterator iter = numbers.begin();    iter != numbers.end();    ++iter) {
- 	std::cout << *iter << std::endl; 
- }
- ```
+<br><br>
 
- For maps:
- ```c++
- // Get an iterator to the element with the key 2 
- std::map<int, std::string> iter = months.find(2); 
- 
- if (iter != months.end()) // This is only true if found {
- 	std::cout << iter->first << std::endl; // Outputs 2
- 	std::cout << iter->second << std::endl; // Outputs February
- }
- ```
+Another collection is the **Queue** which works with the FIFO (first in, first out). It is like a queue on a icecream shop.
+
+```c++
+#include <queue>
+
+std::queue<int> my_q;
+
+my_q.push(10);
+my_q.push(20);
+my_q.emplace(30);
+
+my_q.front();   // access first element
+my_q.back();    // access last element
+my_q.pop();     // removes first element
+```
+
+<br><br>
+
+The opposite is the **Stack**. It works with the LIFO priciple (last in, first out). The last element which got added will be the first which get out from the stack. Like a stack of papers on a table of a busy worker in the 80s.
+
+```c++
+#include <stack>
+
+std::stack<int> my_stack;
+
+my_stack.push(10);
+my_stack.push(20);
+my_stack.emplace(30);
+
+my_stack.top();   // access top element
+my_stack.pop();   // removes top element
+```
+
+<br><br>
+
+Most performant data structures are the maps and hash maps. The difference is that maps are ordered and hash maps using hashing to allow unordered lists. They work with a key which lead to a value...like a dictionary.
+
+```c++
+#include <map>
+#include <string>
+
+std::map<int, std::string> months;
+
+months.emplace(1, "January");
+months.emplace(2, "February");
+
+std::cout << months[2] << std::endl;
+
+months.find(2);          // returns iterator
+months.contains(2);     // C++20
+months.erase(2);
+months.size();
+months.empty();
+months.clear();
+```
+
+<br><br>
+
+Hash-maps:
+```c++
+#include <unordered_map>
+#include <string>
+
+std::unordered_map<int, std::string> months;
+
+months.emplace(1, "January");
+months.emplace(2, "February");
+
+std::cout << months[2] << std::endl;
+
+// safer lookup
+auto it = months.find(2);
+if (it != months.end()) {
+    std::cout << it->second << std::endl;
+}
+
+months.try_emplace(2, "NewValue"); // does NOT overwrite if key exists
+```
+
+
+<br><br>
+
+Important for collections is to itterate over them and this is sometimes not easy possible. For that we can use **Iterator** which are objects which help to traverse the object.
+
+```c++
+std::list<int> numbers;
+
+numbers.emplace_back(2);
+numbers.emplace_back(4);
+numbers.emplace_back(6);
+
+for (auto iter = numbers.begin(); iter != numbers.end(); ++iter) {
+    std::cout << *iter << std::endl;
+}
+
+// or modern
+
+for (int n : numbers) {
+    std::cout << n << std::endl;
+}
+
+for (const int& n : numbers) {
+    std::cout << n << std::endl;
+}
+```
+
+For maps:
+```c++
+// Get an iterator to the element with the key 2 
+std::map<int, std::string> iter = months.find(2); 
+
+if (iter != months.end()) // This is only true if contains
+    std::cout << iter->first << std::endl; // Outputs 2
+    std::cout << iter->second << std::endl; // Outputs February
+}
+
+// for > C++20
+if (months.contains(2)) 
+    std::cout << month[2] << std::endl;  
+}
+```
 
  
 
@@ -1230,6 +1660,289 @@ public:
 #endif
 ```
 
+
+<br><br>
+
+You can also check if a class/struct is a given type via `typeid`:
+```cpp
+#include <typeinfo>
+#include <iostream>
+
+struct A {};
+struct B {};
+
+A a;
+B b;
+
+std::cout << (typeid(a) == typeid(A)) << std::endl; // true
+std::cout << (typeid(a) == typeid(B)) << std::endl; // false
+```
+
+`typeid` returns a  `const std::type_info&`.
+
+In some cases this can be wrong when using with inheritance and missing virtuals. <br>
+Such a case is this:
+```cpp
+struct Base {};
+struct Derived : Base {};
+
+Base b = Derived{};
+typeid(b) == typeid(Derived); // false
+```
+
+Another way is to use dynamic cast:
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <memory>
+
+struct Component {
+    virtual ~Component() = default; // REQUIRED for dynamic_cast
+};
+
+struct RenderComponent : Component {
+    void render() const {
+        std::cout << "Rendering\n";
+    }
+};
+
+struct PhysicsComponent : Component {
+    void simulate() const {
+        std::cout << "Simulating physics\n";
+    }
+};
+
+// here we use dynamic cast
+void process(Component* component) {
+    if (auto* render = dynamic_cast<RenderComponent*>(component)) {
+        render->render();
+    }
+    else if (auto* physics = dynamic_cast<PhysicsComponent*>(component)) {
+        physics->simulate();
+    }
+}
+
+// running code
+int main() {
+    std::vector<std::unique_ptr<Component>> components;
+
+    components.push_back(std::make_unique<RenderComponent>());
+    components.push_back(std::make_unique<PhysicsComponent>());
+
+    for (const auto& c : components) {
+        process(c.get());
+    }
+}
+```
+
+Use `typeid` when:
+- You want exact type comparison
+- You don't care about base/derived relationships
+- Performance matters
+
+Use `dynamic_cast` when:
+- You want to know if an object is-a type
+- You're working with polymorphism
+- You care about inheritance hierarchies
+
+
+<br><br>
+
+<a name="basics_structs_" href="#bascis_top_">^</a><br>
+**Structs**
+
+Structs are also just classes in C++ and can everything what classes can BUT they are typically only used as more complex datatypes without (or only very few) methods.<br>
+While in languages like python you can mix datatypes easily (in C++ also possible but way harder), in C++ the most comfortable but still nice way is with structs.
+
+Here is an practical example:
+```cpp
+struct Window {
+    std::tuple<int, int> position{ 0, 0 };
+    std::tuple<int, int> size{ 512, 512 };
+    bool is_accessed{ true };
+    bool is_activated{ true };
+};
+
+struct ActiveState {
+    std::vector<Key> keys;
+    std::vector<MouseButton> mouse_buttons;
+    std::unordered_map<int, std::vector<ControllerButton>> controller_buttons;
+    std::unordered_map<int, std::vector<ControllerAxis>> controller_axis;
+};
+```
+
+They use the `struct` keyword, are very straight forward. Every member/attribute is `public` by default (while in classes the default is `private`).
+
+Typical characteristics:
+- Public data members
+- Lightweight
+- No strong invariants
+- Often POD / aggregate-like
+- Used for data transfer, math types, configs
+
+It is also often use with aggregate initialization:
+```cpp
+struct Color {
+    int r, g, b;
+};
+
+Color c{255, 128, 0};
+```
+
+> A struct is a class that doesn't hide its data by default. -> C++ has only "classes", struct just flips the defaults.
+
+
+<br><br>
+
+<a name="basics_class_methods" href="#bascis_top_">^</a><br>
+**Class Methods**
+
+You can define many special methods for your classes to define behaviour for example when using brackets on your class `my_obj[0]`. Here is an overview of the most common methods in C++ for your classes.
+
+Object Lifetime (standard 5/6 methods)
+
+| Purpose                            | Method Signature                         | Notes                                     |
+| ---------------------------------- | ---------------------------------------- | ----------------------------------------- |
+| Default constructor                | `ClassName()`                            | Can be implicitly deleted or generated    |
+| Destructor                         | `~ClassName()`                           | Should be virtual if class is polymorphic |
+| Copy constructor                   | `ClassName(const ClassName&)`            | Deep copy logic                           |
+| Copy assignment                    | `ClassName& operator=(const ClassName&)` | Handle self-assignment                    |
+| Move constructor                   | `ClassName(ClassName&&)`                 | Transfers ownership                       |
+| Move assignment                    | `ClassName& operator=(ClassName&&)`      | Usually `noexcept`                        |
+| Defaulted destructor (Rule of 0/6) | `= default`                              | When RAII members handle everything       |
+
+
+> Rule of 5: if you define one, you should define all of them -> destructor + copy/move constructor + copy/move assignment
+> Rule of 0: just let every of the 5 default
+
+<br><br>
+
+Comparison Operators
+
+| Operator      | Signature                                 |
+| ------------- | ----------------------------------------- |
+| Equality      | `bool operator==(const ClassName&) const` |
+| Inequality    | `bool operator!=(const ClassName&) const` |
+| Less-than     | `bool operator<(const ClassName&) const`  |
+| Less-equal    | `bool operator<=(const ClassName&) const` |
+| Greater-than  | `bool operator>(const ClassName&) const`  |
+| Greater-equal | `bool operator>=(const ClassName&) const` |
+
+Three-way Comparison (C++20)
+
+| Operator                | Signature                                  | Notes                     |
+| ----------------------- | ------------------------------------------ | ------------------------- |
+| Spaceship               | `auto operator<=>(const ClassName&) const` | Generates all comparisons |
+| Equality (still needed) | `bool operator==(const ClassName&) const`  | Required for `<=>`        |
+
+
+<br><br>
+
+
+Stream Operators (I/O)
+
+| Operator | Signature                                                          | Notes    |
+| -------- | ------------------------------------------------------------------ | -------- |
+| Output   | `friend std::ostream& operator<<(std::ostream&, const ClassName&)` | Printing |
+| Input    | `friend std::istream& operator>>(std::istream&, ClassName&)`       | Parsing  |
+
+<br><br>
+
+Arithmetic Operators
+
+| Operator       | Signature                                     |
+| -------------- | --------------------------------------------- |
+| Addition       | `ClassName operator+(const ClassName&) const` |
+| Subtraction    | `ClassName operator-(const ClassName&) const` |
+| Multiplication | `ClassName operator*(const ClassName&) const` |
+| Division       | `ClassName operator/(const ClassName&) const` |
+| Modulo         | `ClassName operator%(const ClassName&) const` |
+
+
+<br><br>
+
+| Operator   | Signature                                 |
+| ---------- | ----------------------------------------- |
+| Add-assign | `ClassName& operator+=(const ClassName&)` |
+| Sub-assign | `ClassName& operator-=(const ClassName&)` |
+| Mul-assign | `ClassName& operator*=(const ClassName&)` |
+| Div-assign | `ClassName& operator/=(const ClassName&)` |
+
+
+<br><br>
+
+Unary Operators
+
+| Operator          | Signature                     | Meaning           |
+| ----------------- | ----------------------------- | ----------------- |
+| Unary plus        | `ClassName operator+() const` | Identity          |
+| Unary minus       | `ClassName operator-() const` | Negation          |
+| Logical NOT       | `bool operator!() const`      | Custom truthiness |
+| Bitwise NOT       | `ClassName operator~() const` | Inversion         |
+| Prefix increment  | `ClassName& operator++()`     | `++x`             |
+| Postfix increment | `ClassName operator++(int)`   | `x++`             |
+| Prefix decrement  | `ClassName& operator--()`     | `--x`             |
+| Postfix decrement | `ClassName operator--(int)`   | `x--`             |
+
+<br><br>
+
+Assignment & Access
+
+| Operator        | Signature                           | Purpose           |
+| --------------- | ----------------------------------- | ----------------- |
+| Subscript       | `T& operator[](size_t)`             | Array-like access |
+| Const subscript | `const T& operator[](size_t) const` | Read-only         |
+| Function call   | `Return operator()(Args...)`        | Functor           |
+| Dereference     | `T& operator*()`                    | Pointer-like      |
+| Arrow           | `T* operator->()`                   | Smart pointers    |
+
+<br><br>
+
+Conversion Operators
+
+| Conversion          | Signature                        | Notes                 |
+| ------------------- | -------------------------------- | --------------------- |
+| Implicit conversion | `operator TargetType() const`    | Dangerous if implicit |
+| Explicit conversion | `explicit operator bool() const` | Common & safe         |
+
+<br><br>
+
+Memory Management (Rare but Important)
+
+| Operator     | Signature                       |
+| ------------ | ------------------------------- |
+| Allocation   | `void* operator new(size_t)`    |
+| Deallocation | `void operator delete(void*)`   |
+| Array new    | `void* operator new[](size_t)`  |
+| Array delete | `void operator delete[](void*)` |
+
+<br><br>
+
+Bitwise Operators
+
+| Operator    | Signature                                     |                           |
+| ----------- | --------------------------------------------- | ------------------------- |
+| AND         | `ClassName operator&(const ClassName&) const` |                           |
+| OR          | `ClassName operator                           | (const ClassName&) const` |
+| XOR         | `ClassName operator^(const ClassName&) const` |                           |
+| Left shift  | `ClassName operator<<(int) const`             |                           |
+| Right shift | `ClassName operator>>(int) const`             |                           |
+| AND-assign  | `ClassName& operator&=(const ClassName&)`     |                           |
+| OR-assign   | `ClassName& operator                          | =(const ClassName&)`      |
+
+<br><br>
+
+Miscellaneous / Less Common
+
+| Operator          | Signature                               |
+| ----------------- | --------------------------------------- |
+| Comma             | `ClassName operator,(const ClassName&)` |
+| Pointer-to-member | `operator->*`                           |
+| Placement new     | `void* operator new(size_t, void*)`     |
+
+
+
 <br><br>
 
 <a name="basics_brace_init_" href="#bascis_top_">^</a><br>
@@ -1386,7 +2099,7 @@ So far so easy. An `lvalue` is everything which have an **persistent memory addr
 int x = 10; // x is an lvalue
 int* p = &x; // you can take its address
 ```
-`rvalue`'s on the other side are values which are only **temporary** and you can only read them.
+`rvalue`'s on the other side are values which are only **temporary** and you can often only read them but this is not a must.
 
 With that following datatyp signatures are for `lvalues`/`rvalues` references:
 | Reference type     | What it can bind to | Typical use                      |
