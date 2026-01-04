@@ -756,6 +756,7 @@ struct Entity {
 
 int main() {
     // std::unique_pointer<Entity> e = std::make_unique<Entity>(42);
+    // std::unique_pointer<Entity> e(Entity(42));
 	auto e = std::make_unique<Entity>(42);
 	std::cout << e->id << '\n';
 
@@ -765,7 +766,8 @@ int main() {
 }
 ```
 
-> Do not copy a `unique_ptr`. Ownership can only be moved.
+> Do not copy a `unique_ptr`. Ownership can only be moved with `std::move(your_pointer)`.
+
 
 <a href="#basics_move_semantics_">Click here to learn more about the Move Semantic.</a>
 
@@ -819,6 +821,32 @@ int main() {
 } // shared destroyed -> weak becomes expired
 ```
 
+<br><br>
+
+
+Sometimes you also want to define your **own deleter** -> that is always needed when the compiler don't have the complete definition of the saved type, which is needed when deleting the object or you want that something happen when your pointer/object gets destroyed.
+
+Here is the solution:
+```cpp
+auto sdl_controller_deleter = [](SDL_Gamepad* g) {
+    if (g) SDL_CloseGamepad(g);
+};
+
+std::unique_ptr<SDL_Gamepad, decltype(sdl_controller_deleter)> controller(
+    SDL_OpenGamepad(cid), sdl_controller_deleter
+);
+
+```
+Or local:
+```cpp
+std::unique_ptr<SDL_Gamepad, decltype([](SDL_Gamepad* g){ if(g) SDL_CloseGamepad(g); })> controller(
+                                                                                                SDL_OpenGamepad(cid),
+                                                                                                [](SDL_Gamepad* g){ if(g) SDL_CloseGamepad(g); }
+                                                                                            );
+```
+
+So you need a lambda function which takes an pointer from your type: 
+`std::unique_ptr<YOUR_TYPE, decltype([](YOUR_TYPE* g){ if(g) SDL_CloseGamepad(g); })>`
 
 
 <br><br>
